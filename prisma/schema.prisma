@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id       String  @id @default(uuid())
+  name     String
+  pic      String
+  phone    String
+  email    String
+  authKey  String  @unique
+  darkMode Boolean
+}
+
+model Student {
+  id       String    @id @default(uuid())
+  name     String
+  pic      String
+  phone    String?
+  email    String?
+  authKey  String    @unique
+  grade    Int
+  darkMode Boolean
+  sessions Session[]
+
+  @@index([authKey])
+}
+
+model Tutor {
+  id           String     @id @default(uuid())
+  name         String
+  pic          String
+  phone        String?
+  email        String?
+  authKey      String     @unique
+  grade        Int
+  prefGrade    Int
+  subjects     String[]
+  availability DateTime[]
+  darkMode     Boolean
+  hoursTerm    Float
+  hoursTotal   Float
+  sessions     Session[]
+
+  @@index([authKey])
+}
+
+model Session {
+  id        Int      @id @default(autoincrement())
+  time      DateTime
+  tutor     Tutor    @relation(fields: [tutorId], references: [id])
+  tutorId   String
+  student   Student  @relation(fields: [studentId], references: [id])
+  studentId String
+
+  @@index([time])
+}
