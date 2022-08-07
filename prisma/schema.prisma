@@ -19,6 +19,8 @@ model Admin {
   email    String
   authKey  String  @unique
   darkMode Boolean
+
+  @@index([authKey])
 }
 
 model Student {

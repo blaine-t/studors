@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../../components/head'); %>
+    <title>Studors</title>
+  </head>
+
+  <body>
+    <header><%- include('../../components/header'); %></header>
+    <h2>Tutor Registration Page</h2>
+    <div class="register">
+      <div class="circular--landscape">
+        <img src="/img/logo512.webp" id="profilePic" />
+      </div>
+      <br />
+      <label>
+        <form
+          method="POST"
+          action="/upload/profilePic"
+          enctype="multipart/form-data"
+        >
+          <input
+            type="file"
+            style="display: none"
+            onchange="showPreview(event);"
+            id="pic"
+            name="pic"
+            accept="image/png, image/jpg, image/webp"
+            ;
+          />
+          <u
+            ><i><a>Upload Photo</a></i></u
+          >
+        </form>
+      </label>
+      <form></form>
+    </div>
+    <footer><%- include('../../components/footer'); %></footer>
+    <script>
+      function showPreview(event) {
+        if (event.target.files.length > 0) {
+          const src = URL.createObjectURL(event.target.files[0])
+          const preview = document.getElementById('profilePic')
+          preview.src = src
+          preview.style.display = 'block'
+        }
+      }
+    </script>
+  </body>
+</html>
