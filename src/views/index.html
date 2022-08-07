@@ -13,6 +13,30 @@
     <meta name="theme-color" content="#ffffff" />
     <title>Studors</title>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        let authKey
+        $('#submit').click(function () {
+          authKey = $('#authKey').val()
+          $.post(
+            'http://localhost:8080/api/getHours',
+            { authKey: authKey },
+            function (data) {
+              if (data === 'yes') {
+                alert('login success')
+              }
+            }
+          )
+        })
+      })
+    </script>
   </head>
-  <body></body>
+  <body>
+    <h1>Hello people !</h1>
+
+    <input id="authKey" size="40" type="TEXT" />
+    <input id="submit" type="button" value="Submit" />
+  </body>
 </html>

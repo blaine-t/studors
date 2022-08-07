@@ -12,7 +12,8 @@ datasource db {
 
 model Admin {
   id       String  @id @default(uuid())
-  name     String
+  apiKey   String  @default(uuid())
+  username String
   pic      String
   phone    String
   email    String
@@ -21,28 +22,29 @@ model Admin {
 }
 
 model Student {
-  id       String    @id @default(uuid())
-  name     String
-  pic      String
-  phone    String?
-  email    String?
-  authKey  String    @unique
-  grade    Int
-  darkMode Boolean
-  sessions Session[]
+  id        String    @id @default(uuid())
+  firstName String
+  lastName  String
+  pic       String
+  phone     String?
+  email     String?
+  authKey   String    @unique
+  grade     Int
+  darkMode  Boolean
+  sessions  Session[]
 
   @@index([authKey])
 }
 
 model Tutor {
   id           String     @id @default(uuid())
-  name         String
+  firstName    String
+  lastName     String
   pic          String
   phone        String?
   email        String?
   authKey      String     @unique
   grade        Int
-  prefGrade    Int
   subjects     String[]
   availability DateTime[]
   darkMode     Boolean
@@ -54,12 +56,12 @@ model Tutor {
 }
 
 model Session {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   time      DateTime
   tutor     Tutor    @relation(fields: [tutorId], references: [id])
   tutorId   String
   student   Student  @relation(fields: [studentId], references: [id])
   studentId String
 
-  @@index([time])
+  @@index([time, tutorId, studentId])
 }

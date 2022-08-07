@@ -1,9 +1,18 @@
 {
     "compilerOptions": {
         "sourceMap": true,
-        "outDir": "dist",
+        "outDir": "./build",
+        "rootDir": "src",
         "strict": true,
         "lib": ["esnext"],
+        "target": "esnext",
+        "module": "commonjs",
         "esModuleInterop": true
-    }
+    },
+    "include": [
+        "src/**/*"
+, "src/db.ts"    ],
+    "exclude": [
+        "node_modules"
+    ]
 }
