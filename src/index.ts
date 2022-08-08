@@ -6,7 +6,14 @@ const app = express()
 // Allows API requests
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-app.use(fileUpload())
+app.use(
+  fileUpload({
+    limits: {
+      fileSize: 10000000 //10mb
+    },
+    abortOnLimit: true
+  })
+)
 app.set('view engine', 'ejs')
 const port = 8080
 

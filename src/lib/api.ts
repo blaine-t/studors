@@ -1,14 +1,16 @@
 import db from './db'
 
 async function acceptHoursRequest(apiKey: string) {
-  if (apiKey === undefined) {
-    return { user: 'UNAUTHORIZED' }
+  if (typeof apiKey !== 'string') {
+    if (apiKey === undefined) {
+      return { supply: 'API KEY' }
+    }
+    return { invalid: 'TYPE' }
   }
   if ((await db.confirmApiKey(apiKey)) != null) {
     return await db.getHours()
-  } else {
-    return { user: 'UNAUTHORIZED' }
   }
+  return { user: 'UNAUTHORIZED' }
 }
 
 export default {
