@@ -2,9 +2,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import fileUpload from 'express-fileupload'
-//import helmet from 'helmet'
 const app = express()
-//app.use(helmet()) // Adds extra security to express by default
 // Allows API requests
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())

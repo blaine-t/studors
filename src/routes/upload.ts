@@ -1,5 +1,7 @@
 import express from 'express'
 import { UploadedFile } from 'express-fileupload'
+import sharp from 'sharp'
+import { v4 as uuidv4 } from 'uuid'
 const router = express.Router()
 
 router.get('/', (req, res) => {
@@ -8,17 +10,12 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   if (req.files) {
-    console.log(req.files)
     const file = req.files.file as UploadedFile
-    const filename = file.name
-    console.log(filename)
-    file.mv('public/profiles/' + filename, function (err) {
-      if (err) {
-        res.send(err)
-      } else {
-        res.send('File Uploaded')
-      }
-    })
+    const newFileName = Date.now() + '-' + uuidv4() + '.webp'
+    sharp(file.data)
+      .resize(200, 200)
+      .toFile('public/profiles/' + newFileName)
+    res.send(newFileName)
   }
 })
 
