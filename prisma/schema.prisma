@@ -15,7 +15,7 @@ datasource db {
 }
 
 model Admin {
-  id        String  @id @default(uuid())
+  id        String  @id
   apiKey    String  @default(uuid())
   firstName String
   lastName  String
@@ -29,7 +29,7 @@ model Admin {
 }
 
 model Student {
-  id        String    @id @default(uuid())
+  id        String    @id
   firstName String
   lastName  String
   pic       String
@@ -44,7 +44,7 @@ model Student {
 }
 
 model Tutor {
-  id           String     @id @default(uuid())
+  id           String     @id
   firstName    String
   lastName     String
   pic          String

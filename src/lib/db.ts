@@ -74,11 +74,20 @@ async function confirmApiKey(apiKey: string) {
   })
 }
 
+async function authStudent(id: string) {
+  return await prisma.admin.findFirst({
+    where: {
+      id: id
+    }
+  })
+}
+
 export default {
   findTutor,
   addStudent,
   addTutor,
   getHours,
   confirmApiKey,
-  addAdmin
+  addAdmin,
+  authStudent
 }

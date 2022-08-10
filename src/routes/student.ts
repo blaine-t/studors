@@ -1,4 +1,5 @@
 import express from 'express'
+import passport from 'passport'
 const router = express.Router()
 
 router.get('/register', (req, res) => {
@@ -38,6 +39,12 @@ router.post('/logout', function (req, res, next) {
   })
 })
 
-router.get('/login', (req, res) => {})
+router.get('/login', passport.authenticate('google'), (req, res) => {
+  res.send(200)
+})
+
+router.get('/auth', passport.authenticate('google'), (req, res) => {
+  res.send(200)
+})
 
 export { router }

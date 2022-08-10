@@ -8,6 +8,23 @@ app.use(bodyParser.json())
 app.set('view engine', 'ejs')
 const port = 8080
 
+// Auth Support
+import passport from 'passport'
+import session from 'express-session'
+import dotenv from 'dotenv'
+dotenv.config()
+
+app.use(
+  session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true
+  })
+)
+require('./strategies/google')
+app.use(passport.initialize())
+app.use(passport.session())
+
 // Static Web Files
 app.use(express.static('public'))
 app.use(express.static('public/icons')) //Flattens icons to public for support reasons
