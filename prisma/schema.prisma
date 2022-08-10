@@ -15,55 +15,55 @@ datasource db {
 }
 
 model Admin {
-  id        String  @id
-  apiKey    String  @default(uuid())
-  firstName String
-  lastName  String
-  pic       String
-  phone     String?
-  email     String  @unique
-  authKey   String  @unique
-  darkMode  Boolean
+  id          String        @id @unique
+  apiKey      String        @default(cuid())
+  firstName   String
+  lastName    String
+  pic         String
+  phone       String?
+  email       String
+  darkMode    Boolean       @default(false)
+  authSession AuthSession[]
 
-  @@index([email, authKey])
+  @@index([id, email])
 }
 
 model Student {
-  id        String    @id
-  firstName String
-  lastName  String
-  pic       String
-  phone     String?
-  email     String    @unique
-  authKey   String    @unique
-  grade     Int
-  darkMode  Boolean
-  sessions  Session[]
+  id          String        @id @unique
+  firstName   String
+  lastName    String
+  pic         String
+  phone       String?
+  email       String
+  grade       Int           @default(-1)
+  darkMode    Boolean       @default(false)
+  sessions    Session[]
+  AuthSession AuthSession[]
 
-  @@index([email, authKey])
+  @@index([id, email])
 }
 
 model Tutor {
-  id           String     @id
+  id           String        @id @unique
   firstName    String
   lastName     String
   pic          String
   phone        String?
-  email        String     @unique
-  authKey      String     @unique
-  grade        Int
+  email        String
+  grade        Int           @default(-1)
   subjects     String[]
   availability DateTime[]
-  darkMode     Boolean
-  hoursTerm    Float
-  hoursTotal   Float
+  darkMode     Boolean       @default(false)
+  hoursTerm    Float         @default(0)
+  hoursTotal   Float         @default(0)
   sessions     Session[]
+  AuthSession  AuthSession[]
 
-  @@index([email, authKey])
+  @@index([id, email])
 }
 
 model Session {
-  id        String   @id @default(uuid())
+  id        String   @id @default(cuid())
   time      DateTime
   tutor     Tutor    @relation(fields: [tutorId], references: [id])
   tutorId   String
@@ -71,4 +71,16 @@ model Session {
   studentId String
 
   @@index([time, tutorId, studentId])
+}
+
+model AuthSession {
+  id        String   @id @default(cuid())
+  sid       String   @unique
+  expires   DateTime
+  admin     Admin    @relation(fields: [adminId], references: [id])
+  adminId   String
+  student   Student  @relation(fields: [studentId], references: [id])
+  studentId String
+  tutor     Tutor    @relation(fields: [tutorId], references: [id])
+  tutorId   String
 }

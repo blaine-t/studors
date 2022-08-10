@@ -3,11 +3,17 @@ import passport from 'passport'
 const router = express.Router()
 
 router.get('/register', (req, res) => {
-  res.render('pages/student/register')
+  res.redirect('http://localhost:8080/student/home')
 })
 
 router.get('/home', (req, res) => {
-  res.render('pages/student/home')
+  if (req.user) {
+    res.render('pages/student/home', {
+      user: req.user
+    })
+  } else {
+    res.redirect('http://localhost:8080/student/login')
+  }
 })
 
 router.get('/find', (req, res) => {
@@ -39,12 +45,18 @@ router.post('/logout', function (req, res, next) {
   })
 })
 
-router.get('/login', passport.authenticate('google'), (req, res) => {
-  res.send(200)
+router.get('/login', (req, res) => {
+  res.redirect('http://localhost:8080/student/login/google')
 })
 
-router.get('/auth', passport.authenticate('google'), (req, res) => {
-  res.send(200)
-})
+router.get('/login/google', passport.authenticate('google'))
+
+router.get(
+  '/auth/google',
+  passport.authenticate('google', {
+    successRedirect: '/student/register',
+    failureRedirect: '/student/login'
+  })
+)
 
 export { router }

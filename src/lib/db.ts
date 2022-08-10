@@ -1,33 +1,39 @@
 import prisma from './prisma'
 
-async function findTutor(authKey: string) {
+async function findTutor(id: string) {
   const students = await prisma.tutor.findUnique({
     where: {
-      authKey: authKey
+      id: id
     }
   })
   console.log(students)
 }
 
-async function addStudent() {
+async function addStudent(
+  id: string,
+  firstName: string,
+  lastName: string,
+  pic: string,
+  email: string
+) {
   await prisma.student.create({
     data: {
-      firstName: 'Jeff',
-      lastName: 'epstein',
-      pic: './jpg',
-      authKey: 'ij1324ji34ji23j424',
-      grade: 9,
-      darkMode: false
+      id: id,
+      firstName: firstName,
+      lastName: lastName,
+      pic: pic,
+      email: email
     }
   })
 }
 
-async function addAdmin() {
+async function addAdmin(id: string) {
   await prisma.admin.create({
     data: {
-      username: 'epstein',
+      id: id,
+      firstName: 'epstein',
+      lastName: 'hell',
       pic: './jpg',
-      authKey: 'ij1324ji34ji23j424',
       phone: '4025406790',
       email: '0340@gmail.com',
       darkMode: false
@@ -35,15 +41,15 @@ async function addAdmin() {
   })
 }
 
-async function addTutor() {
+async function addTutor(id: string) {
   await prisma.tutor.create({
     data: {
+      id: id,
       firstName: 'Jeff',
       lastName: 'epstein',
       pic: './jpg',
       phone: '4025405790',
       email: 'Jeff@bathost.net',
-      authKey: 'ij1324ji34ji23j424',
       grade: 9,
       hoursTerm: 0,
       hoursTotal: 45.5,
@@ -75,7 +81,7 @@ async function confirmApiKey(apiKey: string) {
 }
 
 async function authStudent(id: string) {
-  return await prisma.admin.findFirst({
+  return await prisma.student.findFirst({
     where: {
       id: id
     }

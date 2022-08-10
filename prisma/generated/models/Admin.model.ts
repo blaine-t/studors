@@ -1,5 +1,5 @@
-import { IsString, IsDefined, IsBoolean } from "class-validator";
-import "./";
+import { IsString, IsDefined, IsOptional, IsBoolean } from "class-validator";
+import { AuthSession } from "./";
 
 export class Admin {
     @IsDefined()
@@ -12,25 +12,28 @@ export class Admin {
 
     @IsDefined()
     @IsString()
-    username!: string;
+    firstName!: string;
+
+    @IsDefined()
+    @IsString()
+    lastName!: string;
 
     @IsDefined()
     @IsString()
     pic!: string;
 
-    @IsDefined()
+    @IsOptional()
     @IsString()
-    phone!: string;
+    phone?: string;
 
     @IsDefined()
     @IsString()
     email!: string;
 
     @IsDefined()
-    @IsString()
-    authKey!: string;
-
-    @IsDefined()
     @IsBoolean()
     darkMode!: boolean;
+
+    @IsDefined()
+    authSession!: AuthSession[];
 }

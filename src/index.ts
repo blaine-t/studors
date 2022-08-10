@@ -11,14 +11,19 @@ const port = 8080
 // Auth Support
 import passport from 'passport'
 import session from 'express-session'
-import dotenv from 'dotenv'
+import * as dotenv from 'dotenv'
 dotenv.config()
 
 app.use(
   session({
-    secret: 'secret',
+    secret: process.env.SESSION_SECRET || 'Please dont use this secret',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 1000 * 60 * 60 * 24 * 7 // 7 Days
+    }
   })
 )
 require('./strategies/google')

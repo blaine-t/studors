@@ -23,10 +23,17 @@ passport.use(
       // If there is already a student with this ID
       const studentProfile = await db.authStudent(profile.id)
       if (studentProfile != null) {
-        console.log(studentProfile)
         done(null, studentProfile)
-      } else {
-        console.log('exists')
+      }
+      // If there is not a student with this ID
+      else {
+        db.addStudent(
+          profile.id,
+          profile._json.given_name || 'Example',
+          profile._json.family_name || 'Student',
+          profile._json.picture || 'https://via.placeholder.com/96',
+          profile._json.email || 'example@class.lps.org'
+        )
         done(null, false)
       }
     }
@@ -34,6 +41,7 @@ passport.use(
 )
 
 passport.serializeUser((userObj, done) => {
+  console.log(userObj)
   done(null, userObj)
 })
 

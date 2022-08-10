@@ -1,5 +1,5 @@
 import { IsString, IsDefined, IsOptional, IsInt, IsBoolean } from "class-validator";
-import { Session } from "./";
+import { Session, AuthSession } from "./";
 
 export class Student {
     @IsDefined()
@@ -22,13 +22,9 @@ export class Student {
     @IsString()
     phone?: string;
 
-    @IsOptional()
-    @IsString()
-    email?: string;
-
     @IsDefined()
     @IsString()
-    authKey!: string;
+    email!: string;
 
     @IsDefined()
     @IsInt()
@@ -40,4 +36,7 @@ export class Student {
 
     @IsDefined()
     sessions!: Session[];
+
+    @IsDefined()
+    AuthSession!: AuthSession[];
 }

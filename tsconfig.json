@@ -6,7 +6,7 @@
         "strict": true,
         "lib": ["esnext"],
         "target": "esnext",
-        "module": "commonjs",
+        "module": "CommonJS",
         "esModuleInterop": true
     },
     "include": [

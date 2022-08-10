@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../../components/head'); %>
+    <title>TITLE</title>
+  </head>
+
+  <body>
+    <header><%- include('../../components/header'); %></header>
+    <div>
+      <img src="<%= user.pic %>" referrerpolicy="no-referrer" />
+      <p><%= user.firstName %> <%= user.lastName %></p>
+      <p><%= user.email %></p>
+      <p><%= user.grade %></p>
+    </div>
+    <footer><%- include('../../components/footer'); %></footer>
+    <script></script>
+  </body>
+</html>
