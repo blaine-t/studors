@@ -22,6 +22,8 @@ router.post('/logout', function (req, res, next) {
   })
 })
 
-router.get('/login', (req, res) => {})
+router.get('/login', (req, res) => {
+  res.redirect('/')
+})
 
 export { router }

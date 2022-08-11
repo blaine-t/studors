@@ -3,29 +3,41 @@ import express from 'express'
 import bodyParser from 'body-parser'
 const app = express()
 // Allows API requests
-app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.set('view engine', 'ejs')
 const port = 8080
 
 // Auth Support
 import passport from 'passport'
 import session from 'express-session'
+// Implement nonleaking memory store for cookies
+import createMemoryStore from 'memorystore'
+const MemoryStore = createMemoryStore(session)
+import { v4 as uuidv4 } from 'uuid'
+
+// Environment variable support for the project
 import * as dotenv from 'dotenv'
 dotenv.config()
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || 'Please dont use this secret',
+    secret: uuidv4(),
     resave: false,
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 1000 * 60 * 60 * 24 * 7 // 7 Days
-    }
+      maxAge: 604800000 // 7 Days
+    },
+    store: new MemoryStore({
+      checkPeriod: 86400000
+    })
   })
 )
+import db from './lib/db'
+db.test()
+
 require('./strategies/google')
 app.use(passport.initialize())
 app.use(passport.session())
