@@ -36,7 +36,7 @@ app.use(
   })
 )
 
-require('./strategies/google')
+require('./strategies/student-google')
 app.use(passport.initialize())
 app.use(passport.session())
 
@@ -50,12 +50,14 @@ import { router as student } from './routes/student'
 import { router as tutor } from './routes/tutor'
 import { router as admin } from './routes/admin'
 import { router as api } from './routes/api'
+import { router as auth } from './routes/auth'
 
 app.use('/', root)
 app.use('/student', student)
 app.use('/tutor', tutor)
 app.use('/admin', admin)
 app.use('/api', api)
+app.use('/auth', auth)
 
 app.listen(port, () => {
   console.log(`Example app listening on http://127.0.0.1:${port}`)

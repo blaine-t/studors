@@ -81,14 +81,8 @@ async function updateAdmin(id: string, phone: string, dark_theme: boolean) {
 
 async function authUser(role: string, id: string) {
   try {
-    const res = await pool.query(
-      `SELECT count(id) FROM ${role} WHERE id = $1`,
-      [id]
-    )
-    if (res.rows[0].count > 0) {
-      return true
-    }
-    return false
+    const res = await pool.query(`SELECT * FROM ${role} WHERE id = $1`, [id])
+    return res.rows[0]
   } catch (err) {
     console.log(err)
   }
