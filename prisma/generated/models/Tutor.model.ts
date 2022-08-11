@@ -1,5 +1,5 @@
 import { IsString, IsDefined, IsOptional, IsInt, IsDate, IsBoolean } from "class-validator";
-import { Session, AuthSession } from "./";
+import { Session } from "./";
 
 export class Tutor {
     @IsDefined()
@@ -50,7 +50,4 @@ export class Tutor {
 
     @IsDefined()
     sessions!: Session[];
-
-    @IsDefined()
-    AuthSession!: AuthSession[];
 }

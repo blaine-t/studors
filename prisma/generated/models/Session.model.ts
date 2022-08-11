@@ -1,4 +1,4 @@
-import { IsString, IsDefined, IsDate } from "class-validator";
+import { IsString, IsDefined, IsDate, IsOptional } from "class-validator";
 import { Tutor, Student } from "./";
 
 export class Session {
@@ -7,20 +7,24 @@ export class Session {
     id!: string;
 
     @IsDefined()
+    @IsString()
+    subject!: string;
+
+    @IsDefined()
     @IsDate()
     time!: Date;
 
     @IsDefined()
     tutor!: Tutor;
 
+    @IsOptional()
+    Student?: Student;
+
+    @IsOptional()
+    @IsString()
+    studentId?: string;
+
     @IsDefined()
     @IsString()
     tutorId!: string;
-
-    @IsDefined()
-    student!: Student;
-
-    @IsDefined()
-    @IsString()
-    studentId!: string;
 }
