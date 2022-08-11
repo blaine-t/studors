@@ -21,13 +21,14 @@ passport.use(
       done: VerifyCallback
     ) => {
       // If there is already a student with this ID
-      const studentProfile = await db.authStudent(profile.id)
-      if (studentProfile != null) {
+      const studentProfile = await db.authUser('students', profile.id)
+      if (studentProfile) {
         done(null, studentProfile)
       }
       // If there is not a student with this ID
       else {
-        db.addStudent(
+        db.createUser(
+          'students',
           profile.id,
           profile._json.given_name || 'Example',
           profile._json.family_name || 'Student',

@@ -35,8 +35,6 @@ app.use(
     })
   })
 )
-import db from './lib/db'
-db.test()
 
 require('./strategies/google')
 app.use(passport.initialize())

@@ -23,7 +23,7 @@ alter role studorsadmin nocreatedb;
 -- psql -d studors -U studorsadmin
 
 create table students(
-    id uuid primary key default gen_random_uuid(),
+    id text primary key,
     first_name text default 'example',
     last_name text default 'student',
     picture text default 'https://studor.lps.org/img/defaultStudent.jpg',
@@ -35,7 +35,7 @@ create table students(
 );
 
 create table tutors(
-    id uuid primary key default gen_random_uuid(),
+    id text primary key,
     first_name text default 'example',
     last_name text default 'tutor',
     picture text default 'https://studor.lps.org/img/defaultTutor.jpg',
@@ -51,21 +51,21 @@ create table tutors(
 );
 
 create table admins(
-    id uuid primary key default gen_random_uuid(),
+    id text primary key,
     api_key uuid default gen_random_uuid(),
     first_name text default 'example',
     last_name text default 'admin',
     picture text default 'https://studor.lps.org/img/defaultAdmin.jpg',
     email text unique not null,
-    dark_theme bool default false
+    school text default 'LSW',
+    dark_theme bool default false,
+    phone text
 );
 
 create table sessions(
     id uuid primary key default gen_random_uuid(),
     subject text default 'other',
     timeof timestamp not null,
-    student_id uuid references students(id) not null,
-    tutor_id uuid references tutors(id) not null
+    student_id text references students(id) not null,
+    tutor_id text references tutors(id) not null
 );
-
-select now();
