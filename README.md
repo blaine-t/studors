@@ -1,10 +1,13 @@
 # studors
+
 A web service that allows for students to get in contact with volunteer student tutors
 
 ## TODO:
 
-Implement passport with Postgres to allow for storage of info and linkage to profile picture URLs
+Setup tutor verification
 
-Rewrite pages to add support for passport
+Refactor all code and ensure proper function use and proper security
+
+Write pages
 
 Add CSS to make pages pretty

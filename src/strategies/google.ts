@@ -18,9 +18,10 @@ passport.use(
   'student-google',
   new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      callbackURL: process.env.GOOGLE_STUDENT_REDIRECT_URL!,
+      clientID: process.env.GOOGLE_CLIENT_ID || 'clientIDNotFound',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'clientSecretNotFound',
+      callbackURL:
+        process.env.GOOGLE_STUDENT_REDIRECT_URL || 'studentRedirectNotFound',
       scope: ['email', 'profile']
     },
     async (
@@ -54,9 +55,10 @@ passport.use(
   'tutor-google',
   new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      callbackURL: process.env.GOOGLE_TUTOR_REDIRECT_URL!,
+      clientID: process.env.GOOGLE_CLIENT_ID || 'clientIDNotFound',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'clientSecretNotFound',
+      callbackURL:
+        process.env.GOOGLE_TUTOR_REDIRECT_URL || 'tutorRedirectNotFound',
       scope: ['email', 'profile']
     },
     async (
@@ -90,9 +92,10 @@ passport.use(
   'admin-google',
   new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      callbackURL: process.env.GOOGLE_ADMIN_REDIRECT_URL!,
+      clientID: process.env.GOOGLE_CLIENT_ID || 'clientIDNotFound',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'clientSecretNotFound',
+      callbackURL:
+        process.env.GOOGLE_ADMIN_REDIRECT_URL || 'adminRedirectNotFound',
       scope: ['email', 'profile']
     },
     async (
@@ -107,15 +110,17 @@ passport.use(
         done(null, adminProfile)
       }
       // If there is not a student with this ID
-      else {
-        db.createUser(
-          'admins',
-          profile.id,
-          profile._json.given_name || 'Example',
-          profile._json.family_name || 'Admin',
-          profile._json.picture || 'https://via.placeholder.com/96',
-          profile._json.email || 'exampleAdmin@class.lps.org'
-        )
+      else if (profile._json.email != undefined) {
+        if ((await db.checkUser('admin', profile._json.email)) != undefined) {
+          db.createUser(
+            'admins',
+            profile.id,
+            profile._json.given_name || 'Example',
+            profile._json.family_name || 'Admin',
+            profile._json.picture || 'https://via.placeholder.com/96',
+            profile._json.email
+          )
+        }
         done(null, false)
       }
     }

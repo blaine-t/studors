@@ -1,14 +1,21 @@
-import express from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 const router = express.Router()
 
-router.get('/home', (req, res) => {
-  if (req.user) {
-    res.render('pages/student/home', {
-      user: req.user
-    })
+function checkAuthentication(req: Request, res: Response, next: NextFunction) {
+  if (req.isAuthenticated()) {
+    //req.isAuthenticated() will return true if user is logged in
+    next()
   } else {
     res.redirect('/auth/student')
   }
+}
+
+router.use(checkAuthentication)
+
+router.get('/home', (req, res) => {
+  res.render('pages/student/home', {
+    user: req.user
+  })
 })
 
 router.get('/find', (req, res) => {

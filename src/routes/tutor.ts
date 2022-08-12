@@ -1,9 +1,16 @@
-import express from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 const router = express.Router()
 
-router.get('/register', (req, res) => {
-  res.render('pages/tutor/register')
-})
+function checkAuthentication(req: Request, res: Response, next: NextFunction) {
+  if (req.isAuthenticated()) {
+    //req.isAuthenticated() will return true if user is logged in
+    next()
+  } else {
+    res.redirect('/auth/tutor')
+  }
+}
+
+router.use(checkAuthentication)
 
 router.get('/home', (req, res) => {
   res.render('pages/tutor/home')
@@ -23,19 +30,6 @@ router.get('/upcoming', (req, res) => {
 
 router.get('/history', (req, res) => {
   res.render('pages/tutor/history')
-})
-
-router.post('/logout', function (req, res, next) {
-  req.logout(function (err) {
-    if (err) {
-      return next(err)
-    }
-    res.redirect('/')
-  })
-})
-
-router.get('/login', (req, res) => {
-  res.redirect('/')
 })
 
 export { router }

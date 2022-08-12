@@ -2,22 +2,23 @@ import express from 'express'
 import passport from 'passport'
 const router = express.Router()
 
-router.get(
-  '/student/google',
-  passport.authenticate('student-google', {
-    successRedirect: '/student/home',
-    failureRedirect: '/student/google'
-  })
-)
 router.get('/student', (req, res) => {
   res.redirect('/auth/student/google')
 })
 
 router.get(
+  '/student/google',
+  passport.authenticate('student-google', {
+    successRedirect: '/student/home',
+    failureRedirect: '/auth/failure'
+  })
+)
+
+router.get(
   '/tutor/google',
   passport.authenticate('tutor-google', {
     successRedirect: '/tutor/home',
-    failureRedirect: '/tutor/google'
+    failureRedirect: '/auth/failure'
   })
 )
 router.get('/tutor', (req, res) => {
@@ -28,7 +29,7 @@ router.get(
   '/admin/google',
   passport.authenticate('admin-google', {
     successRedirect: '/admin/panel',
-    failureRedirect: '/admin/google'
+    failureRedirect: '/auth/failure'
   })
 )
 router.get('/admin', (req, res) => {

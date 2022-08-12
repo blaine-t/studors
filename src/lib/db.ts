@@ -2,8 +2,6 @@ import { Pool } from 'pg'
 // Pulls connection info from .env variables. See: https://node-postgres.com/features/connecting
 const pool = new Pool()
 
-//TODO: PROPERLY ADD FUNCTIONS
-
 async function createUser(
   role: string,
   id: string,
@@ -88,14 +86,52 @@ async function authUser(role: string, id: string) {
   }
 }
 
+async function checkUser(role: string, email: string) {
+  try {
+    const res = await pool.query(`SELECT * FROM ${role} WHERE email = $1`, [
+      email
+    ])
+    return res.rows[0]
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+async function allowUser(role: string, email: string) {
+  pool.query(
+    `INSERT INTO allowed${role} (email) VALUES ($1)`,
+    [email],
+    (err) => {
+      if (err) {
+        console.log(err)
+      }
+    }
+  )
+}
+
 async function confirmApiKey(apiKey: string) {
   if (apiKey != null) {
-    return true
+    try {
+      const res = await pool.query(
+        `SELECT api_key FROM admins WHERE api_key = $1`,
+        [apiKey]
+      )
+      return res.rows[0]
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
 
 async function getHours() {
-  return true
+  try {
+    const res = await pool.query(
+      `SELECT last_name, first_name, hours_term, hours_total FROM tutors ORDER BY last_name`
+    )
+    return res.rows
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 export default {
@@ -105,6 +141,8 @@ export default {
   updateAdmin,
   deleteUser,
   authUser,
+  checkUser,
+  allowUser,
   confirmApiKey,
   getHours
 }

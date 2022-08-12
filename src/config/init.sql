@@ -70,12 +70,18 @@ create table sessions(
     tutor_id text references tutors(id) not null
 );
 
-create table allowedAdmins(
-    email text primary key
-);
+-- Create whitelist for admins and tutors so that only certain emails can sign up
+
+create table allowedAdmins( email text primary key );
+
+create table allowedTutors( email text primary key );
 
 -- drop table sessions;
+
 -- drop table admins;
+
 -- drop table tutors;
+
 -- drop table students;
--- drop table allowedAdmins
+
+-- drop table allowedAdmins;
