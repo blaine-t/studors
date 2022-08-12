@@ -17,4 +17,12 @@ router.get('/contact', (req, res) => {
   res.render('pages/root/contact')
 })
 
+router.get('/privacy', (req, res) => {
+  res.render('pages/root/contact')
+})
+
+router.get('/tos', (req, res) => {
+  res.render('pages/root/contact')
+})
+
 export { router }

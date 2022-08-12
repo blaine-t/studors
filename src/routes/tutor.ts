@@ -3,7 +3,7 @@ const router = express.Router()
 
 function checkAuthentication(req: Request, res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
-    //req.isAuthenticated() will return true if user is logged in
+    res.locals.user = req.user
     next()
   } else {
     res.redirect('/auth/tutor')

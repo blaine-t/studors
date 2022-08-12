@@ -11,7 +11,7 @@ async function createUser(
   email: string
 ) {
   pool.query(
-    `INSERT INTO ${role}(id,first_name,last_name,picture,email) VALUES ($1,$2,$3,$4,$5)`,
+    `INSERT INTO ${role} (id,first_name,last_name,picture,email) VALUES ($1,$2,$3,$4,$5)`,
     [id, first_name, last_name, picture, email],
     (err) => {
       if (err) {
@@ -88,9 +88,10 @@ async function authUser(role: string, id: string) {
 
 async function checkUser(role: string, email: string) {
   try {
-    const res = await pool.query(`SELECT * FROM ${role} WHERE email = $1`, [
-      email
-    ])
+    const res = await pool.query(
+      `SELECT * FROM allowed${role} WHERE email = $1`,
+      [email]
+    )
     return res.rows[0]
   } catch (err) {
     console.log(err)

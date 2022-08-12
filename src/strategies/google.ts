@@ -45,8 +45,10 @@ passport.use(
           profile._json.picture || 'https://via.placeholder.com/96',
           profile._json.email || 'example@class.lps.org'
         )
-        done(null, false)
+        const studentProfile = await db.authUser('students', profile.id)
+        done(null, studentProfile)
       }
+      done(null, false)
     }
   )
 )
@@ -111,7 +113,7 @@ passport.use(
       }
       // If there is not a student with this ID
       else if (profile._json.email != undefined) {
-        if ((await db.checkUser('admin', profile._json.email)) != undefined) {
+        if ((await db.checkUser('admins', profile._json.email)) != undefined) {
           db.createUser(
             'admins',
             profile.id,

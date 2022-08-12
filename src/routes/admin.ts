@@ -3,7 +3,7 @@ const router = express.Router()
 
 function checkAuthentication(req: Request, res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
-    //req.isAuthenticated() will return true if user is logged in
+    res.locals.user = req.user
     next()
   } else {
     res.redirect('/auth/admin')
@@ -13,23 +13,15 @@ function checkAuthentication(req: Request, res: Response, next: NextFunction) {
 router.use(checkAuthentication)
 
 router.get('/panel', (req, res) => {
-  if (req.isAuthenticated()) {
-    res.render('pages/admin/panel', {
-      user: req.user
-    })
-  } else {
-    res.redirect('/auth/admin')
-  }
+  res.render('pages/admin/panel')
 })
 
 router.get('/settings', (req, res) => {
-  if (req.user) {
-    res.render('pages/admin/settings', {
-      user: req.user
-    })
-  } else {
-    res.redirect('/auth/admin')
-  }
+  res.render('pages/admin/settings')
+})
+
+router.get('/manage', (req, res) => {
+  res.render('pages/admin/manage')
 })
 
 export { router }

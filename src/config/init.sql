@@ -72,16 +72,18 @@ create table sessions(
 
 -- Create whitelist for admins and tutors so that only certain emails can sign up
 
-create table allowedAdmins( email text primary key );
+create table allowedadmins( email text primary key );
 
-create table allowedTutors( email text primary key );
+create table allowedtutors( email text primary key );
 
--- drop table sessions;
+drop table allowedtutors;
 
--- drop table admins;
+drop table allowedadmins;
 
--- drop table tutors;
+drop table sessions;
 
--- drop table students;
+drop table admins;
 
--- drop table allowedAdmins;
+drop table tutors;
+
+drop table students;

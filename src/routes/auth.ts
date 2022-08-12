@@ -14,6 +14,10 @@ router.get(
   })
 )
 
+router.get('/tutor', (req, res) => {
+  res.redirect('/auth/tutor/google')
+})
+
 router.get(
   '/tutor/google',
   passport.authenticate('tutor-google', {
@@ -21,8 +25,9 @@ router.get(
     failureRedirect: '/auth/failure'
   })
 )
-router.get('/tutor', (req, res) => {
-  res.redirect('/auth/tutor/google')
+
+router.get('/admin', (req, res) => {
+  res.redirect('/auth/admin/google')
 })
 
 router.get(
@@ -32,9 +37,6 @@ router.get(
     failureRedirect: '/auth/failure'
   })
 )
-router.get('/admin', (req, res) => {
-  res.redirect('/auth/admin/google')
-})
 
 router.post('/logout', function (req, res, next) {
   req.logout(function (err) {
