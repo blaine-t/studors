@@ -6,7 +6,13 @@ router.get('/register', (req, res) => {
 })
 
 router.get('/panel', (req, res) => {
-  res.render('pages/admin/panel')
+  if (req.user) {
+    res.render('pages/admin/panel', {
+      user: req.user
+    })
+  } else {
+    res.redirect('/auth/admin')
+  }
 })
 
 router.get('/settings', (req, res) => {

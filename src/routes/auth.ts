@@ -6,7 +6,7 @@ router.get(
   '/student/google',
   passport.authenticate('student-google', {
     successRedirect: '/student/home',
-    failureRedirect: '/auth/failure'
+    failureRedirect: '/student/google'
   })
 )
 router.get('/student', (req, res) => {
@@ -15,19 +15,25 @@ router.get('/student', (req, res) => {
 
 router.get(
   '/tutor/google',
-  passport.authenticate('student-google', {
+  passport.authenticate('tutor-google', {
     successRedirect: '/tutor/home',
-    failureRedirect: '/auth/failure'
+    failureRedirect: '/tutor/google'
   })
 )
+router.get('/tutor', (req, res) => {
+  res.redirect('/auth/tutor/google')
+})
 
 router.get(
   '/admin/google',
   passport.authenticate('admin-google', {
     successRedirect: '/admin/panel',
-    failureRedirect: '/auth/failure'
+    failureRedirect: '/admin/google'
   })
 )
+router.get('/admin', (req, res) => {
+  res.redirect('/auth/admin/google')
+})
 
 router.post('/logout', function (req, res, next) {
   req.logout(function (err) {

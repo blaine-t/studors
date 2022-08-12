@@ -27,7 +27,7 @@ create table students(
     first_name text default 'example',
     last_name text default 'student',
     picture text default 'https://studor.lps.org/img/defaultStudent.jpg',
-    email text unique not null,
+    email text not null unique,
     grade int default -1,
     school text default 'LSW',
     dark_theme bool default false,
@@ -39,7 +39,7 @@ create table tutors(
     first_name text default 'example',
     last_name text default 'tutor',
     picture text default 'https://studor.lps.org/img/defaultTutor.jpg',
-    email text unique not null,
+    email text not null unique,
     grade int default -1,
     school text default 'LSW',
     subjects text [] default '{}',
@@ -56,7 +56,7 @@ create table admins(
     first_name text default 'example',
     last_name text default 'admin',
     picture text default 'https://studor.lps.org/img/defaultAdmin.jpg',
-    email text unique not null,
+    email text not null unique,
     school text default 'LSW',
     dark_theme bool default false,
     phone text
@@ -69,3 +69,13 @@ create table sessions(
     student_id text references students(id) not null,
     tutor_id text references tutors(id) not null
 );
+
+create table allowedAdmins(
+    email text primary key
+);
+
+-- drop table sessions;
+-- drop table admins;
+-- drop table tutors;
+-- drop table students;
+-- drop table allowedAdmins

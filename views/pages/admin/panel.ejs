@@ -8,6 +8,9 @@
   <body>
     <header><%- include('../../components/header'); %></header>
     <div>
+      <img src="<%= user.picture %>" referrerpolicy="no-referrer" />
+      <p><%= user.first_name %> <%= user.last_name %></p>
+      <p><%= user.email %></p>
       <p>Edit stuff here to allow for admins to do their admin things</p>
     </div>
     <footer><%- include('../../components/footer'); %></footer>

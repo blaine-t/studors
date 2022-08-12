@@ -36,7 +36,7 @@ app.use(
   })
 )
 
-require('./strategies/student-google')
+require('./strategies/google')
 app.use(passport.initialize())
 app.use(passport.session())
 
