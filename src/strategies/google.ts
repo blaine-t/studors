@@ -34,6 +34,7 @@ passport.use(
       const studentProfile = await db.authUser('students', profile.id)
       if (studentProfile) {
         done(null, studentProfile)
+        return
       }
       // If there is not a student with this ID
       else {
@@ -48,7 +49,6 @@ passport.use(
         const studentProfile = await db.authUser('students', profile.id)
         done(null, studentProfile)
       }
-      done(null, false)
     }
   )
 )
@@ -73,17 +73,23 @@ passport.use(
       const tutorProfile = await db.authUser('tutors', profile.id)
       if (tutorProfile) {
         done(null, tutorProfile)
+        return
       }
       // If there is not a student with this ID
-      else {
-        db.createUser(
-          'tutors',
-          profile.id,
-          profile._json.given_name || 'Example',
-          profile._json.family_name || 'Tutor',
-          profile._json.picture || 'https://via.placeholder.com/96',
-          profile._json.email || 'exampleTutor@class.lps.org'
-        )
+      else if (profile._json.email != undefined) {
+        if ((await db.checkUser('tutors', profile._json.email)) != undefined) {
+          db.createUser(
+            'tutors',
+            profile.id,
+            profile._json.given_name || 'Example',
+            profile._json.family_name || 'Tutor',
+            profile._json.picture || 'https://via.placeholder.com/96',
+            profile._json.email || 'exampleTutor@class.lps.org'
+          )
+          const tutorProfile = await db.authUser('tutors', profile.id)
+          done(null, tutorProfile)
+          return
+        }
         done(null, false)
       }
     }
@@ -110,6 +116,7 @@ passport.use(
       const adminProfile = await db.authUser('admins', profile.id)
       if (adminProfile) {
         done(null, adminProfile)
+        return
       }
       // If there is not a student with this ID
       else if (profile._json.email != undefined) {
@@ -122,9 +129,12 @@ passport.use(
             profile._json.picture || 'https://via.placeholder.com/96',
             profile._json.email
           )
+          const adminProfile = await db.authUser('admins', profile.id)
+          done(null, adminProfile)
+          return
         }
-        done(null, false)
       }
+      done(null, false)
     }
   )
 )

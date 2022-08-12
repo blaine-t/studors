@@ -4,10 +4,12 @@ const router = express.Router()
 function checkAuthentication(req: Request, res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
     res.locals.user = req.user
-    next()
-  } else {
-    res.redirect('/auth/admin')
+    if (res.locals.user.pos === 'admin') {
+      next()
+      return
+    }
   }
+  res.redirect('/auth/admin')
 }
 
 router.use(checkAuthentication)

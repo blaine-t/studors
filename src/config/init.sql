@@ -31,7 +31,8 @@ create table students(
     grade int default -1,
     school text default 'LSW',
     dark_theme bool default false,
-    phone text
+    phone text,
+    pos text default 'student'
 );
 
 create table tutors(
@@ -47,7 +48,8 @@ create table tutors(
     hours_term float4 default 0,
     hours_total float4 default 0,
     dark_theme bool default false,
-    phone text
+    phone text,
+    pos text default 'tutor'
 );
 
 create table admins(
@@ -59,7 +61,8 @@ create table admins(
     email text not null unique,
     school text default 'LSW',
     dark_theme bool default false,
-    phone text
+    phone text,
+    pos text default 'admin'
 );
 
 create table sessions(

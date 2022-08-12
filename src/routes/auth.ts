@@ -38,6 +38,10 @@ router.get(
   })
 )
 
+router.get('/failure', (req, res) => {
+  res.render('pages/auth/failure')
+})
+
 router.post('/logout', function (req, res, next) {
   req.logout(function (err) {
     if (err) {
