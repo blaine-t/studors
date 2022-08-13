@@ -3,6 +3,10 @@
 
 <head>
   <%- include('../../components/head'); %>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" />
     <title>Studors</title>
 </head>
 
@@ -20,7 +24,12 @@
     </button>
   </div>
   <footer>
-    <%- include('../../components/footer'); %>
+    <ul class="footer-content">
+      <li><a href="about">About</a></li>
+      <li><a href="mission">Our Mission</a></li>
+      <li><a href="contact">Contact Us</a></li>
+      <li><a href="auth/admin">Admin</a></li>
+    </ul>
   </footer>
 </body>
 

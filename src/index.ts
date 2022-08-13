@@ -3,6 +3,16 @@ import express from 'express'
 import bodyParser from 'body-parser'
 const app = express()
 
+// Helmet setup for security
+import helmet from 'helmet'
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+    crossOriginEmbedderPolicy: false
+    // ...
+  })
+)
+
 // Allows API requests
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -65,6 +75,29 @@ app.use('/tutor', tutor)
 app.use('/admin', admin)
 app.use('/api', api)
 app.use('/auth', auth)
+
+app.use(function (req, res) {
+  res.status(404)
+
+  // respond with html page
+  if (req.accepts('html')) {
+    let randString = ''
+    for (let i = 0; i < Math.random() * 100; i++) {
+      randString += Math.random().toString(36).slice(2)
+    }
+    res.render('pages/root/404', { url: req.url, string: randString })
+    return
+  }
+
+  // respond with json
+  if (req.accepts('json')) {
+    res.json({ error: 'Not found' })
+    return
+  }
+
+  // default to plain-text. send()
+  res.type('txt').send('Not found')
+})
 
 // Have the server listen for incoming requests
 app.listen(port, () => {

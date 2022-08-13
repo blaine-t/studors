@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../../components/head'); %>
+        <title>Studors Gone?!</title>
+</head>
+
+<style>
+    html {
+        background-color: #ff0000;
+        overflow: hidden;
+    }
+
+    section {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        height: 45vw;
+    }
+
+    h1 {
+        margin: 0;
+        color: #ffffff;
+        font-family: Impact, sans-serif;
+        font-size: 10vw;
+        text-align: center;
+    }
+
+    .button {
+        display: inline-block;
+        padding: 15px 25px;
+        font-size: 24px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #000;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 9px #A00;
+    }
+
+    .button:hover {
+        background-color: #222;
+    }
+
+    .button:active {
+        background-color: #111;
+        box-shadow: 0 9px #800;
+        transform: translateY(4px);
+    }
+</style>
+
+<body>
+    <section>
+        <h1>404</h1>
+        <button class="button" onclick="location.href='/'" type="button">
+            Homepage
+        </button>
+    </section>
+    <div style="visibility: hidden;">
+        <%= string %>
+    </div>
+</body>
