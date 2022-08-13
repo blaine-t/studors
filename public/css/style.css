@@ -1,6 +1,94 @@
-h3 {
-    color:red;
+/* Body setup */
+body {
+    background-color:#efefef;
+    font-family: "Open Sans", Verdana;
 }
-h2 {
-    color: red;
+
+/* Footer setup */
+
+.footer {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    font-size: calc(6px + 1.5vw);
+}
+
+li {
+    float: right;
+    border-right: 1px solid #bbb;
+}
+
+li:first-child {
+    border-right: none;
+}
+
+li a {
+    display: block;
+    color: #434343;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #CCC;
+}
+
+/* Title setup */
+.title {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    margin-bottom: 0;
+}
+
+.subtitle {
+    font-style: italic;
+    font-size: calc(4px + 1.5vw);
+    text-align: center;
+    font-weight: 300;
+    color: #222222;
+}
+
+/* Login buttons setup */
+.button {
+    background-color:#d9d9d9;
+    border: none;
+    color:#434343;
+    font-size: calc(8px + 2.5vw);
+    text-align: center;
+    border-radius: 12px;
+    padding: 12px;
+    margin: 1vw;
+    min-width: 35%;
+    font-family: "Open Sans", Verdana;
+    font-weight: 500;
+}
+
+.button:hover {
+    background-color: #cccccc;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    height: 50vh;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Resizable window support */
+@media screen and (max-width: 800px) {
+    .button {
+        width: 60%;
+    }
+    .button-container {
+        flex-direction: column;
+    }
 }
