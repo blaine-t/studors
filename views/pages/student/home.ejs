@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <%- include('../../components/head'); %>
-    <title>TITLE</title>
-  </head>
 
-  <body>
-    <header><%- include('../../components/header'); %></header>
-    <div>
-      <img src="<%= user.picture %>" referrerpolicy="no-referrer" />
-      <p><%= user.first_name %> <%= user.last_name %></p>
-      <p><%= user.email %></p>
-      <p><%= user.grade %></p>
-    </div>
-    <footer><%- include('../../components/footer'); %></footer>
-    <script></script>
-  </body>
+<head>
+  <%- include('../../components/head'); %>
+    <title>Studors - Student</title>
+</head>
+
+<style>
+  #nav-home {
+    font-weight: 900;
+  }
+</style>
+
+<body>
+  <%- include('../../components/header'); %>
+    <%- include('../../components/navbar'); %>
+      <%- include('../../components/profile'); %>
+        <%- include('../../components/footer'); %>
+</body>
+
 </html>

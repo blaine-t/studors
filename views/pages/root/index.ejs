@@ -3,19 +3,92 @@
 
 <head>
   <%- include('../../components/head'); %>
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" />
     <title>Studors</title>
 </head>
 
+<style>
+  /* Title setup */
+  #title img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    margin-bottom: 0;
+  }
+
+  #title h3 {
+    font-style: italic;
+    font-size: calc(4px + 1.5vw);
+    text-align: center;
+    font-weight: 300;
+    color: #222222;
+    margin-bottom: 0;
+  }
+
+  /* Login buttons setup */
+  #login-buttons {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20vh;
+    justify-content: center;
+  }
+
+  #login-buttons button {
+    background-color: #d9d9d9;
+    border: none;
+    color: #434343;
+    font-size: calc(8px + 2.5vw);
+    text-align: center;
+    border-radius: 12px;
+    padding: 12px;
+    margin: 1vw;
+    min-width: 35%;
+    font-family: "Open Sans", Verdana;
+    font-weight: 500;
+    z-index: 100;
+  }
+
+  #login-buttons button:hover {
+    background-color: #cccccc;
+  }
+
+  /* Resizable window support */
+
+  /* Mobile devices */
+  @media (max-aspect-ratio: 11/16) {
+    #title img {
+      width: 70%;
+    }
+
+    #login-buttons button {
+      width: 60%;
+    }
+
+    #login-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  /* Ultrawide devices */
+  @media (min-aspect-ratio: 43/18) {
+    footer#title-footer ul {
+      flex-direction: column;
+    }
+
+    footer#title-footer ul li {
+      border-right: 0px;
+    }
+  }
+</style>
+
 <body>
-  <script>0</script>
-  <img class="title" src="img/studors.webp" />
-  <h3 class="subtitle">Where students can learn from each other</h3>
-  <br />
-  <div class="button-container">
+  <div id="title">
+    <img src="img/studors.webp" />
+    <h3>Where students can learn from each other</h3>
+    <br />
+  </div>
+  <div id="login-buttons">
     <button class="button" onclick="location.href='auth/tutor'" type="button">
       Login as a tutor
     </button>
@@ -23,11 +96,11 @@
       Login as a student
     </button>
   </div>
-  <footer>
-    <ul class="footer-content">
-      <li><a href="about">About</a></li>
-      <li><a href="mission">Our Mission</a></li>
-      <li><a href="contact">Contact Us</a></li>
+  <footer id="title-footer">
+    <ul>
+      <li><a href="/about">About</a></li>
+      <li><a href="/mission">Our Mission</a></li>
+      <li><a href="/contact">Contact Us</a></li>
       <li><a href="auth/admin">Admin</a></li>
     </ul>
   </footer>

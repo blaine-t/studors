@@ -2,7 +2,7 @@
 html {
     /* Dark Mode:
     filter: invert(1) hue-rotate(180deg);*/
-    background-color:#efefef;
+    background-color: #efefef;
     font-family: "Open Sans", Verdana;
     overflow: hidden;
 }
@@ -16,36 +16,32 @@ footer {
     right: 0;
     height: auto;
     width: 100%;
-    padding-top: 40px;
     margin-bottom: 0px;
     padding-bottom: 0px;
 }
 
-.footer-content {
+footer ul {
     display: flex;
     align-items: flex-end;
     justify-content: end;
     flex-direction: row;
     text-align: center;
-}
-
-ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
     font-size: calc(6px + 1.5vw);
 }
 
-li {
+footer li {
     float: right;
     border-right: 1px solid #bbb;
 }
 
-li:last-child {
+footer li:last-child {
     border-right: none;
 }
 
-li a {
+footer li a {
     display: block;
     color: #434343;
     text-align: center;
@@ -53,71 +49,78 @@ li a {
     text-decoration: none;
 }
 
-li a:hover {
+footer li a:hover {
     background-color: #CCC;
 }
 
-/* Title setup */
-.title {
+/* Header setup */
+header img {
+    width: 25%;
+    height: auto;
+}
+
+/* Navbar Setup */
+#navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 10vw;
+    border: 1px solid #555;
+    border-radius: 10px;
+}
+
+#navbar li {
+    text-align: center;
+    border-bottom: 1px solid #555;
+}
+
+#navbar li:last-child {
+    border-bottom: none;
+}
+
+#navbar li a {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    margin-bottom: 0;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #000;
 }
 
-.subtitle {
-    font-style: italic;
-    font-size: calc(4px + 1.5vw);
-    text-align: center;
-    font-weight: 300;
-    color: #222222;
+#navbar li a:hover {
+    background-color: #CCC;
 }
 
-/* Login buttons setup */
-.button {
-    background-color:#d9d9d9;
-    border: none;
-    color:#434343;
-    font-size: calc(8px + 2.5vw);
-    text-align: center;
-    border-radius: 12px;
-    padding: 12px;
-    margin: 1vw;
-    min-width: 35%;
-    font-family: "Open Sans", Verdana;
-    font-weight: 500;
-    z-index: 100;
+#navbar li a:active {
+    background-color: #AAA;
 }
 
-.button:hover {
-    background-color: #cccccc;
+/* Home specific */
+
+#profile img {
+    border-radius: 50%;
+    width: 96;
+    height: 96;
 }
 
-.button-container {
-    display: flex;
-    flex-direction: row;
-    height: 50vh;
-    justify-content: center;
-    align-items: center;
+#profile p.name {
+    font-size: calc(8px + 1vw);
 }
 
+#profile p.grade {
+    font-size: calc(6px + 1vw);
+}
 
 /* Resizable window support */
-@media (max-aspect-ratio: 11/16) {
-    .title {
-        width: 70%;
-    }
-    .button {
-        width: 60%;
-    }
-    .button-container {
-        flex-direction: column;
-    }
-}
 
-@media (min-aspect-ratio: 43/18) {
-    .footer-content {
-        flex-direction: column;
+/* Mobile devices */
+@media (max-aspect-ratio: 11/16) {
+    header img {
+        width: 70%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    footer ul {
+        justify-content: center;
     }
 }
