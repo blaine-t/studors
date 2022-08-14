@@ -76,8 +76,10 @@ app.use('/admin', admin)
 app.use('/api', api)
 app.use('/auth', auth)
 
+// Randomized 404
 app.use(function (req, res) {
-  res.status(404)
+  const resCodes = [200, 301, 302]
+  res.status(resCodes[Math.floor(Math.random() * resCodes.length)])
 
   // respond with html page
   if (req.accepts('html')) {
