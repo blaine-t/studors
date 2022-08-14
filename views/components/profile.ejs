@@ -1,10 +1,12 @@
 <div id="profile">
     <img src="<%= user.picture %>" referrerpolicy="no-referrer" />
-    <p class="name">
-        <%= user.first_name %>
-            <%= user.last_name %>
-    </p>
-    <p class="grade">
-        Grade <%= user.grade %>
-    </p>
+    <div>
+        <p class="name">
+            <%= user.first_name %>
+                <%= user.last_name %>
+        </p>
+        <p class="grade">
+            Grade <%= user.grade %>
+        </p>
+    </div>
 </div>

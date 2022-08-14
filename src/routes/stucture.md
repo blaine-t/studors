@@ -36,7 +36,7 @@ home - Home page for students :Access to options below
 
 find - Find a new tutoring session
 
-|******\_\_****** request - Request a session that is not in the books // May or may not implement
+|**\*\***\_\_**\*\*** request - Request a session that is not in the books // May or may not implement
 
 settings - Change options about your account
 
@@ -50,7 +50,7 @@ history - List history of sessions
 
 home - Home page for students :Access to options below
 
-request - Fulfill a request a student has made that is outside of standard ours // May or many not implement
+find - Fulfill a request a student has made that is outside of standard ours // May or many not implement
 
 settings - Change options about your account
 
