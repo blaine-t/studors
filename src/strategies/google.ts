@@ -31,6 +31,7 @@ passport.use(
       done: VerifyCallback
     ) => {
       // If there is already a student with this ID
+      console.log(profile._json.picture)
       const studentProfile = await db.authUser('students', profile.id)
       if (studentProfile) {
         done(null, studentProfile)
@@ -38,12 +39,13 @@ passport.use(
       }
       // If there is not a student with this ID
       else {
+        const profilePic = profile._json.picture?.replace('=s96-c', '=s256-c')
         db.createUser(
           'students',
           profile.id,
           profile._json.given_name || 'Example',
           profile._json.family_name || 'Student',
-          profile._json.picture || 'https://via.placeholder.com/96',
+          profilePic || 'https://via.placeholder.com/256',
           profile._json.email || 'example@class.lps.org'
         )
         const studentProfile = await db.authUser('students', profile.id)

@@ -87,6 +87,7 @@ header img {
 }
 
 #navbar li a {
+    font-size: calc(6px + 1vw);
     display: block;
     padding: 8px 16px;
     text-decoration: none;
@@ -102,22 +103,6 @@ header img {
 }
 
 /* Home specific */
-
-#profile img {
-    border-radius: 50%;
-    width: 8vw;
-    height: 8vw;
-    max-width: 96px;
-    max-height: 96px;
-}
-
-#profile p.name {
-    font-size: calc(8px + 1vw);
-}
-
-#profile p.grade {
-    font-size: calc(6px + 1vw);
-}
 
 #home-internal {
     display: flex;
@@ -153,6 +138,14 @@ header img {
     font-size: calc(4px + 1vw);
     font-weight: 300;
     margin: 0;
+}
+
+#profile img {
+    border-radius: 50%;
+    width: 6vw;
+    height: 6vw;
+    max-width: 256px;
+    max-height: 256px;
 }
 
 #home-buttons {
@@ -226,7 +219,7 @@ header img {
     }
 
     /* Home specific */
-    /* Remove padding */
+    /* Remove padding and side navbar and add top bar */
     #right-hidden-navbar {
         display: none;
     }
@@ -237,5 +230,31 @@ header img {
 
     #topbar ul {
         display: flex;
+    }
+
+    /* Properly size profile and buttons */
+    #home-buttons button {
+        width: 200%;
+        font-size: calc(6px + 2vw);
+    }
+
+    #profile {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    #profile img {
+        width: 20vw;
+        height: 20vw;
+    }
+
+    #profile div p.name {
+        font-size: calc(6px + 2vw);
+        text-align: center;
+    }
+
+    #profile div p.grade {
+        font-size: calc(4px + 1.5vw);
+        text-align: center;
     }
 }
