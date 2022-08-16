@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../../components/head'); %>
+        <title>Studors - Tutor</title>
+</head>
+
+<style>
+    /* Navbar current bold */
+    #nav-home {
+        font-weight: 900;
+    }
+</style>
+
+<body>
+    <div id="flex-box">
+        <div id="home-top">
+            <%- include('../../components/header'); %>
+                <%- include('../../components/topbar'); %>
+        </div>
+        <div id="home-internal">
+            <%- include('../../components/navbar'); %>
+                <div id="home-center-box">
+                    <%- include('../../components/profile'); %>
+                        <%- include('../../components/buttons', {label: 'Fill a request' }); %>
+                </div>
+                <div id="right-hidden-navbar">
+                    <hr />
+                </div>
+        </div>
+        <%- include('../../components/footer'); %>
+    </div>
+</body>
+
+</html>

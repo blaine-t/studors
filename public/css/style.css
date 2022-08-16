@@ -12,6 +12,10 @@ body {
     height: 100%
 }
 
+button {
+    cursor: pointer;
+}
+
 #flex-box {
     display: flex;
     flex-direction: column;
@@ -65,7 +69,7 @@ header img {
 
 /* Navbar Setup */
 #navbar {
-    margin-left: 5vw;
+    margin-left: 2.5vw;
 }
 
 #navbar ul {
@@ -172,7 +176,7 @@ header img {
 }
 
 #right-hidden-navbar {
-    margin-left: 25vw;
+    margin-left: 22.5vw;
 }
 
 #topbar ul {
