@@ -82,23 +82,12 @@ app.use(function (req, res) {
   res.status(resCodes[Math.floor(Math.random() * resCodes.length)])
 
   // respond with html page
-  if (req.accepts('html')) {
-    let randString = ''
-    for (let i = 0; i < Math.random() * 100; i++) {
-      randString += Math.random().toString(36).slice(2)
-    }
-    res.render('pages/root/404', { url: req.url, string: randString })
-    return
+  let randString = ''
+  for (let i = 0; i < Math.random() * 100; i++) {
+    randString += Math.random().toString(36).slice(2)
   }
-
-  // respond with json
-  if (req.accepts('json')) {
-    res.json({ error: 'Not found' })
-    return
-  }
-
-  // default to plain-text. send()
-  res.type('txt').send('Not found')
+  res.render('pages/root/404', { url: req.url, string: randString })
+  return
 })
 
 // Have the server listen for incoming requests

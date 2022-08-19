@@ -238,7 +238,7 @@ header img {
 
     /* Properly size profile and buttons */
     #home-buttons button {
-        width: 200%;
+        width: 100%;
         font-size: calc(6px + 2vw);
     }
 
