@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../../components/head'); %>
+        <title>Studors - Admin</title>
+</head>
+
+<body>
+    <div id="flex-box">
+        <%- include('../../components/header'); %>
+            <div id="settings-box">
+                <p id="apiKey">API KEY: <%= user.api_key %>
+                </p>
+                <form action="" method="post">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                        value="<%=user.phone %>">
+                    <br>
+                    <button type="submit">Save</button>
+                </form>
+            </div>
+            <%- include('../../components/footer'); %>
+    </div>
+</body>
+
+</html>
