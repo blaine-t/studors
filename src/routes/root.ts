@@ -18,11 +18,11 @@ router.get('/contact', (req, res) => {
 })
 
 router.get('/privacy', (req, res) => {
-  res.render('pages/root/contact')
+  res.render('pages/root/privacy')
 })
 
 router.get('/tos', (req, res) => {
-  res.render('pages/root/contact')
+  res.render('pages/root/tos')
 })
 
 export { router }

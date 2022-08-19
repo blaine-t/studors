@@ -15,6 +15,7 @@ tos - The terms of service (if there is any blame google for this entry)
 ## Admin
 
 /admin/\*
+PROTECTED
 
 panel - List of options of things that can be done (purge database and stuff)
 
@@ -31,6 +32,7 @@ getHours - List out hours in a JSON format using a POST request with an api toke
 ## Student
 
 /student/\*
+PROTECTED
 
 home - Home page for students :Access to options below
 
@@ -47,6 +49,7 @@ history - List history of sessions
 ## Tutor
 
 /tutor/\*
+PROTECTED
 
 home - Home page for students :Access to options below
 

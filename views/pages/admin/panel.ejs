@@ -1,19 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <%- include('../../components/head'); %>
-    <title>TITLE</title>
-  </head>
 
-  <body>
-    <header><%- include('../../components/header'); %></header>
-    <div>
-      <img src="<%= user.picture %>" referrerpolicy="no-referrer" />
-      <p><%= user.first_name %> <%= user.last_name %></p>
-      <p><%= user.email %></p>
-      <p>Edit stuff here to allow for admins to do their admin things</p>
-    </div>
-    <footer><%- include('../../components/footer'); %></footer>
-    <script></script>
-  </body>
+<head>
+  <%- include('../../components/head'); %>
+    <title>Studors - Admin</title>
+</head>
+
+<body>
+  <div id="flex-box">
+    <%- include('../../components/header'); %>
+      <div id="home-center-box">
+        <div id="profile">
+          <img src="<%= user.picture %>" referrerpolicy="no-referrer" />
+          <div>
+            <p class="name">
+              <%= user.first_name %>
+                <%= user.last_name %>
+            </p>
+          </div>
+        </div>
+        <div id="home-buttons">
+          <button onclick="location.href='manage'" type="button">
+            Manage users
+          </button>
+          <button onclick="location.href='settings'" type="button">
+            Edit your account
+          </button>
+          <button onclick="location.href='/auth/logout'" type="button">
+            Logout
+          </button>
+        </div>
+      </div>
+      <%- include('../../components/footer'); %>
+  </div>
+</body>
+
 </html>
