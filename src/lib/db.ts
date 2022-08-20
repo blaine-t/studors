@@ -135,6 +135,35 @@ async function getHours() {
   }
 }
 
+async function truncateTable(table: string) {
+  pool.query(`TRUNCATE TABLE ${table}`, (err) => {
+    if (err) {
+      console.log(err)
+    }
+  })
+}
+
+async function incrementGrade() {
+  pool.query('UPDATE students SET grade = grade + 1', (err) => {
+    if (err) {
+      console.log(err)
+    }
+  })
+  pool.query('UPDATE tutors SET grade = grade + 1', (err) => {
+    if (err) {
+      console.log(err)
+    }
+  })
+}
+
+async function removeOldUsers(role: string) {
+  pool.query(`DELETE FROM ${role} WHERE grade > 12`, (err) => {
+    if (err) {
+      console.log(err)
+    }
+  })
+}
+
 export default {
   createUser,
   updateStudent,
@@ -145,5 +174,8 @@ export default {
   checkUser,
   allowUser,
   confirmApiKey,
-  getHours
+  getHours,
+  truncateTable,
+  incrementGrade,
+  removeOldUsers
 }

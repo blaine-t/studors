@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../../components/head'); %>
+        <title>Studors - Admin</title>
+</head>
+
+<style>
+    #manage-form {
+        font-size: calc(6px + 1vw);
+        margin-left: 1vw;
+    }
+
+    #manage-form input[type=text] {
+        font-size: calc(6px + 0.5vw);
+        padding: 0.3vw 0vw 0.3vw 0.3vw;
+        width: 95vw;
+    }
+
+    #manage-form button {
+        color: #434343;
+        font-size: calc(6px + 1vw);
+        text-align: center;
+        border-radius: 12px;
+        padding: 0.5vw;
+        font-family: "Open Sans", Verdana;
+        font-weight: 500;
+    }
+</style>
+
+<body>
+    <div id="flex-box">
+        <%- include('../../components/header'); %>
+            <div id="manage-form">
+                <form action="" method="post">
+                    <label for="allowedStudentDomain">Allow student domain(s):</label>
+                    <input type="text" id="allowedStudentDomain" name="allowedStudentDomain"
+                        pattern="^@[\w\-.]+\.[A-Za-z]+@[\w\-.]+\.[A-Za-z]+)[\W]*$"
+                        placeholder="@example.org,@example.com"
+                        oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')"
+                        oninput="setCustomValidity('')">
+                    <br>
+                    <label for="allowedTutors">Allow tutor(s):</label>
+                    <input type="text" id="allowedTutors" name="allowedTutors"
+                        pattern="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]+[\W]*,{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]+)[\W]*$"
+                        placeholder="test@example.com,test2@example.com"
+                        oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')"
+                        oninput="setCustomValidity('')">
+                    <br>
+                    <label for="allowedAdmins">Allow admin(s):</label>
+                    <input type="text" id="allowedAdmins" name="allowedAdmins"
+                        pattern="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]+[\W]*,{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]+)[\W]*$"
+                        placeholder="test@example.com,test2@example.com"
+                        oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')"
+                        oninput="setCustomValidity('')">
+                    <br>
+                    <label for="revokedStudentDomain">Remove student domain(s):</label>
+                    <input type="text" id="revokedStudentDomain" name="revokedStudentDomain"
+                        pattern="^@[\w\-.]+\.[A-Za-z]+@[\w\-.]+\.[A-Za-z]+)[\W]*$"
+                        placeholder="@example.org,@example.com"
+                        oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')"
+                        oninput="setCustomValidity('')">
+                    <br>
+                    <label for="revokedTutors">Remove tutor(s):</label>
+                    <input type="text" id="revokedTutors" name="revokedTutors"
+                        pattern="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]+[\W]*,{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]+)[\W]*$"
+                        placeholder="test@example.com,test2@example.com"
+                        oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')"
+                        oninput="setCustomValidity('')">
+                    <br>
+                    <label for="revokedAdmins">Remove admin(s):</label>
+                    <input type="text" id="revokedAdmins" name="revokedAdmins"
+                        pattern="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]+[\W]*,{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]+)[\W]*$"
+                        placeholder="test@example.com,test2@example.com"
+                        oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')"
+                        oninput="setCustomValidity('')">
+                    <br>
+                    <label for="inc_grade">Increment Grade:</label>
+                    <input type="checkbox" id="inc_grade" name="inc_grade">
+                    <br>
+                    <label for="rem_student_grade">Remove students >12:</label>
+                    <input type="checkbox" id="rem_student_grade" name="rem_student_grade">
+                    <br>
+                    <label for="rem_tutor_grade">Remove tutors >12:</label>
+                    <input type="checkbox" id="rem_tutor_grade" name="rem_tutor_grade">
+                    <br>
+                    <label for="rem_students">Remove all students:</label>
+                    <input type="checkbox" id="rem_students" name="rem_students">
+                    <br>
+                    <label for="rem_tutors">Remove all tutors:</label>
+                    <input type="checkbox" id="rem_tutors" name="rem_tutors">
+                    <br>
+                    <label for="rem_admins">Remove all admins:</label>
+                    <input type="checkbox" id="rem_admins" name="rem_admins">
+                    <p id="small-error">
+                        <%=error %>
+                    </p>
+                    <button type="submit">Apply</button>
+                </form>
+            </div>
+            <%- include('../../components/footer'); %>
+    </div>
+
+    <script>
+
+    </script>
+</body>
+
+</html>

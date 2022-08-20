@@ -42,7 +42,39 @@ router.post('/settings', (req, res) => {
 })
 
 router.get('/manage', (req, res) => {
-  res.render('pages/admin/manage')
+  res.render('pages/admin/manage', { error: '' })
+})
+
+router.post('/manage', async (req, res) => {
+  if (
+    req.body.allowedStudentDomain.match(
+      '^@[w-.]+.[A-Za-z]+@[w-.]+.[A-Za-z]+)[W]*$'
+    )
+  ) {
+    db.allowUser('students', req.body.allowedStudentDomain) // FIX
+  } else if (!req.body.allowedStudentDomain.match('')) {
+    res.render('pages/admin/settings', {
+      error: 'Failed to save allowed student domains'
+    })
+  }
+  if (req.body.inc_grade != undefined) {
+    await db.incrementGrade()
+  }
+  if (req.body.rem_students != undefined) {
+    db.truncateTable('students')
+  } else if (req.body.rem_student_grade != undefined) {
+    db.removeOldUsers('students')
+  }
+  if (req.body.rem_tutors != undefined) {
+    db.truncateTable('tutors')
+  } else if (req.body.rem_tutor_grade != undefined) {
+    db.removeOldUsers('tutors')
+  }
+  if (req.body.rem_admins) {
+    db.truncateTable('admins')
+  }
+  res.redirect('panel')
+  return
 })
 
 export { router }
