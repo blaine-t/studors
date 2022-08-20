@@ -106,6 +106,14 @@ header img {
     background-color: #AAA;
 }
 
+/* Padding box setup */
+#holder {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+}
+
 /* Home specific */
 
 #home-internal {
@@ -208,6 +216,40 @@ header img {
 
 #topbar li a:hover {
     background-color: #CCC;
+}
+
+/* Settings specific */
+#settings-box {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: fit-content;
+    padding: 2.5%;
+    border: 2px solid #434343;
+    border-radius: 5%;
+
+    font-size: calc(6px + 1vw);
+}
+
+#settings-box form {
+    text-align: center;
+}
+
+#settings-box input {
+    width: calc(60px + 7vw);
+    font-size: calc(6px + 1vw);
+    padding: 0.5vw 0vw 0.5vw 0.5vw;
+}
+
+#settings-box button {
+    color: #434343;
+    font-size: calc(6px + 1vw);
+    text-align: center;
+    border-radius: 12px;
+    padding: 0.5vw;
+    margin: 1vw;
+    font-family: "Open Sans", Verdana;
+    font-weight: 500;
 }
 
 /* Resizable window support */

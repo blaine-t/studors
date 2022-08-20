@@ -19,9 +19,7 @@ Add CSS to make pages pretty
 
 ### WEB PAGES NOT DONE:
 
-/admin/register
-
-/admin/settings
+/admin/settings // Done besides styling
 
 /admin/manage
 
@@ -31,28 +29,24 @@ Add CSS to make pages pretty
 
 /mission // Done but waiting for info
 
-/privacy
+/privacy?
 
-/tos
+/tos?
 
 /student/find
 
 /student/history
 
-/student/register
-
 /student/request?
 
-/student/settings
+/student/settings // Done besides styling
 
 /student/upcoming
 
 /tutor/history
 
-/tutor/register
-
 /tutor/request
 
-/tutor/settings
+/tutor/settings // Done besides styling
 
 /tutor/upcoming
