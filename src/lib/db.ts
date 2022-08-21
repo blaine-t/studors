@@ -127,6 +127,41 @@ async function listUsers(role: string) {
   }
 }
 
+async function listSessions(upcoming: boolean) {
+  let operator = ''
+  if (upcoming) {
+    operator = '>'
+  } else {
+    operator = '<'
+  }
+  try {
+    const res = await pool.query(
+      `SELECT sessions.timeof, tutors.first_name as tutor_name, tutors.last_name as tutor_surname, 
+      students.first_name as student_name, students.last_name as student_surname, sessions.subject, sessions.hours
+      FROM sessions
+      INNER JOIN tutors on sessions.tutor_id = tutors.id
+      INNER JOIN students on sessions.student_id = students.id
+      WHERE timeof ${operator} now()
+      ORDER BY timeof`
+    )
+    return res.rows
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+async function createSession(sid: string, tid: string, time: Date) {
+  pool.query(
+    'INSERT INTO sessions (student_id,tutor_id,timeof) VALUES ($1,$2,$3)',
+    [sid, tid, time],
+    (err) => {
+      if (err) {
+        console.log(err)
+      }
+    }
+  )
+}
+
 async function confirmApiKey(apiKey: string) {
   if (apiKey != null) {
     try {
@@ -192,6 +227,8 @@ export default {
   allowUser,
   revokeUser,
   listUsers,
+  listSessions,
+  createSession,
   confirmApiKey,
   getHours,
   truncateTable,

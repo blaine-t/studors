@@ -28,13 +28,17 @@ router.get('/list', async (req, res) => {
   const studentDomains = await db.listUsers('allowedstudents')
   const tutorEmails = await db.listUsers('allowedtutors')
   const adminEmails = await db.listUsers('allowedadmins')
+  const pastSessions = await db.listSessions(false)
+  const upcomingSessions = await db.listSessions(true)
   res.render('pages/admin/list', {
     students: students,
     tutors: tutors,
     admins: admins,
     studentAllowed: studentDomains,
     tutorAllowed: tutorEmails,
-    adminAllowed: adminEmails
+    adminAllowed: adminEmails,
+    pastSessions: pastSessions,
+    upcomingSessions: upcomingSessions
   })
 })
 

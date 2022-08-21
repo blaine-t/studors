@@ -70,7 +70,9 @@ create table sessions(
     subject text default 'other',
     timeof timestamp not null,
     student_id text references students(id) not null,
-    tutor_id text references tutors(id) not null
+    tutor_id text references tutors(id) not null,
+    school text default 'LSW',
+    hours float
 );
 
 -- Create whitelist for admins and tutors so that only certain emails can sign up
