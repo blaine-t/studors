@@ -7,6 +7,10 @@ function checkAuthentication(req: Request, res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
     res.locals.user = req.user
     if (res.locals.user.pos === 'student') {
+      if (res.locals.user.grade < 9 && req.path != '/settings') {
+        res.redirect('settings')
+        return
+      }
       next()
       return
     }

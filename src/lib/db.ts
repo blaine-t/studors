@@ -153,7 +153,7 @@ async function getHours() {
 }
 
 async function truncateTable(table: string) {
-  pool.query(`TRUNCATE TABLE ${table}`, (err) => {
+  pool.query(`TRUNCATE TABLE ${table} CASCADE`, (err) => {
     if (err) {
       console.log(err)
     }
