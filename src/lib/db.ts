@@ -107,11 +107,24 @@ async function allowUser(role: string, email: string) {
 }
 
 async function revokeUser(role: string, email: string) {
-  pool.query(`DELETE FROM allowed${role} (email) VALUES ${email}`, (err) => {
+  pool.query(`DELETE FROM allowed${role} WHERE email = ${email}`, (err) => {
     if (err) {
       console.log(err)
     }
   })
+}
+
+async function listUsers(role: string) {
+  try {
+    const res = await pool.query(`SELECT email FROM ${role} ORDER BY email`)
+    let returnStatement = ''
+    for (let i = 0; i < res.rows.length; i++) {
+      returnStatement += res.rows[i]['email'] + '\n'
+    }
+    return returnStatement
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 async function confirmApiKey(apiKey: string) {
@@ -178,6 +191,7 @@ export default {
   checkUser,
   allowUser,
   revokeUser,
+  listUsers,
   confirmApiKey,
   getHours,
   truncateTable,

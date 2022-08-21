@@ -21,7 +21,9 @@ Add CSS to make pages pretty
 
 /admin/settings // Done besides styling
 
-/admin/manage
+/admin/manage // Done besides styling. Could use some QoL improvements in regards to revoking and removing
+
+/admin/list // Done besides MAJOR styling
 
 /about // Done but waiting for info
 

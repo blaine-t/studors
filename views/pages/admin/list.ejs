@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../../components/head'); %>
+        <title>Studors - Admin</title>
+</head>
+
+<style>
+    #user-list {
+        white-space: pre-line;
+    }
+</style>
+
+<body>
+    <div id="flex-box">
+        <%- include('../../components/header'); %>
+            <div id="user-list">
+                <h2> Students: </h2>
+                <%= students %>
+                    <h2> Tutors: </h2>
+                    <%= tutors %>
+                        <h2> Admins: </h2>
+                        <%= admins %>
+                            <h2> Allowed Student domains: </h2>
+                            <%= studentAllowed %>
+                                <h2> Allowed Tutors: </h2>
+                                <%= tutorAllowed %>
+                                    <h2> Allowed Admins: </h2>
+                                    <%= adminAllowed %>
+            </div>
+            <%- include('../../components/footer'); %>
+    </div>
+</body>
+
+</html>

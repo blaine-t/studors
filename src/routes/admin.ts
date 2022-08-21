@@ -20,6 +20,24 @@ router.get('/panel', (req, res) => {
   res.render('pages/admin/panel')
 })
 
+router.get('/list', async (req, res) => {
+  // Sequential because parrallel connections harm runtime in tests. Confirm later
+  const students = await db.listUsers('students')
+  const tutors = await db.listUsers('tutors')
+  const admins = await db.listUsers('admins')
+  const studentDomains = await db.listUsers('allowedstudents')
+  const tutorEmails = await db.listUsers('allowedtutors')
+  const adminEmails = await db.listUsers('allowedadmins')
+  res.render('pages/admin/list', {
+    students: students,
+    tutors: tutors,
+    admins: admins,
+    studentAllowed: studentDomains,
+    tutorAllowed: tutorEmails,
+    adminAllowed: adminEmails
+  })
+})
+
 router.get('/settings', (req, res) => {
   res.render('pages/admin/settings', { error: '' })
 })
