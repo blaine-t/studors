@@ -79,6 +79,10 @@ create table allowedadmins( email text primary key );
 
 create table allowedtutors( email text primary key );
 
+create table allowedstudents( email text primary key );
+
+drop table allowedstudents;
+
 drop table allowedtutors;
 
 drop table allowedadmins;

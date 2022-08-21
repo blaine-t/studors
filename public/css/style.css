@@ -252,6 +252,11 @@ header img {
     font-weight: 500;
 }
 
+#small-error {
+    color: red;
+    white-space: pre-line;
+}
+
 /* Resizable window support */
 
 /* Mobile devices */

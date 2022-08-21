@@ -46,17 +46,54 @@ router.get('/manage', (req, res) => {
 })
 
 router.post('/manage', async (req, res) => {
-  if (
-    req.body.allowedStudentDomain.match(
-      '^@[w-.]+.[A-Za-z]+@[w-.]+.[A-Za-z]+)[W]*$'
-    )
-  ) {
-    db.allowUser('students', req.body.allowedStudentDomain) // FIX
-  } else if (!req.body.allowedStudentDomain.match('')) {
-    res.render('pages/admin/settings', {
-      error: 'Failed to save allowed student domains'
-    })
-  }
+  const domainRegex =
+    '[\\W]*(@[\\w\\-.]+\\.[A-Za-z]+[\\W]*,{1}[\\W]*)*(@[\\w\\-.]+\\.[A-Za-z]+)[\\W]*$'
+  const emailRegex =
+    '^[\\W]*([\\w+\\-.%]+@[\\w\\-.]+\\.[A-Za-z]{2,4}[\\W]*,{1}[\\W]*)*([\\w+\\-.%]+@[\\w\\-.]+\\.[A-Za-z]{2,4})[\\W]*$'
+  let error = ''
+  error += checkUserInput(
+    req.body.allowedStudentDomain,
+    domainRegex,
+    true,
+    'students',
+    'Failed to save allowed student domains\n'
+  )
+  error += checkUserInput(
+    req.body.allowedTutors,
+    emailRegex,
+    true,
+    'tutors',
+    'Failed to save allowed tutors\n'
+  )
+  error += checkUserInput(
+    req.body.allowedAdmins,
+    emailRegex,
+    true,
+    'admins',
+    'Failed to save allowed admins\n'
+  )
+  error += checkUserInput(
+    req.body.revokedStudentDomain,
+    domainRegex,
+    false,
+    'students',
+    'Failed to save removed student domains\n'
+  )
+  error += checkUserInput(
+    req.body.revokedTutors,
+    emailRegex,
+    false,
+    'tutors',
+    'Failed to save removed tutors\n'
+  )
+  error += checkUserInput(
+    req.body.revokedAdmins,
+    emailRegex,
+    false,
+    'admins',
+    'Failed to save removed admins\n'
+  )
+
   if (req.body.inc_grade != undefined) {
     await db.incrementGrade()
   }
@@ -73,8 +110,40 @@ router.post('/manage', async (req, res) => {
   if (req.body.rem_admins) {
     db.truncateTable('admins')
   }
+
+  if (error != '') {
+    res.render('pages/admin/manage', { error: error })
+    return
+  }
   res.redirect('panel')
-  return
 })
 
 export { router }
+
+function checkUserInput(
+  request: string,
+  regex: string,
+  allow: boolean,
+  database: string,
+  error: string
+) {
+  if (request.match(regex)) {
+    const array = request.split(',').map((element: string) => element.trim())
+
+    let string = ''
+    for (let i = 0; i < array.length; i++) {
+      string += "('" + array[i] + "'),"
+    }
+    string = string.replace(/,$/, '')
+    if (allow) {
+      db.allowUser(database, string)
+      return ''
+    }
+    db.revokeUser(database, string)
+    return ''
+  }
+  if (!request.match('^$')) {
+    return error
+  }
+  return ''
+}

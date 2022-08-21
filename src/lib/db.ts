@@ -99,15 +99,19 @@ async function checkUser(role: string, email: string) {
 }
 
 async function allowUser(role: string, email: string) {
-  pool.query(
-    `INSERT INTO allowed${role} (email) VALUES ($1)`,
-    [email],
-    (err) => {
-      if (err) {
-        console.log(err)
-      }
+  pool.query(`INSERT INTO allowed${role} (email) VALUES ${email}`, (err) => {
+    if (err) {
+      console.log(err)
     }
-  )
+  })
+}
+
+async function revokeUser(role: string, email: string) {
+  pool.query(`DELETE FROM allowed${role} (email) VALUES ${email}`, (err) => {
+    if (err) {
+      console.log(err)
+    }
+  })
 }
 
 async function confirmApiKey(apiKey: string) {
@@ -173,6 +177,7 @@ export default {
   authUser,
   checkUser,
   allowUser,
+  revokeUser,
   confirmApiKey,
   getHours,
   truncateTable,

@@ -23,6 +23,8 @@ settings - Allow change of phone number and listing of API token
 
 manage - Add users to the allowed admin and allowed tutor list
 
+list - List all users and information on them
+
 ## API
 
 /api/\*

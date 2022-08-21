@@ -36,9 +36,9 @@
                 <form action="" method="post">
                     <label for="allowedStudentDomain">Allow student domain(s):</label>
                     <input type="text" id="allowedStudentDomain" name="allowedStudentDomain"
-                        pattern="^@[\w\-.]+\.[A-Za-z]+@[\w\-.]+\.[A-Za-z]+)[\W]*$"
+                        pattern="^[\W]*(@[\w\-.]+\.[A-Za-z]+[\W]*,{1}[\W]*)*(@[\w\-.]+\.[A-Za-z]+)[\W]*$"
                         placeholder="@example.org,@example.com"
-                        oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')"
+                        oninvalid="setCustomValidity('Please enter an email or list of emails with this format: @example.com,@example.org')"
                         oninput="setCustomValidity('')">
                     <br>
                     <label for="allowedTutors">Allow tutor(s):</label>
@@ -59,7 +59,7 @@
                     <input type="text" id="revokedStudentDomain" name="revokedStudentDomain"
                         pattern="^@[\w\-.]+\.[A-Za-z]+@[\w\-.]+\.[A-Za-z]+)[\W]*$"
                         placeholder="@example.org,@example.com"
-                        oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')"
+                        oninvalid="setCustomValidity('Please enter an email or list of emails with this format: @example.com,@example.org')"
                         oninput="setCustomValidity('')">
                     <br>
                     <label for="revokedTutors">Remove tutor(s):</label>
