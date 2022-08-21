@@ -20,8 +20,8 @@ router.get('/home', (req, res) => {
   res.render('pages/tutor/home')
 })
 
-router.get('/request', (req, res) => {
-  res.render('pages/tutor/request')
+router.get('/find', (req, res) => {
+  res.render('pages/tutor/find')
 })
 
 router.get('/settings', (req, res) => {

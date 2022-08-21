@@ -18,36 +18,27 @@
 
   #title h3 {
     font-style: italic;
-    font-size: calc(4px + 1.5vw);
+    font-size: calc(6px + 1.5vw);
     text-align: center;
     font-weight: 300;
-    color: #222222;
+    color: #333;
     margin-bottom: 0;
   }
 
   /* Login buttons setup */
   #login-buttons {
     display: flex;
-    flex-direction: row;
     justify-content: center;
   }
 
   #login-buttons button {
     background-color: #d9d9d9;
-    border: none;
-    color: #434343;
-    font-size: calc(8px + 2.5vw);
-    text-align: center;
-    border-radius: 12px;
-    padding: 12px;
-    margin: 1vw;
-    min-width: 35%;
-    font-family: "Open Sans", Verdana;
-    font-weight: 500;
+    font-size: calc(8px + 2vw);
+    min-width: 25%;
   }
 
   #login-buttons button:hover {
-    background-color: #cccccc;
+    background-color: #CCC;
   }
 
   /* Resizable window support */
@@ -60,6 +51,7 @@
 
     #login-buttons button {
       width: 60%;
+      min-height: 5vh;
     }
 
     #login-buttons {

@@ -13,6 +13,8 @@ Write pages
 
 Add CSS to make pages pretty
 
+404 page could be a littttttle more explanatory
+
 ### Notes:
 
 /src/lib/db.ts currently has support for phone numbers so if that is not allowed that will need to be changed.

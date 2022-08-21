@@ -1,7 +1,5 @@
 /* Body setup */
 html {
-    /* Dark Mode:
-    filter: invert(100%) hue-rotate(180deg) contrast(90%);*/
     background-color: #efefef;
     font-family: "Open Sans", Verdana;
     height: 100%;
@@ -14,6 +12,24 @@ body {
 
 button {
     cursor: pointer;
+    color: #434343;
+    font-size: calc(6px + 1vw);
+    border-radius: 1vw;
+    padding: 0.75vw;
+    margin: 1vw;
+    font-weight: 500;
+}
+
+button:hover {
+    background-color: #DDD;
+}
+
+li a:hover {
+    background-color: #DDD;
+}
+
+li a:active {
+    background-color: #BBB;
 }
 
 #flex-box {
@@ -29,10 +45,7 @@ button {
 
 footer ul {
     display: flex;
-    align-items: flex-end;
     justify-content: end;
-    flex-direction: row;
-    text-align: center;
     margin: 0;
     padding: 0;
     list-style-type: none;
@@ -40,24 +53,18 @@ footer ul {
 }
 
 footer li {
-    float: right;
-    border-right: 1px solid #bbb;
+    border-right: 1px solid #BBB;
 }
 
 footer li:last-child {
-    border-right: none;
+    border-right-style: none;
 }
 
 footer li a {
     display: block;
     color: #434343;
-    text-align: center;
-    padding: 14px 16px;
+    padding: 9px 16px;
     text-decoration: none;
-}
-
-footer li a:hover {
-    background-color: #CCC;
 }
 
 /* Header setup */
@@ -91,39 +98,18 @@ header img {
 }
 
 #navbar li a {
-    font-size: calc(6px + 1vw);
+    font-size: calc(4px + 1.5vw);
     display: block;
-    padding: 8px 16px;
+    padding: 8px;
     text-decoration: none;
     color: #000;
-}
-
-#navbar li a:hover {
-    background-color: #CCC;
-}
-
-#navbar li a:active {
-    background-color: #AAA;
-}
-
-/* Padding box setup */
-#holder {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: center;
 }
 
 /* Home specific */
 
 #home-internal {
     display: flex;
-    flex-direction: row;
-    width: 100%;
-    padding: 0;
-    margin: 0;
     align-items: center;
-    justify-content: center;
 }
 
 #home-center-box {
@@ -131,12 +117,10 @@ header img {
     flex-direction: column;
     width: 100%;
     align-items: center;
-    justify-content: center;
 }
 
 #profile {
     display: flex;
-    flex-direction: row;
     align-items: center;
 }
 
@@ -148,11 +132,11 @@ header img {
 #profile div p.grade {
     color: #333;
     font-size: calc(4px + 1vw);
-    font-weight: 300;
     margin: 0;
 }
 
 #profile img {
+    filter: none !important;
     border-radius: 50%;
     width: 6vw;
     height: 6vw;
@@ -161,26 +145,13 @@ header img {
 }
 
 #home-buttons {
-    margin-top: 1.5%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 #home-buttons button {
-    color: #434343;
-    font-size: calc(6px + 1vw);
-    text-align: center;
-    border-radius: 12px;
-    padding: 12px;
-    margin: 1vw;
     width: 100%;
-    font-family: "Open Sans", Verdana;
-    font-weight: 500;
-}
-
-#home-buttons button:hover {
-    background-color: #cccccc;
 }
 
 #right-hidden-navbar {
@@ -189,8 +160,6 @@ header img {
 
 #topbar ul {
     display: none;
-    flex-direction: row;
-    text-align: center;
     margin: 0;
     padding: 0;
     list-style-type: none;
@@ -198,8 +167,7 @@ header img {
 }
 
 #topbar li {
-    float: left;
-    border-right: 1px solid #bbb;
+    border-right: 1px solid #BBB;
 }
 
 #topbar li:last-child {
@@ -210,20 +178,21 @@ header img {
     display: block;
     color: #434343;
     text-align: center;
-    padding: 14px 16px;
+    padding: 9px 16px;
     text-decoration: none;
 }
 
-#topbar li a:hover {
-    background-color: #CCC;
+/* Settings specific */
+
+/* Setup holder to hold info between header and footer */
+#holder {
+    display: flex;
+    justify-content: center;
 }
 
-/* Settings specific */
 #settings-box {
     display: flex;
-    align-items: center;
     flex-direction: column;
-    width: fit-content;
     padding: 2.5%;
     border: 2px solid #434343;
     border-radius: 5%;
@@ -285,7 +254,6 @@ header img {
 
     /* Properly size profile and buttons */
     #home-buttons button {
-        width: 100%;
         font-size: calc(6px + 2vw);
     }
 
