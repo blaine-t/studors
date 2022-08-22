@@ -6,13 +6,28 @@
         <title>Studors - Admin</title>
 </head>
 
+<style>
+    #apiKey {
+        display: flex;
+        align-items: center;
+    }
+    #apiKey p {
+        color: blueviolet;
+    }
+</style>
+
 <body>
     <div id="flex-box">
         <%- include('../../components/header'); %>
             <div id="holder">
                 <div id="settings-box">
-                    <p id="apiKey">API KEY: <%= user.api_key %>
-                    </p>
+                    <div id="apiKey">
+                        <p>API KEY: <%= user.api_key %>
+                        </p>
+                        <form method="post" action="apiReset">
+                            <button class="button" onclick="if(confirm('Are you sure?\nResetting will require you to replace any API keys in any applications that you use. For example google sheets.')){}else{return false;};" type="submit">Reset</button>
+                        </form>
+                    </div>
                     <form action="" method="post">
                         <label for="phone">Phone:</label>
                         <input type="tel" id="phone" name="phone"

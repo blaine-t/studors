@@ -1,6 +1,8 @@
 import express, { NextFunction, Request, Response } from 'express'
 const router = express.Router()
 
+import { v4 as uuidv4 } from 'uuid'
+
 import db from '../lib/db'
 
 function checkAuthentication(req: Request, res: Response, next: NextFunction) {
@@ -46,6 +48,13 @@ router.get('/settings', (req, res) => {
   res.render('pages/admin/settings', { error: '' })
 })
 
+router.post('/apiReset', (req, res) => {
+  const newApiKey = uuidv4()
+  db.updateApiKey(res.locals.user.id, newApiKey)
+  res.locals.user.api_key = newApiKey
+  res.redirect('settings')
+})
+
 router.post('/settings', (req, res) => {
   if (
     req.body.phone.match('^([2-9][0-8][0-9])[-]([2-9][0-9]{2})[-]([0-9]{4})$')
@@ -73,45 +82,39 @@ router.post('/manage', async (req, res) => {
   const emailRegex =
     '^[\\W]*([\\w+\\-.%]+@[\\w\\-.]+\\.[A-Za-z]{2,4}[\\W]*,{1}[\\W]*)*([\\w+\\-.%]+@[\\w\\-.]+\\.[A-Za-z]{2,4})[\\W]*$'
   let error = ''
-  error += checkUserInput(
+  error += allowUserInput(
     req.body.allowedStudentDomain,
     domainRegex,
-    true,
     'students',
     'Failed to save allowed student domains\n'
   )
-  error += checkUserInput(
+  error += allowUserInput(
     req.body.allowedTutors,
     emailRegex,
-    true,
     'tutors',
     'Failed to save allowed tutors\n'
   )
-  error += checkUserInput(
+  error += allowUserInput(
     req.body.allowedAdmins,
     emailRegex,
-    true,
     'admins',
     'Failed to save allowed admins\n'
   )
-  error += checkUserInput(
+  error += revokeUserInput(
     req.body.revokedStudentDomain,
     domainRegex,
-    false,
     'students',
     'Failed to save removed student domains\n'
   )
-  error += checkUserInput(
+  error += revokeUserInput(
     req.body.revokedTutors,
     emailRegex,
-    false,
     'tutors',
     'Failed to save removed tutors\n'
   )
-  error += checkUserInput(
+  error += revokeUserInput(
     req.body.revokedAdmins,
     emailRegex,
-    false,
     'admins',
     'Failed to save removed admins\n'
   )
@@ -142,10 +145,9 @@ router.post('/manage', async (req, res) => {
 
 export { router }
 
-function checkUserInput(
+function allowUserInput(
   request: string,
   regex: string,
-  allow: boolean,
   database: string,
   error: string
 ) {
@@ -154,13 +156,32 @@ function checkUserInput(
 
     let string = ''
     for (let i = 0; i < array.length; i++) {
-      string += "('" + array[i] + "'),"
+      string += "('" + array[i].toLowerCase() + "'),"
     }
     string = string.replace(/,$/, '')
-    if (allow) {
-      db.allowUser(database, string)
-      return ''
+    db.allowUser(database, string)
+    return ''
+  }
+  if (!request.match('^$')) {
+    return error
+  }
+  return ''
+}
+
+function revokeUserInput(
+  request: string,
+  regex: string,
+  database: string,
+  error: string
+) {
+  if (request.match(regex)) {
+    const array = request.split(',').map((element: string) => element.trim())
+
+    let string = '('
+    for (let i = 0; i < array.length; i++) {
+      string += "'" + array[i].toLowerCase() + "',"
     }
+    string = string.replace(/,$/, ')')
     db.revokeUser(database, string)
     return ''
   }

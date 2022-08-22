@@ -7,6 +7,14 @@ Pentested by the Unofficial LSW Programming Club AKA ULPC
 
 ## TODO:
 
+Form regex is borked
+
+Ensure lowercase emails are consistent
+
+Add space in with comma separation support
+
+Test suite from start to finish
+
 Refactor all code and ensure proper function use and proper security
 
 Write pages
@@ -23,7 +31,7 @@ Add CSS to make pages pretty
 
 /admin/settings // Done besides styling
 
-/admin/manage // Done besides styling. Could use some QoL improvements in regards to revoking and removing
+/admin/manage // Done besides styling. Could use some QoL improvements
 
 /admin/list // Done besides MAJOR styling
 

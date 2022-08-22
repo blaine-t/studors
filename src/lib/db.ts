@@ -12,7 +12,7 @@ async function createUser(
 ) {
   pool.query(
     `INSERT INTO ${role} (id,first_name,last_name,picture,email) VALUES ($1,$2,$3,$4,$5)`,
-    [id, first_name, last_name, picture, email],
+    [id, first_name, last_name, picture, email.toLowerCase()],
     (err) => {
       if (err) {
         console.log(err)
@@ -99,15 +99,18 @@ async function checkUser(role: string, email: string) {
 }
 
 async function allowUser(role: string, email: string) {
-  pool.query(`INSERT INTO allowed${role} (email) VALUES ${email}`, (err) => {
-    if (err) {
-      console.log(err)
+  pool.query(
+    `INSERT INTO allowed${role} (email) VALUES ${email} ON CONFLICT DO NOTHING`,
+    (err) => {
+      if (err) {
+        console.log(err)
+      }
     }
-  })
+  )
 }
 
 async function revokeUser(role: string, email: string) {
-  pool.query(`DELETE FROM allowed${role} WHERE email = ${email}`, (err) => {
+  pool.query(`DELETE FROM allowed${role} WHERE email IN ${email}`, (err) => {
     if (err) {
       console.log(err)
     }
@@ -154,6 +157,18 @@ async function createSession(sid: string, tid: string, time: Date) {
   pool.query(
     'INSERT INTO sessions (student_id,tutor_id,timeof) VALUES ($1,$2,$3)',
     [sid, tid, time],
+    (err) => {
+      if (err) {
+        console.log(err)
+      }
+    }
+  )
+}
+
+async function updateApiKey(id: string, apiKey: string) {
+  pool.query(
+    'UPDATE admins SET api_key = $2::uuid WHERE id = $1',
+    [id, apiKey],
     (err) => {
       if (err) {
         console.log(err)
@@ -229,6 +244,7 @@ export default {
   listUsers,
   listSessions,
   createSession,
+  updateApiKey,
   confirmApiKey,
   getHours,
   truncateTable,
