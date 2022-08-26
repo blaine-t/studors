@@ -1,23 +1,121 @@
+/* Online crap */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz@8..144&display=swap');
+/* btw this is a variable font so it looks really nice at all sizes, and is infinitely scalable */
+
+/* front page stuff */
+/* Title setup */
+  .title img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    min-width: 300px;
+    margin-bottom: 0;
+  }
+
+  .title h1 {
+    font-style: italic;
+    font-size: 2em;
+    text-align: center;
+    font-weight: 300;
+    color: #333;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Login buttons setup */
+  .login-buttons {
+    display: flex;
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    width: 100%;
+    text-align: center;
+  }
+
+  .login-buttons button {
+    background-color: #d9d9d9;
+    font-size: 2.5em;
+    min-width: 25%;
+  }
+
+  .login-buttons button:hover {
+    background-color: #CCC;
+  }
+
+  /* Resizable window support */
+
+  /* Mobile devices */
+  @media (max-width: 600px ) {
+    .title img {
+      width: 90%;
+    }
+
+    .title h1 {
+      font-size: 5vw;
+    }
+
+    .login-buttons button {
+      width: 90%;
+      padding: 10px;
+      font-size: 1.5em;
+      min-height: 50px;
+    }
+
+    .login-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+/* end of front page stuff */
+
+
+/* Misc stuff... sort */
+.about-info {
+    font-size: 1.5em;
+    position: relative;
+    top: 0%;
+    left: 5%;
+    border-left: 4px solid;
+    padding: 0;
+    padding-left: 10px;
+    border-color: #e8413c;
+    width: 90%;
+}
+
+.about-info p {
+    margin: 0px;
+    margin-bottom: 10px;
+
+}
+
 /* Body setup */
 html {
     background-color: #efefef;
-    font-family: "Open Sans", Verdana;
-    height: 100%;
+    font-family: 'Roboto Flex', "Open Sans", Verdana, sans-serif;
+    overflow-x: hidden;
 }
 
 body {
     margin: 0;
-    height: 100%
+    height: 100vh;
+    max-width: 100vw;
+    max-width: 2560px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 button {
     cursor: pointer;
     color: #434343;
-    font-size: calc(6px + 1vw);
-    border-radius: 1vw;
-    padding: 0.75vw;
-    margin: 1vw;
-    font-weight: 500;
+    border-radius: 20px;
+    border: 2px solid grey;
+    padding: 25px;
+    margin: 20px;
+    font-weight: light;
 }
 
 button:hover {
@@ -32,16 +130,29 @@ li a:active {
     background-color: #BBB;
 }
 
-#flex-box {
+.flex-box {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 100vh;
     padding: 0;
     margin: 0;
     justify-content: space-between;
 }
 
 /* Footer setup */
+footer {
+    position: absolute;
+    right: calc((100vw - 2560px)/2);
+    bottom: 0;
+    width: 100%;
+    background: white;
+}
+
+@media (max-width: 2560px) {
+    footer {
+        right: 0;
+    }
+}
 
 footer ul {
     display: flex;
@@ -49,15 +160,12 @@ footer ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
-    font-size: calc(6px + 1.5vw);
+    font-size: 2em;
+    white-space: nowrap;
 }
 
 footer li {
     border-right: 1px solid #BBB;
-}
-
-footer li:last-child {
-    border-right-style: none;
 }
 
 footer li a {
@@ -67,11 +175,34 @@ footer li a {
     text-decoration: none;
 }
 
+footer hr {
+    position: fixed;
+    width: 100vw;
+    left: 0;
+    margin: auto;
+    height: 1px;
+    background-color: #BBB;
+    border: none;
+}
+
 /* Header setup */
+header {
+    padding-bottom: 20px;
+}
+
 header img {
     filter: none !important;
     min-height: 40px;
     height: 10vh;
+}
+
+header hr {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #292929;
+    border: none;
 }
 
 /* Navbar Setup */
@@ -217,7 +348,7 @@ header img {
     border-radius: 12px;
     padding: 0.5vw;
     margin: 1vw;
-    font-family: "Open Sans", Verdana;
+    font-family: "Roboto Flex", "Open Sans", Verdana;
     font-weight: 500;
 }
 
@@ -229,7 +360,7 @@ header img {
 /* Resizable window support */
 
 /* Mobile devices */
-@media (max-aspect-ratio: 11/16) {
+@media (max-width: 600px) {
     header img {
         height: auto;
         width: 70%;
@@ -275,5 +406,35 @@ header img {
     #profile div p.grade {
         font-size: calc(4px + 1.5vw);
         text-align: center;
+    }
+
+    /*Footer things*/
+    footer ul {
+        display: flex;
+        justify-content: space-evenly;
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        font-size: 1.2em;
+        width: 100%;
+    }
+
+    footer li {
+        text-align: center;
+        width: 33%;
+    }
+
+    footer li a {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .about-info {
+        font-size: 1.2em;
+        position: relative;
+        left: 50%;
+        top: 20%;
+        transform: translate(-50%, -50%);
+        width: 90%;
     }
 }

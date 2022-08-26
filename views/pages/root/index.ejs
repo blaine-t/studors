@@ -6,82 +6,25 @@
     <title>Studors</title>
 </head>
 
-<style>
-  /* Title setup */
-  #title img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    margin-bottom: 0;
-  }
-
-  #title h3 {
-    font-style: italic;
-    font-size: calc(6px + 1.5vw);
-    text-align: center;
-    font-weight: 300;
-    color: #333;
-    margin-bottom: 0;
-  }
-
-  /* Login buttons setup */
-  #login-buttons {
-    display: flex;
-    justify-content: center;
-  }
-
-  #login-buttons button {
-    background-color: #d9d9d9;
-    font-size: calc(8px + 2vw);
-    min-width: 25%;
-  }
-
-  #login-buttons button:hover {
-    background-color: #CCC;
-  }
-
-  /* Resizable window support */
-
-  /* Mobile devices */
-  @media (max-aspect-ratio: 11/16) {
-    #title img {
-      width: 70%;
-    }
-
-    #login-buttons button {
-      width: 60%;
-      min-height: 5vh;
-    }
-
-    #login-buttons {
-      flex-direction: column;
-      align-items: center;
-    }
-  }
-</style>
-
 <body>
-  <div id="flex-box">
-    <div id="title">
-      <picture>
-        <source srcset="/img/studors.webp" type="image/webp">
-        <source srcset="/img/studors.png" type="image/png">
-        <img src="/img/studors.png" alt="Studors Logo" />
-      </picture>
-      <h3>Where students can learn from each other</h3>
-      <br />
-    </div>
-    <div id="login-buttons">
-      <button class="button" onclick="location.href='auth/tutor'" type="button">
-        Login as a tutor
-      </button>
-      <button class="button" onclick="location.href='auth/student'" type="button">
-        Login as a student
-      </button>
-    </div>
-    <%- include('../../components/footer'); %>
+  <div class="title">
+    <picture>
+      <source srcset="/img/studors.webp" type="image/webp">
+      <source srcset="/img/studors.png" type="image/png">
+      <img src="/img/studors.png" alt="Studors Logo" />
+    </picture>
+    <h1 class="titletext">Where students can learn from each other</h1>
+    <br>
   </div>
+  <div class="login-buttons">
+    <button class="button" onclick="location.href='auth/tutor'" type="button">
+      Login as a tutor
+    </button>
+    <button class="button" onclick="location.href='auth/student'" type="button">
+      Login as a student
+    </button>
+  </div>
+  <%- include('../../components/footer'); %>
 </body>
 
 </html>

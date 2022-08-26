@@ -3,27 +3,20 @@
 
 <head>
     <%- include('../../components/head'); %>
-        <title>Studors - Contact</title>
+    <title>Studors - Contact</title>
 </head>
-
 <style>
-    #contact-footer {
+    .contact-footer {
         font-weight: 900;
-    }
-
-    #contact-info p {
-        font-size: 1vw;
     }
 </style>
 
 <body>
-    <div id="flex-box">
-        <%- include('../../components/header'); %>
-            <div id="contact-info">
-                <p> Email: contact@studors.org</p>
-            </div>
-            <%- include('../../components/footer'); %>
+    <%- include('../../components/header'); %>
+    <div class="about-info">
+        <p> Email: contact@studors.org</p>
     </div>
+    <%- include('../../components/footer'); %>
 </body>
 
 </html>

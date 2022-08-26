@@ -3,32 +3,21 @@
 
 <head>
     <%- include('../../components/head'); %>
-        <title>Studors - About</title>
+    <title>Studors - About</title>
 </head>
-
 <style>
-    #about-footer {
+    .about-footer {
         font-weight: 900;
     }
-
-    #about-info p {
-        font-size: 1vw;
-    }
 </style>
-
 <body>
-    <div id="flex-box">
-        <%- include('../../components/header'); %>
-            <div id="about-info">
-                <p>A web service that allows for students to get in contact with volunteer student tutors
-                </p>
-                <p> Developed by Blaine Traudt
-                </p>
-                <p>Pentested by the Unofficial LSW Programming Club AKA ULPC
-                </p>
-            </div>
-            <%- include('../../components/footer'); %>
+    <%- include('../../components/header'); %>
+    <div class="about-info">
+        <p>A web service that allows students to get in contact with volunteer student tutors</p>
+        <p> Developed by Blaine Traudt</p>
+        <p>Pentested by the Unofficial LSW Programming Club AKA ULPC</p>
     </div>
+    <%- include('../../components/footer'); %>
 </body>
 
 </html>

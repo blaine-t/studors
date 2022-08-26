@@ -2,32 +2,38 @@
 <html lang="en">
 
 <head>
-    <%- include('../../components/head'); %>
-        <title>Studors Gone?!</title>
+    <title>Studors - Page not found</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <style>
     html {
-        background-color: #ff0000;
+        background-color: #FFF;
         overflow: hidden;
-    }
-
-    section {
-        display: flex;
-        flex-grow: 1;
-        flex-direction: column;
+        text-align: center;
+        font-family: sans-serif;
         justify-content: center;
-        align-items: center;
-        align-content: center;
-        height: 45vw;
     }
 
     h1 {
-        margin: 0;
-        color: #ffffff;
+        margin: auto;
+        color: #e8413c;
         font-family: Impact, sans-serif;
-        font-size: 10vw;
-        text-align: center;
+        font-size: 15em;
+        font-weight: bold;
+    }
+
+    h2 {
+        font-weight: bold;
+        margin-bottom: 50px;
+    }
+
+    .centered {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: auto;
     }
 
     .button {
@@ -38,32 +44,38 @@
         text-align: center;
         text-decoration: none;
         outline: none;
-        color: #fff;
-        background-color: #000;
+        color: #292929;
+        background-color: #c7c7c7;
         border: none;
         border-radius: 15px;
-        box-shadow: 0 9px #A00;
+        box-shadow: 2px 4px grey;
     }
 
     .button:hover {
-        background-color: #222;
+        background-color: #c7c7c7;
+        box-shadow: 1px 2px grey;
+        transform: translate(1px, 2px);
     }
 
     .button:active {
-        background-color: #111;
-        box-shadow: 0 9px #800;
-        transform: translateY(4px);
+        background-color: #c7c7c7;
+        box-shadow: 0px 0px grey;
+        transform: translate(2px, 4px);
+    }
+
+    @media (max-width: 600px) {
+        h1 {
+        font-size: 10em;
+        }
     }
 </style>
 
 <body>
-    <section>
+    <div class="centered">
         <h1>404</h1>
+        <h2>Oops, the page you are requesting could not be found.</h2>
         <button class="button" onclick="location.href='/'" type="button">
-            Homepage
+            Return Home
         </button>
-    </section>
-    <div style="visibility: hidden;">
-        <%= string %>
     </div>
 </body>
