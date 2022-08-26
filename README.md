@@ -7,21 +7,14 @@ Pentested by the Unofficial LSW Programming Club AKA ULPC
 
 ## TODO:
 
-Form regex is borked
-
-Ensure lowercase emails are consistent
-
-Add space in with comma separation support
-
-Test suite from start to finish
-
-Refactor all code and ensure proper function use and proper security
-
-Write pages
-
-Add CSS to make pages pretty
-
-404 page could be a littttttle more explanatory
+- [ ] Form regex is borked
+- [ ] Ensure lowercase emails are consistent
+- [ ] Add space in with comma separation support
+- [ ] Test suite from start to finish
+- [ ] Refactor all code and ensure proper function use and proper security
+- [ ] Write pages
+- [ ] Add CSS to make pages pretty
+- [X] 404 page could be a littttttle more explanatory
 
 ### Notes:
 
