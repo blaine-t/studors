@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // Allows variable HTML AKA EJS
 app.set('view engine', 'ejs')
-const port = 8080
+const port = 19090
 
 // Auth Support
 import passport from 'passport'
