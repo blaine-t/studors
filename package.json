@@ -10,7 +10,7 @@
     "clean": "npx rimraf dist/*",
     "lint-and-fix": "eslint . --ext .ts --fix",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
-    "prebuild": "npm-run-all clean lint-and-fix prettier-format",
+    "prebuild": "npm-run-all clean lint-and-fix",
     "build": "npx tsc",
     "postbuild": "npx ts-node build",
     "build-image": "docker build --tag studors-node:latest -f Node-Dockerfile .",

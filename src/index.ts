@@ -93,5 +93,5 @@ app.use(function (req, res) {
 
 // Have the server listen for incoming requests
 app.listen(port, () => {
-  console.log(`Example app listening on http://127.0.0.1:${port}`)
+  console.log(`Studors is listening on http://127.0.0.1:${port}`)
 })
