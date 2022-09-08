@@ -1,0 +1,19 @@
+version: '3'
+services:
+  app:
+    image: 'studors-node:latest'
+    container_name: 'studors-node'
+    ports:
+      - '8080:8080/tcp'
+    depends_on:
+      - db
+    user: '1000:1000'
+    restart: 'unless-stopped'
+
+  db:
+    image: 'studors-postgres:latest'
+    container_name: 'studors-postgres'
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    user: '1000:1000'
+    restart: 'unless-stopped'

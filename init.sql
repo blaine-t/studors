@@ -1,27 +1,3 @@
--- security so that studorsadmin has own db and they have limited perms
-
-create role studorsadmin with login password 'password';
-
-alter role studorsadmin createdb;
-
--- \q
-
--- psql -d postgres -U studorsadmin
-
-create database studors;
-
--- \q
-
--- psql -d studors -U postgres
-
-drop database postgres;
-
-alter role studorsadmin nocreatedb;
-
--- \q
-
--- psql -d studors -U studorsadmin
-
 create table students(
     id text primary key,
     first_name text default 'example',
@@ -82,17 +58,3 @@ create table allowedadmins( email text primary key );
 create table allowedtutors( email text primary key );
 
 create table allowedstudents( email text primary key );
-
-drop table allowedstudents;
-
-drop table allowedtutors;
-
-drop table allowedadmins;
-
-drop table sessions;
-
-drop table admins;
-
-drop table tutors;
-
-drop table students;

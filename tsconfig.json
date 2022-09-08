@@ -2,7 +2,7 @@
     "compilerOptions": {
         "sourceMap": true,
         "outDir": "./dist",
-        "rootDir": "src",
+        "rootDir": ".",
         "strict": true,
         "lib": ["esnext"],
         "target": "esnext",

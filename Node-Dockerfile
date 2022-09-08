@@ -1,0 +1,12 @@
+# syntax=docker/dockerfile:1
+FROM node:lts
+
+ENV NODE_ENV=production
+
+WORKDIR /app
+
+COPY ./dist .
+
+RUN npm install --omit=dev
+
+CMD [ "node", "." ]

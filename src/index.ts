@@ -40,6 +40,7 @@ app.use(
     secret: uuidv4(),
     resave: false,
     saveUninitialized: false,
+    proxy: process.env.NODE_ENV === 'production',
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

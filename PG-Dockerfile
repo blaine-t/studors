@@ -1,0 +1,7 @@
+FROM postgres:latest
+
+ENV POSTGRES_USER studorsadmin
+ENV POSTGRES_PASSWORD password
+ENV POSTGRES_DB studors
+
+ADD init.sql /docker-entrypoint-initdb.d/
