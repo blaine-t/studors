@@ -3,7 +3,8 @@
 A web service that allows for students to get in contact with volunteer student tutors
 
 Developed by Blaine Traudt
-Pentested by the Unofficial LSW Programming Club AKA ULPC
+Designed by Grant Gardner
+Pentested by Louis Quattrocchi
 
 ## TODO:
 
@@ -14,7 +15,7 @@ Pentested by the Unofficial LSW Programming Club AKA ULPC
 - [ ] Refactor all code and ensure proper function use and proper security
 - [ ] Write pages
 - [ ] Add CSS to make pages pretty
-- [X] 404 page could be a littttttle more explanatory
+- [x] 404 page could be a littttttle more explanatory
 
 ### Notes:
 
