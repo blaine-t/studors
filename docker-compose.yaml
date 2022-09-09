@@ -4,7 +4,7 @@ services:
     image: 'studors-node:latest'
     container_name: 'studors-node'
     ports:
-      - '8080:8080/tcp'
+      - '19090:19090/tcp'
     depends_on:
       - db
     user: '1000:1000'
