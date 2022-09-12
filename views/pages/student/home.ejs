@@ -3,22 +3,22 @@
 
 <head>
   <%- include('../../components/head'); %>
-    <title>Studors - Student</title>
+  <title>Studors - Student</title>
+
+  <style>
+    /* Navbar current bold */
+    .nav-home {
+      font-weight: 900;
+    }
+  </style>
 </head>
 
-<style>
-  /* Navbar current bold */
-  #nav-home {
-    font-weight: 900;
-  }
-</style>
-
 <body>
-  <div id="flex-box">
-    <div id="home-top">
+  <div id="home-top">
       <%- include('../../components/header'); %>
-        <%- include('../../components/topbar'); %>
-    </div>
+      <%- include('../../components/topbar'); %>
+  </div>
+  <div class="flex-box">
     <div id="home-internal">
       <%- include('../../components/navbar'); %>
         <div id="home-center-box">
@@ -29,8 +29,8 @@
           <hr />
         </div>
     </div>
-    <%- include('../../components/footer'); %>
   </div>
+  <%- include('../../components/footer'); %>
 </body>
 
 </html>

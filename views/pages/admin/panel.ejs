@@ -7,11 +7,13 @@
 </head>
 
 <body>
-  <div id="flex-box">
-    <%- include('../../components/header'); %>
+  <%- include('../../components/header'); %>
+  <div class="flex-box">
       <div id="home-center-box">
-        <div id="profile">
-          <img src="<%= user.picture %>" referrerpolicy="no-referrer" />
+        <div class="profile">
+          <div class="profileimg">
+            <img src="<%= user.picture %>" referrerpolicy="no-referrer" />
+          </div>
           <div>
             <p class="name">
               <%= user.first_name %>
@@ -19,7 +21,7 @@
             </p>
           </div>
         </div>
-        <div id="home-buttons">
+        <div class="home-buttons">
           <button onclick="location.href='manage'" type="button">
             Manage users
           </button>
@@ -34,8 +36,8 @@
           </button>
         </div>
       </div>
-      <%- include('../../components/footer'); %>
   </div>
+  <%- include('../../components/footer'); %>
 </body>
 
 </html>

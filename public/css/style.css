@@ -4,16 +4,16 @@
 
 /* front page stuff */
 /* Title setup */
-  .title img {
+.title img {
     display: block;
     margin-left: auto;
     margin-right: auto;
     width: 30%;
     min-width: 300px;
     margin-bottom: 0;
-  }
+}
 
-  .title h1 {
+.title h1 {
     font-style: italic;
     font-size: 2em;
     text-align: center;
@@ -22,10 +22,10 @@
     margin-bottom: 0;
     margin-left: auto;
     margin-right: auto;
-  }
+}
 
-  /* Login buttons setup */
-  .login-buttons {
+/* Login buttons setup */
+.login-buttons {
     display: flex;
     justify-content: center;
     top: 50%;
@@ -34,44 +34,17 @@
     position: absolute;
     width: 100%;
     text-align: center;
-  }
+}
 
-  .login-buttons button {
+.login-buttons button {
     background-color: #d9d9d9;
-    font-size: 2.5em;
+    font-size: 2em;
     min-width: 25%;
-  }
+}
 
-  .login-buttons button:hover {
+.login-buttons button:hover {
     background-color: #CCC;
-  }
-
-  /* Resizable window support */
-
-  /* Mobile devices */
-  @media (max-width: 600px ) {
-    .title img {
-      width: 90%;
-    }
-
-    .title h1 {
-      font-size: 5vw;
-    }
-
-    .login-buttons button {
-      width: 90%;
-      padding: 10px;
-      font-size: 1.5em;
-      min-height: 50px;
-    }
-
-    .login-buttons {
-      flex-direction: column;
-      align-items: center;
-    }
-  }
-/* end of front page stuff */
-
+}
 
 /* Misc stuff... sort */
 .about-info {
@@ -113,7 +86,9 @@ button {
     color: #434343;
     border-radius: 20px;
     border: 2px solid grey;
-    padding: 25px;
+    padding: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     margin: 20px;
     font-weight: light;
 }
@@ -131,9 +106,9 @@ li a:active {
 }
 
 .flex-box {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+    position: relative;
+    top: 40%;
+    transform: translatey(-50%);
     padding: 0;
     margin: 0;
     justify-content: space-between;
@@ -215,11 +190,11 @@ header hr {
 }
 
 /* Navbar Setup */
-#navbar {
+.navbar {
     margin-left: 2.5vw;
 }
 
-#navbar ul {
+.navbar ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -228,16 +203,16 @@ header hr {
     border-radius: 10px;
 }
 
-#navbar ul li {
+.navbar ul li {
     text-align: center;
     border-bottom: 1px solid #555;
 }
 
-#navbar li:last-child {
+.navbar li:last-child {
     border-bottom: none;
 }
 
-#navbar li a {
+.navbar li a {
     font-size: calc(4px + 1.5vw);
     display: block;
     padding: 8px;
@@ -259,39 +234,55 @@ header hr {
     align-items: center;
 }
 
-#profile {
+/* Profile setup */
+.profile {
     display: flex;
     align-items: center;
+    margin-bottom: 30px;
 }
 
-#profile div p.name {
-    font-size: calc(6px + 1.5vw);
+.profile div p.name {
+    font-size: 30pt;
     margin: 0;
 }
 
-#profile div p.grade {
+.profile div p.grade {
     color: #333;
-    font-size: calc(4px + 1vw);
+    font-size: 24pt;
     margin: 0;
 }
 
-#profile img {
+.profileimg {
+    border-right: 2px solid #666;
+    padding-right: 10px;
+    margin-right: 10px;
+}
+
+.profile img {
     filter: none !important;
     border-radius: 50%;
-    width: 6vw;
-    height: 6vw;
-    max-width: 256px;
-    max-height: 256px;
+    height: 12vh;
+    max-height: 150px;
+    border: 3px solid #000;
 }
 
-#home-buttons {
+.home-buttons {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
-#home-buttons button {
-    width: 100%;
+.home-buttons button {
+    font-size: 1.5em;
+    width: 500px;
+    background-color: #d9d9d9;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.home-buttons button:hover {
+    background-color: #CCC;
 }
 
 #right-hidden-navbar {
@@ -303,11 +294,13 @@ header hr {
     margin: 0;
     padding: 0;
     list-style-type: none;
-    font-size: calc(6px + 1.5vw);
+    font-size: 12pt;
+    width: 100%;
 }
 
 #topbar li {
     border-right: 1px solid #BBB;
+    width: 33%;
 }
 
 #topbar li:last-child {
@@ -318,47 +311,76 @@ header hr {
     display: block;
     color: #434343;
     text-align: center;
-    padding: 9px 16px;
     text-decoration: none;
 }
 
 /* Settings specific */
-
-/* Setup holder to hold info between header and footer */
-#holder {
-    display: flex;
-    justify-content: center;
-}
-
 #settings-box {
     display: flex;
     flex-direction: column;
-    padding: 2.5%;
+    padding: 10px;
     border: 2px solid #434343;
     border-radius: 5%;
-
-    font-size: calc(6px + 1vw);
+    width: 500px;
+    max-width: 90%;
+    font-size: 25pt;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
 }
 
 #settings-box form {
-    text-align: center;
+    text-align: left;
 }
 
 #settings-box input {
-    width: calc(60px + 7vw);
-    font-size: calc(6px + 1vw);
-    padding: 0.5vw 0vw 0.5vw 0.5vw;
+    width: 250px;
+    font-size: 20pt;
+    padding: 5px;
+    float: right;
 }
 
 #settings-box button {
     color: #434343;
-    font-size: calc(6px + 1vw);
+    font-size: 20pt;
     text-align: center;
     border-radius: 12px;
-    padding: 0.5vw;
-    margin: 1vw;
+    padding: 10px;
+    margin: 0;
     font-family: "Roboto Flex", "Open Sans", Verdana;
     font-weight: 500;
+    position: relative;
+    left: 50%;
+    transform: translatex(-50%);
+}
+
+.check span {
+    height: 20pt;
+    width: 20pt;
+    border: 2px solid grey;
+    border-radius: 3px;
+    display: inline;
+    position: relative;
+    margin-left: auto;
+    float: right;
+    color: #CCC;
+    background-color: #d9d9d9;
+}
+
+.check span:hover {
+    background-color: #CCC;
+}
+
+[type=checkbox]:checked + span:after {
+    content: '\1F5F8';
+    position: relative;
+    left: 0;
+    top: -42%;
+}
+
+[type=checkbox]:checked + span {
+    background-color: #444;
 }
 
 #small-error {
@@ -369,52 +391,88 @@ header hr {
 /* Resizable window support */
 
 /* Mobile devices */
-@media (max-width: 600px) {
-    header img {
-        height: auto;
-        width: 70%;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
+@media (max-width: 820px) {
     /* Home specific */
     /* Remove padding and side navbar and add top bar */
     #right-hidden-navbar {
         display: none;
     }
 
-    #navbar {
+    .navbar {
         display: none;
     }
 
-    #topbar ul {
+    #topbar {
         display: flex;
     }
 
-    /* Properly size profile and buttons */
-    #home-buttons button {
-        font-size: calc(6px + 2vw);
+}
+
+@media (max-width: 600px) {
+    .title img {
+        width: 90%;
     }
 
-    #profile {
+    .title h1 {
+        font-size: 5vw;
+    }
+
+    .login-buttons button {
+        width: 90%;
+        padding: 10px;
+        font-size: 1.5em;
+        min-height: 50px;
+    }
+
+    .login-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header img {
+        height: 10vh;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .profile {
         flex-direction: column;
         justify-content: center;
     }
 
-    #profile img {
-        width: 20vw;
-        height: 20vw;
+    .profile img {
+        height: 120px;
+        position: relative;
+        left: 50%;
+        transform: translatex(-50%);
     }
 
-    #profile div p.name {
-        font-size: calc(6px + 2vw);
+    .profileimg {
+        border: none;
+        border-bottom: 2px solid #666;
+        padding: 0;
+        padding-bottom: 5px;
+        margin: 0;
+        margin-bottom: 5px;
+        width: 165px;
+    }
+
+    .profile div p.name {
+        font-size: 20pt;
         text-align: center;
     }
 
-    #profile div p.grade {
-        font-size: calc(4px + 1.5vw);
+    .profile div p.grade {
+        font-size: 18pt;
         text-align: center;
+    }
+
+    .home-buttons button {
+        padding: 10px;
+        font-size: 1.5em;
+        min-height: 50px;
+        width: 90%;
     }
 
     /*Footer things*/
@@ -449,5 +507,40 @@ header hr {
         top: 20%;
         transform: translate(-50%, -50%);
         width: 90%;
+    }
+}
+
+
+/* Fallback stuff, for weird resolutions and things */
+@media (max-height: 625px) {
+    body {
+        margin-bottom: 50px;
+    }
+
+    .navbar {
+        display: none;
+    }
+
+    #right-hidden-navbar {
+        display: none;
+    }
+
+    .home-buttons {
+        flex-direction: row;
+        align-items: center;
+        margin: auto;
+    }
+
+    .home-buttons button {
+        flex-direction: row;
+        align-items: center;
+        width: 30%;
+        height: 4em;
+        font-size: 15pt;
+        padding: 0px
+    }
+
+    .profile img {
+        height: 100px;
     }
 }

@@ -4,30 +4,42 @@
 <head>
   <%- include('../../components/head'); %>
   <title>Studors - Admin</title>
+  <style>
+    #user-list {
+      white-space: pre-line;
+    }
+
+    body {
+      margin-bottom: 10vh;
+      height: 100%;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  </style>
 </head>
 
-<style>
-  #user-list {
-    white-space: pre-line;
-  }
-</style>
-
 <body>
+  <%- include('../../components/header'); %>
   <div id="flex-box">
-    <%- include('../../components/header'); %>
     <div id="user-list">
       <h2> Students: </h2>
       <%= students %>
+      <hr>
       <h2> Tutors: </h2>
       <%= tutors %>
+      <hr>
       <h2> Admins: </h2>
       <%= admins %>
+      <hr>
       <h2> Allowed Student domains: </h2>
       <%= studentAllowed %>
+      <hr>
       <h2> Allowed Tutors: </h2>
       <%= tutorAllowed %>
+      <hr>
       <h2> Allowed Admins: </h2>
       <%= adminAllowed %>
+      <hr>
       <h2> Upcoming Sessions: </h2>
       <table>
         <tr>
@@ -47,6 +59,7 @@
         </tr>
         <% } %>
       </table>
+      <hr>
       <h2> Past Sessions: </h2>
       <table>
         <tr>
@@ -67,8 +80,8 @@
         <% } %>
       </table>
     </div>
-    <%- include('../../components/footer'); %>
   </div>
+  <%- include('../../components/footer'); %>
 </body>
 
 </html>
