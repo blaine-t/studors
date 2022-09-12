@@ -70,6 +70,7 @@ html {
     background-color: #efefef;
     font-family: 'Roboto Flex', "Open Sans", Verdana, sans-serif;
     overflow-x: hidden;
+    min-aspect-ratio: 13/9;
 }
 
 body {
@@ -169,13 +170,12 @@ footer hr {
 
 /* Header setup */
 header {
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     height: 10vh;
 }
 
 header img {
     filter: none !important;
-    min-height: 40px;
     height: 10vh;
 }
 
@@ -289,18 +289,27 @@ header hr {
     margin-left: 22.5vw;
 }
 
+#topbar {
+    position: relative;
+    top: 0px;
+    padding: 0px;
+}
+
 #topbar ul {
     display: none;
     margin: 0;
     padding: 0;
     list-style-type: none;
-    font-size: 12pt;
+    font-size: 14pt;
+    height: 35px;
     width: 100%;
+    border-bottom: 1px solid #BBB;
 }
 
 #topbar li {
+    position: relative;
     border-right: 1px solid #BBB;
-    width: 33%;
+    width: 50%;
 }
 
 #topbar li:last-child {
@@ -312,6 +321,8 @@ header hr {
     color: #434343;
     text-align: center;
     text-decoration: none;
+    height: 30px;
+    padding-top: 5px;
 }
 
 /* Settings specific */
@@ -402,7 +413,7 @@ header hr {
         display: none;
     }
 
-    #topbar {
+    #topbar ul {
         display: flex;
     }
 
@@ -468,11 +479,16 @@ header hr {
         text-align: center;
     }
 
+
     .home-buttons button {
         padding: 10px;
         font-size: 1.5em;
         min-height: 50px;
         width: 90%;
+    }
+
+    #settings-box input {
+        width: 190px;
     }
 
     /*Footer things*/
@@ -542,5 +558,24 @@ header hr {
 
     .profile img {
         height: 100px;
+    }
+
+    .login-buttons {
+        flex-direction: row;
+        top: 65%;
+    }
+
+    .login-buttons button {
+        height: 100px;
+        padding: 0px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    #settings-box {
+        position: relative;
+        top: 100%;
+        left: 50%;
+        transform: translatex(-50%);
     }
 }
