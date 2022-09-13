@@ -22,7 +22,7 @@ function checkHome(req: Request, res: Response, next: NextFunction) {
 
 router.use(checkHome)
 
-router.get('/home', (req, res) => {
+router.get('/', (req, res) => {
   res.redirect('/')
 })
 
