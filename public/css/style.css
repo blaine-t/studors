@@ -163,6 +163,7 @@ footer hr {
     footer {
         right: 0;
     }
+
     footer ul {
         right: 0;
     }
@@ -386,18 +387,18 @@ header hr {
     background-color: #CCC;
 }
 
-[type=checkbox]:checked + span:after {
+[type=checkbox]:checked+span:after {
     content: '\1F5F8';
     position: relative;
     top: -25%;
 }
 
-[type=checkbox]:checked + span {
+[type=checkbox]:checked+span {
     background-color: #444;
 }
 
 #small-error {
-    color: red;
+    color: #e8413c;
     white-space: pre-line;
     height: 20px;
 }
@@ -406,6 +407,7 @@ header hr {
 
 /* Mobile devices */
 @media (max-width: 820px) {
+
     /* Home specific */
     /* Remove padding and side navbar and add top bar */
     #right-hidden-navbar {

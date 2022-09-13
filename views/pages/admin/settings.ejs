@@ -10,9 +10,25 @@
     #apiKey {
         display: flex;
         align-items: center;
+        justify-content: space-between;
     }
     #apiKey p {
-        color: blueviolet;
+        font-size: 12pt;
+        color: #e8413c;
+    }
+    #apiKey p#key {
+        visibility: hidden;
+    }
+
+    button {
+        width: 90px;
+    }
+
+    #settings-box #apiKey #toggleButton {
+        left: 0%;
+        transform: none;
+        margin-left: 12px;
+        margin-right: 12px;
     }
 </style>
 
@@ -20,14 +36,16 @@
     <%- include('../../components/header'); %>
     <div id="flex-box">
         <div id="holder">
-            <div id="settings-box">
+            <div id="settings-box" style="width: fit-content;">
                 <div id="apiKey">
-                    <p style="font-size: 12pt;">API KEY: <%= user.api_key %>
+                    <p style="margin-right: 12px">
+                        API KEY: 
                     </p>
+                    <p id="key"> <%= user.api_key %>
+                    </p>
+                    <button class="button" id="toggleButton" onclick="showMask()">Show</button>
                     <form method="post" action="apiReset">
-                        <button style="float: right; position: relative; display: block; right: 0%; margin-left: 20px;" class="button" onclick="if(confirm('Are you sure?\nResetting will require you to replace any API keys in any applications that you use. For example google sheets.')){}else{return false;};" type="submit">Reset</button>
-                        <br>
-                        <br>
+                        <button class="button" onclick="if(confirm('Are you sure?\nResetting will require you to replace any API keys in any applications that you use. For example google sheets.')){}else{return false;};" type="submit">Reset</button>
                     </form>
                 </div>
                 <br><hr style="width: 100%">
@@ -54,6 +72,21 @@
         </div>
     </div>
     <%- include('../../components/footer'); %>
+
+<script>
+function showMask() {
+    var node = document.getElementById('key')
+    var button = document.getElementById('toggleButton')
+    var visibility = node.style.visibility;
+    if (visibility == "visible") {
+        button.textContent = "Show"
+    } else {
+        button.textContent = "Hide"
+    }
+    
+    node.style.visibility = visibility == "visible" ? 'hidden' : "visible"
+}
+</script>
 </body>
 
 </html>

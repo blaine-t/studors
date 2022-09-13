@@ -17,9 +17,14 @@
         padding: 0.3vw 0vw 0.3vw 0.3vw;
         width: 95vw;
     }
+
     body {
-        margin-bottom: 10%;
         height: 100%;
+    }
+
+    button {
+    margin-left: 0;
+    margin-bottom: 55px;
     }
 </style>
 
@@ -89,9 +94,11 @@
                     <label for="rem_admins">Remove all admins:</label>
                     <label class="check"><input style="display: none;" type="checkbox" id="rem_admins" name="rem_admins"><span></span></label>
                 </label>
+                <% if (error != '') { %>
                 <p id="small-error">
                     <%=error %>
                 </p>
+                <%} %>
                 <button type="submit">Apply</button>
             </form>
         </div>

@@ -1,31 +1,29 @@
-# studors
+# Studors
 
 A web service that allows for students to get in contact with volunteer student tutors
 
 Developed by Blaine Traudt
+
 Designed by Grant Gardner
-Pentested by Louis Quattrocchi
+
+Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
+
+![Studors Scalability Photo](public/img/scalability.png)
 
 ## TODO:
 
-- [ ] Form regex is borked
+- [ ] Form regex is broken
 - [ ] Ensure lowercase emails are consistent
-- [ ] Add space in with comma separation support
+- [ ] Add space in with comma separation support (for batch email additions in admin panel)
 - [ ] Test suite from start to finish
 - [ ] Refactor all code and ensure proper function use and proper security
 - [ ] Write pages
-- [ ] Add CSS to make pages pretty
-- [x] 404 page could be a littttttle more explanatory
 
 ### Notes:
 
 /src/lib/db.ts currently has support for phone numbers so if that is not allowed that will need to be changed.
 
 ### WEB PAGES NOT DONE:
-
-/admin/settings // Done besides styling
-
-/admin/manage // Done besides styling. Could use some QoL improvements
 
 /admin/list // Done besides MAJOR styling
 
