@@ -213,7 +213,7 @@ header hr {
 }
 
 .navbar li a {
-    font-size: calc(4px + 1.5vw);
+    font-size: 28pt;
     display: block;
     padding: 8px;
     text-decoration: none;
@@ -300,8 +300,7 @@ header hr {
     margin: 0;
     padding: 0;
     list-style-type: none;
-    font-size: 14pt;
-    height: 35px;
+    font-size: 20pt;
     width: 100%;
     border-bottom: 1px solid #BBB;
 }
@@ -321,8 +320,7 @@ header hr {
     color: #434343;
     text-align: center;
     text-decoration: none;
-    height: 30px;
-    padding-top: 5px;
+    padding: 5px;
 }
 
 /* Settings specific */
@@ -366,17 +364,22 @@ header hr {
     transform: translatex(-50%);
 }
 
+#settings-box .check span {
+    float: right;
+}
+
 .check span {
     height: 20pt;
     width: 20pt;
     border: 2px solid grey;
     border-radius: 3px;
-    display: inline;
+    display: inline-block;
     position: relative;
-    margin-left: auto;
-    float: right;
     color: #CCC;
     background-color: #d9d9d9;
+    font-size: 20pt;
+    text-align: center;
+    float: right;
 }
 
 .check span:hover {
@@ -386,8 +389,7 @@ header hr {
 [type=checkbox]:checked + span:after {
     content: '\1F5F8';
     position: relative;
-    left: 0;
-    top: -42%;
+    top: -25%;
 }
 
 [type=checkbox]:checked + span {

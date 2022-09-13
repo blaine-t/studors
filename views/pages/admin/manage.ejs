@@ -8,14 +8,17 @@
 
 <style>
     #manage-form {
-        font-size: calc(6px + 1vw);
+        font-size: 20pt;
         margin-left: 1vw;
     }
 
     #manage-form input[type=text] {
-        font-size: calc(6px + 0.5vw);
+        font-size: 20pt;
         padding: 0.3vw 0vw 0.3vw 0.3vw;
         width: 95vw;
+    }
+    body {
+        margin-bottom: 10%;
     }
 </style>
 
@@ -65,24 +68,26 @@
                         placeholder="test@example.com,test2@example.com"
                         oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')"
                         oninput="setCustomValidity('')">
-                    <br>
-                    <label for="inc_grade">Increment Grade:</label>
-                    <input type="checkbox" id="inc_grade" name="inc_grade">
-                    <br>
-                    <label for="rem_student_grade">Remove students >12:</label>
-                    <input type="checkbox" id="rem_student_grade" name="rem_student_grade">
-                    <br>
-                    <label for="rem_tutor_grade">Remove tutors >12:</label>
-                    <input type="checkbox" id="rem_tutor_grade" name="rem_tutor_grade">
-                    <br>
-                    <label for="rem_students">Remove all students:</label>
-                    <input type="checkbox" id="rem_students" name="rem_students">
-                    <br>
-                    <label for="rem_tutors">Remove all tutors:</label>
-                    <input type="checkbox" id="rem_tutors" name="rem_tutors">
-                    <br>
-                    <label for="rem_admins">Remove all admins:</label>
-                    <input type="checkbox" id="rem_admins" name="rem_admins">
+                    <br><hr>
+                    <label style="width: 350px;display: block;">
+                        <label for="inc_grade">Increment Grade:</label>
+                        <label class="check"><input style="display: none;" type="checkbox" id="inc_grade" name="inc_grade"><span></span></label>
+                        <br><hr>
+                        <label for="rem_student_grade">Remove students >12:</label>
+                        <label class="check"><input style="display: none;" type="checkbox" id="rem_student_grade" name="rem_student_grade"><span></span></label>
+                        <br><hr>
+                        <label for="rem_tutor_grade">Remove tutors >12:</label>
+                        <label class="check"><input style="display: none;" type="checkbox" id="rem_tutor_grade" name="rem_tutor_grade"><span></span></label>
+                        <br><hr>
+                        <label for="rem_students">Remove all students:</label>
+                        <label class="check"><input style="display: none;" type="checkbox" id="rem_students" name="rem_students"><span></span></label>
+                        <br><hr>
+                        <label for="rem_tutors">Remove all tutors:</label>
+                        <label class="check"><input style="display: none;" type="checkbox" id="rem_tutors" name="rem_tutors"><span></span></label>
+                        <br><hr>
+                        <label for="rem_admins">Remove all admins:</label>
+                        <label class="check"><input style="display: none;" type="checkbox" id="rem_admins" name="rem_admins"><span></span></label>
+                    </label>
                     <p id="small-error">
                         <%=error %>
                     </p>
