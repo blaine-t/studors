@@ -399,6 +399,7 @@ header hr {
 #small-error {
     color: red;
     white-space: pre-line;
+    height: 20px;
 }
 
 /* Resizable window support */
