@@ -63,6 +63,7 @@ app.use(express.static('public/icons')) //Flattens icons to public for support r
 
 // Routing
 import { router as root } from './routes/root'
+import { router as home } from './routes/home'
 import { router as student } from './routes/student'
 import { router as tutor } from './routes/tutor'
 import { router as admin } from './routes/admin'
@@ -71,6 +72,7 @@ import { router as auth } from './routes/auth'
 
 // Require authentication for certain routes on the site
 app.use('/', root)
+app.use('/home', home)
 app.use('/student', student)
 app.use('/tutor', tutor)
 app.use('/admin', admin)
