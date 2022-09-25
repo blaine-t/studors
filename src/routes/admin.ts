@@ -78,9 +78,9 @@ router.get('/manage', (req, res) => {
 
 router.post('/manage', async (req, res) => {
   const domainRegex =
-    '[\\W]*(@[\\w\\-.]+\\.[A-Za-z]+[\\W]*,{1}[\\W]*)*(@[\\w\\-.]+\\.[A-Za-z]+)[\\W]*$'
+    '^(@[\\w\\-.]+\\.[A-Za-z]{2,4}[\\W]*[,\\s]{1}[\\W]*)*(@[\\w\\-.]+\\.[A-Za-z]+)[\\W]*$'
   const emailRegex =
-    '^[\\W]*([\\w+\\-.%]+@[\\w\\-.]+\\.[A-Za-z]{2,4}[\\W]*,{1}[\\W]*)*([\\w+\\-.%]+@[\\w\\-.]+\\.[A-Za-z]{2,4})[\\W]*$'
+    '^[\\W]*([\\w+\\-.%]+@[\\w\\-.]+\\.[A-Za-z]{2,4}[\\W]*[,\\s]{1}[\\W]*)*([\\w+\\-.%]+@[\\w\\-.]+\\.[A-Za-z]{2,4})[\\W]*$'
   let error = ''
   error += allowUserInput(
     req.body.allowedStudentDomain,
@@ -152,7 +152,9 @@ function allowUserInput(
   error: string
 ) {
   if (request.match(regex)) {
-    const array = request.split(',').map((element: string) => element.trim())
+    const array = request
+      .split(/[, ]+/)
+      .map((element: string) => element.trim())
 
     let string = ''
     for (let i = 0; i < array.length; i++) {
@@ -175,7 +177,9 @@ function revokeUserInput(
   error: string
 ) {
   if (request.match(regex)) {
-    const array = request.split(',').map((element: string) => element.trim())
+    const array = request
+      .split(/[, ]+/)
+      .map((element: string) => element.trim())
 
     let string = '('
     for (let i = 0; i < array.length; i++) {

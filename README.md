@@ -12,9 +12,9 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 
 ## TODO:
 
-- [ ] Form regex is broken
-- [ ] Ensure lowercase emails are consistent
-- [ ] Add space in with comma separation support (for batch email additions in admin panel)
+- [x] Form regex is broken
+- [x] Ensure lowercase emails are consistent
+- [x] Add space in with comma separation support (for batch email additions in admin panel)
 - [ ] Test suite from start to finish
 - [ ] Refactor all code and ensure proper function use and proper security
 - [ ] Write pages

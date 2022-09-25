@@ -37,18 +37,27 @@ passport.use(
         return
       }
       // If there is not a student with this ID
-      else {
-        const profilePic = profile._json.picture?.replace('=s96-c', '=s256-c')
-        db.createUser(
-          'students',
-          profile.id,
-          profile._json.given_name || 'Example',
-          profile._json.family_name || 'Student',
-          profilePic || 'https://via.placeholder.com/256',
-          profile._json.email || 'example@class.lps.org'
-        )
-        const studentProfile = await db.authUser('students', profile.id)
-        done(null, studentProfile)
+      else if (profile._json.email != undefined) {
+        if (
+          (await db.checkUser(
+            'students',
+            '@' + profile._json.email.split('@')[1]
+          )) != undefined
+        ) {
+          const profilePic = profile._json.picture?.replace('=s96-c', '=s256-c')
+          db.createUser(
+            'students',
+            profile.id,
+            profile._json.given_name || 'Example',
+            profile._json.family_name || 'Student',
+            profilePic || 'https://via.placeholder.com/256',
+            profile._json.email.toLowerCase() || 'examplestudent@example.org'
+          )
+          const studentProfile = await db.authUser('students', profile.id)
+          done(null, studentProfile)
+          return
+        }
+        done(null, false)
       }
     }
   )
@@ -70,13 +79,13 @@ passport.use(
       profile: Profile,
       done: VerifyCallback
     ) => {
-      // If there is already a student with this ID
+      // If there is already a tutor with this ID
       const tutorProfile = await db.authUser('tutors', profile.id)
       if (tutorProfile) {
         done(null, tutorProfile)
         return
       }
-      // If there is not a student with this ID
+      // If there is not a tutor with this ID
       else if (profile._json.email != undefined) {
         if ((await db.checkUser('tutors', profile._json.email)) != undefined) {
           const profilePic = profile._json.picture?.replace('=s96-c', '=s256-c')
@@ -86,7 +95,7 @@ passport.use(
             profile._json.given_name || 'Example',
             profile._json.family_name || 'Tutor',
             profilePic || 'https://via.placeholder.com/256',
-            profile._json.email || 'exampleTutor@class.lps.org'
+            profile._json.email.toLowerCase() || 'exampletutor@example.org'
           )
           const tutorProfile = await db.authUser('tutors', profile.id)
           done(null, tutorProfile)
@@ -114,13 +123,13 @@ passport.use(
       profile: Profile,
       done: VerifyCallback
     ) => {
-      // If there is already a student with this ID
+      // If there is already an admin with this ID
       const adminProfile = await db.authUser('admins', profile.id)
       if (adminProfile) {
         done(null, adminProfile)
         return
       }
-      // If there is not a student with this ID
+      // If there is not an admin with this ID
       else if (profile._json.email != undefined) {
         if ((await db.checkUser('admins', profile._json.email)) != undefined) {
           const profilePic = profile._json.picture?.replace('=s96-c', '=s256-c')
@@ -130,7 +139,7 @@ passport.use(
             profile._json.given_name || 'Example',
             profile._json.family_name || 'Admin',
             profilePic || 'https://via.placeholder.com/256',
-            profile._json.email
+            profile._json.email.toLowerCase() || 'exampleadmin@example.org'
           )
           const adminProfile = await db.authUser('admins', profile.id)
           done(null, adminProfile)
