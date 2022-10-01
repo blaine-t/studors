@@ -5,6 +5,8 @@ import { v4 as uuidv4 } from 'uuid'
 
 import db from '../lib/db'
 
+import functions from '../../views/components/functions'
+
 function checkAuthentication(req: Request, res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
     res.locals.user = req.user
@@ -40,7 +42,8 @@ router.get('/list', async (req, res) => {
     tutorAllowed: tutorEmails,
     adminAllowed: adminEmails,
     pastSessions: pastSessions,
-    upcomingSessions: upcomingSessions
+    upcomingSessions: upcomingSessions,
+    functions: functions
   })
 })
 
