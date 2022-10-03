@@ -25,17 +25,13 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 
 ### WEB PAGES NOT DONE:
 
-/admin/list // Done besides MAJOR styling
+/admin/list // Needs JQuery setup
 
 /about // Done but waiting for info
 
 /contact // Done but waiting for info
 
 /mission // Done but waiting for info
-
-/privacy?
-
-/tos?
 
 /student/find
 
