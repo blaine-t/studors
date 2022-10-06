@@ -15,6 +15,11 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 - [x] Form regex is broken
 - [x] Ensure lowercase emails are consistent
 - [x] Add space in with comma separation support (for batch email additions in admin panel)
+- [ ] Fix DB functions for new structure
+- [ ] Handle phone numbers better
+- [ ] Add proper matching
+- [ ] Add unavailability options
+- [ ] Allow admins to set holidays
 - [ ] Test suite from start to finish
 - [ ] Refactor all code and ensure proper function use and proper security
 - [ ] Write pages
