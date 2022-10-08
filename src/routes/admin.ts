@@ -133,6 +133,9 @@ router.post('/manage', async (req, res) => {
     'Failed to save removed admins\n'
   )
 
+  if (req.body.adv_term) {
+    db.advanceTerm()
+  }
   if (req.body.inc_grade != undefined) {
     await db.incrementGrade()
   }
@@ -145,9 +148,6 @@ router.post('/manage', async (req, res) => {
     db.truncateTable('tutors')
   } else if (req.body.rem_tutor_grade != undefined) {
     db.removeOldUsers('tutors')
-  }
-  if (req.body.rem_admins) {
-    db.truncateTable('admins')
   }
 
   if (error != '') {

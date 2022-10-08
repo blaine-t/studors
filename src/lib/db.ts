@@ -230,6 +230,14 @@ async function removeOldUsers(role: string) {
   })
 }
 
+async function advanceTerm() {
+  pool.query('UPDATE tutors SET hours_term = 0', (err) => {
+    if (err) {
+      console.log(err)
+    }
+  })
+}
+
 export default {
   createUser,
   updateUser,
@@ -247,5 +255,6 @@ export default {
   getHours,
   truncateTable,
   incrementGrade,
-  removeOldUsers
+  removeOldUsers,
+  advanceTerm
 }
