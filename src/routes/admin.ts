@@ -11,6 +11,10 @@ function checkAuthentication(req: Request, res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
     res.locals.user = req.user
     if (res.locals.user.pos === 'admin') {
+      if (res.locals.user.grade < 9 && req.path != '/settings') {
+        res.redirect('settings')
+        return
+      }
       next()
       return
     }
@@ -60,15 +64,21 @@ router.post('/apiReset', (req, res) => {
 
 router.post('/settings', (req, res) => {
   if (
-    req.body.phone.match('^([2-9][0-8][0-9])[-]([2-9][0-9]{2})[-]([0-9]{4})$')
+    (req.body.phone.match(
+      '^([2-9][0-8][0-9])[-]([2-9][0-9]{2})[-]([0-9]{4})$'
+    ) ||
+      req.body.phone.match('')) &&
+    (req.body.grade.match('[9]') || req.body.grade.match('[1][0-3]'))
   ) {
     db.updateUser(
       'admins',
       res.locals.user.id,
       req.body.phone,
+      req.body.grade,
       req.body.dark_theme || false
     )
     res.locals.user.phone = req.body.phone
+    res.locals.user.grade = req.body.grade
     res.locals.user.dark_theme = req.body.dark_theme
     res.redirect('panel')
     return

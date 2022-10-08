@@ -36,7 +36,8 @@
     <%- include('../../components/header'); %>
     <div id="flex-box">
         <div id="holder">
-            <div id="settings-box" style="width: fit-content;">
+            <div id="settings-box" <% if(user.grade>8){ %> style="width: fit-content;" <% } %>>
+                <% if(user.grade>8){ %>
                 <div id="apiKey">
                     <p style="margin-right: 12px">
                         API KEY: 
@@ -49,19 +50,27 @@
                     </form>
                 </div>
                 <br><hr style="width: 100%">
+                <% } %>
                 <form action="" method="post">
-                    <label for="phone">Phone:</label>
-                    <input type="tel" id="phone" name="phone"
-                        pattern="^([2-9][0-8][0-9])[-]([2-9][0-9]{2})[-]([0-9]{4})$" value="<%=user.phone %>"
-                        placeholder="800-555-0101"
-                        oninvalid="setCustomValidity('Please enter a phone number with this style: ###-###-####')"
-                        oninput="setCustomValidity('')">
-                    <br>
-                    <br>
-                    <label for="dark_theme">Dark Mode:</label>
-                    <label class="check"><input style="display: none;" type="checkbox" id="dark_theme" name="dark_theme" <%=user.dark_theme ? "checked" : "" %>>
-                        <span></span>
-                    </label>
+                    <label for="grade">Grade</label>
+                    <input type="tel" id="grade" name="grade" pattern="^[9]$|^[1][0-3]$"
+                        oninvalid="setCustomValidity('Please enter a grade between 9-13. (Enter 13 if you are post-graduate)')"
+                        oninput="setCustomValidity('')" placeholder="9-13" <% if(user.grade>8) { %>value="<%=user.grade %>"<%}%> >
+                            <span style="color:red;">*</span><br>
+                            <br>
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone"
+                                pattern="^([2-9][0-8][0-9])[-]([2-9][0-9]{2})[-]([0-9]{4})$"
+                                value="<%=user.phone %>" placeholder="800-555-0101"
+                                oninvalid="setCustomValidity('Please enter a phone number with this style: ###-###-####')"
+                                oninput="setCustomValidity('')">
+                            <br>
+                            <br>
+                            <label for="dark_theme">Dark Mode</label>
+                            <label class="check"><input style="display: none;" type="checkbox" id="dark_theme" name="dark_theme" <%=user.dark_theme ? "checked"
+                                : "" %>>
+                                <span></span>
+                            </label>
                     <br>
                     <p id="small-error"><%=error %></p>
                     <button type="submit">Save</button>

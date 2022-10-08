@@ -51,7 +51,7 @@ passport.use(
             profile._json.given_name || 'Example',
             profile._json.family_name || 'Student',
             profilePic || 'https://via.placeholder.com/256',
-            profile._json.email.toLowerCase() || 'examplestudent@example.org'
+            profile._json.email || 'examplestudent@example.org'
           )
           const studentProfile = await db.authUser('students', profile.id)
           done(null, studentProfile)
@@ -95,7 +95,7 @@ passport.use(
             profile._json.given_name || 'Example',
             profile._json.family_name || 'Tutor',
             profilePic || 'https://via.placeholder.com/256',
-            profile._json.email.toLowerCase() || 'exampletutor@example.org'
+            profile._json.email || 'exampletutor@example.org'
           )
           const tutorProfile = await db.authUser('tutors', profile.id)
           done(null, tutorProfile)
@@ -139,7 +139,7 @@ passport.use(
             profile._json.given_name || 'Example',
             profile._json.family_name || 'Admin',
             profilePic || 'https://via.placeholder.com/256',
-            profile._json.email.toLowerCase() || 'exampleadmin@example.org'
+            profile._json.email || 'exampleadmin@example.org'
           )
           const adminProfile = await db.authUser('admins', profile.id)
           done(null, adminProfile)
