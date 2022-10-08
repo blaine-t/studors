@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import db from '../lib/db'
 
 import functions from '../../views/components/functions'
+import sanitize from '../lib/sanitize'
 
 function checkAuthentication(req: Request, res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
@@ -64,26 +65,30 @@ router.post('/apiReset', (req, res) => {
 
 router.post('/settings', (req, res) => {
   if (
-    (req.body.phone.match(
-      '^([2-9][0-8][0-9])[-]([2-9][0-9]{2})[-]([0-9]{4})$'
-    ) ||
-      req.body.phone.match('')) &&
-    (req.body.grade.match('[9]') || req.body.grade.match('[1][0-3]'))
+    ((req.body.phone.match(
+      '^[(]?([2-9][0-8][0-9])[)]?[-|\\s]?([2-9][0-9]{2})[-|\\s]?([0-9]{4})$'
+    ) &&
+      sanitize.phone(req.body.phone)) ||
+      req.body.phone.match('^$')) &&
+    (req.body.grade.match('[9]') || req.body.grade.match('[1][0-2]'))
   ) {
+    const phone = String(sanitize.phone(req.body.phone))
     db.updateUser(
       'admins',
       res.locals.user.id,
-      req.body.phone,
+      phone,
       req.body.grade,
       req.body.dark_theme || false
     )
-    res.locals.user.phone = req.body.phone
+    res.locals.user.phone = phone
     res.locals.user.grade = req.body.grade
     res.locals.user.dark_theme = req.body.dark_theme
-    res.redirect('panel')
+    res.redirect('home')
     return
   }
-  res.render('pages/admin/settings', { error: 'Failed to save phone number' })
+  res.render('pages/admin/settings', {
+    error: 'Invalid grade or phone number'
+  })
 })
 
 router.get('/manage', (req, res) => {

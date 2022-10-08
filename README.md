@@ -16,17 +16,13 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 - [x] Ensure lowercase emails are consistent
 - [x] Add space in with comma separation support (for batch email additions in admin panel)
 - [x] Fix DB functions for new structure
+- [x] Handle phone numbers better
 - [ ] Extra admin actions (e.g. add holidays)
-- [ ] Handle phone numbers better
 - [ ] Add proper matching
 - [ ] Add unavailability options
 - [ ] Test suite from start to finish
 - [ ] Refactor all code and ensure proper function use and proper security
 - [ ] Write pages
-
-### Notes:
-
-/src/lib/db.ts currently has support for phone numbers so if that is not allowed that will need to be changed.
 
 ### WEB PAGES NOT DONE:
 

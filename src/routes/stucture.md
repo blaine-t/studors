@@ -4,13 +4,9 @@
 
 about - List of what the app does and how it works
 
-mission - BS about why we do it
+mission - Why we do it
 
 contact - Email form to send a message to admins about an issue
-
-privacy - Information about what data is stored on the server and if it is optional
-
-tos - The terms of service (if there is any blame google for this entry)
 
 ## Admin
 

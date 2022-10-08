@@ -97,3 +97,7 @@ app.use(function (req, res) {
 app.listen(port, () => {
   console.log(`Studors is listening on http://127.0.0.1:${port}`)
 })
+
+import sanitize from './lib/sanitize'
+
+console.log(sanitize.phone('(402) a540-5790'))
