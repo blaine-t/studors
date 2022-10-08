@@ -15,7 +15,7 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 - [x] Form regex is broken
 - [x] Ensure lowercase emails are consistent
 - [x] Add space in with comma separation support (for batch email additions in admin panel)
-- [ ] Fix DB functions for new structure
+- [x] Fix DB functions for new structure
 - [ ] Extra admin actions (e.g. Advance the term, add holidays)
 - [ ] Handle phone numbers better
 - [ ] Add proper matching
@@ -30,7 +30,7 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 
 ### WEB PAGES NOT DONE:
 
-/admin/list // Needs JQuery setup
+/admin/list // Styling required
 
 /about // Done but waiting for info
 

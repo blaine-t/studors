@@ -88,13 +88,29 @@ async function revokeUser(role: string, email: string) {
 }
 
 async function listUsers(role: string) {
+  let extraQuery = ''
+  if (role == 'tutors') {
+    extraQuery = ', hours_term, hours_total'
+  }
   try {
-    const res = await pool.query(`SELECT email FROM ${role} ORDER BY email`)
-    let returnStatement = ''
-    for (let i = 0; i < res.rows.length; i++) {
-      returnStatement += res.rows[i]['email'] + '\n'
-    }
-    return returnStatement
+    const res = await pool.query(
+      `SELECT first_name, last_name, grade, email, phone${extraQuery} 
+      FROM ${role} 
+      ORDER BY last_name
+      `
+    )
+    return res.rows
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+async function listAllowed(role: string) {
+  try {
+    const res = await pool.query(
+      `SELECT email FROM allowed${role} ORDER BY email`
+    )
+    return res.rows
   } catch (err) {
     console.log(err)
   }
@@ -109,13 +125,13 @@ async function listSessions(upcoming: boolean) {
   }
   try {
     const res = await pool.query(
-      `SELECT sessions.timeof, tutors.first_name as tutor_name, tutors.last_name as tutor_surname, 
-      students.first_name as student_name, students.last_name as student_surname, sessions.subject, sessions.hours
+      `SELECT sessions.time_id, tutors.first_name as tutor_name, tutors.last_name as tutor_surname, 
+      students.first_name as student_name, students.last_name as student_surname, sessions.subject_id, sessions.hours
       FROM sessions
       INNER JOIN tutors on sessions.tutor_id = tutors.id
       INNER JOIN students on sessions.student_id = students.id
-      WHERE timeof ${operator} now()
-      ORDER BY timeof`
+      WHERE time_id ${operator} now()
+      ORDER BY time_id`
     )
     return res.rows
   } catch (err) {
@@ -123,10 +139,15 @@ async function listSessions(upcoming: boolean) {
   }
 }
 
-async function createSession(sid: string, tid: string, time: Date) {
+async function createSession(
+  sid: string,
+  tid: string,
+  time: Date,
+  subject: string
+) {
   pool.query(
-    'INSERT INTO sessions (student_id,tutor_id,timeof) VALUES ($1,$2,$3)',
-    [sid, tid, time],
+    'INSERT INTO sessions (student_id,tutor_id,time_id,subject_id) VALUES ($1,$2,$3,$4)',
+    [sid, tid, time, subject],
     (err) => {
       if (err) {
         console.log(err)
@@ -181,12 +202,20 @@ async function truncateTable(table: string) {
 }
 
 async function incrementGrade() {
-  pool.query('UPDATE students SET grade = grade + 1', (err) => {
+  pool.query(
+    'UPDATE students SET grade = grade + 1 WHERE grade < 13',
+    (err) => {
+      if (err) {
+        console.log(err)
+      }
+    }
+  )
+  pool.query('UPDATE tutors SET grade = grade + 1 WHERE grade < 13', (err) => {
     if (err) {
       console.log(err)
     }
   })
-  pool.query('UPDATE tutors SET grade = grade + 1', (err) => {
+  pool.query('UPDATE admins SET grade = grade + 1 WHERE grade < 13', (err) => {
     if (err) {
       console.log(err)
     }
@@ -210,6 +239,7 @@ export default {
   allowUser,
   revokeUser,
   listUsers,
+  listAllowed,
   listSessions,
   createSession,
   updateApiKey,

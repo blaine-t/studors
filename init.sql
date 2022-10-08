@@ -47,6 +47,7 @@ create table
     sessions(
         id uuid primary key default gen_random_uuid(),
         time_id date references times(time) not null,
+        subject_id text references subjects(subject) not null,
         student_id text references students(id) not null,
         tutor_id text references tutors(id) not null,
         school text default 'LSW',
