@@ -21,22 +21,15 @@ async function createUser(
   )
 }
 
-async function deleteUser(role: string, id: string) {
-  pool.query(`DELETE FROM ${role} WHERE id = $1`, [id], (err) => {
-    if (err) {
-      console.log(err)
-    }
-  })
-}
-
-async function updateStudent(
+async function updateUser(
+  role: string,
   id: string,
   phone: string,
   grade: number,
   dark_theme: boolean
 ) {
   pool.query(
-    'UPDATE students SET phone = $2, grade = $3, dark_theme = $4 WHERE id = $1',
+    `UPDATE ${role} SET phone = $2, grade = $3, dark_theme = $4 WHERE id = $1`,
     [id, phone, grade, dark_theme],
     (err) => {
       if (err) {
@@ -46,35 +39,12 @@ async function updateStudent(
   )
 }
 
-async function updateTutor(
-  id: string,
-  phone: string,
-  grade: number,
-  subjects: string[],
-  availability: Date[],
-  dark_theme: boolean
-) {
-  pool.query(
-    'UPDATE tutors SET phone = $2, grade = $3, subjects = $4, availability = $5, dark_theme = $6 WHERE id = $1',
-    [id, phone, grade, subjects, availability, dark_theme],
-    (err) => {
-      if (err) {
-        console.log(err)
-      }
+async function deleteUser(role: string, id: string) {
+  pool.query(`DELETE FROM ${role} WHERE id = $1`, [id], (err) => {
+    if (err) {
+      console.log(err)
     }
-  )
-}
-
-async function updateAdmin(id: string, phone: string, dark_theme: boolean) {
-  pool.query(
-    'UPDATE admins SET phone = $2, dark_theme = $3 WHERE id = $1',
-    [id, phone, dark_theme],
-    (err) => {
-      if (err) {
-        console.log(err)
-      }
-    }
-  )
+  })
 }
 
 async function authUser(role: string, id: string) {
@@ -233,9 +203,7 @@ async function removeOldUsers(role: string) {
 
 export default {
   createUser,
-  updateStudent,
-  updateTutor,
-  updateAdmin,
+  updateUser,
   deleteUser,
   authUser,
   checkUser,

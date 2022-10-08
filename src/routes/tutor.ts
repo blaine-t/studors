@@ -52,12 +52,11 @@ router.post('/settings', (req, res) => {
       req.body.phone.match('')) &&
     (req.body.grade.match('[9]') || req.body.grade.match('[1][0-2]'))
   ) {
-    db.updateTutor(
+    db.updateUser(
+      'tutors',
       res.locals.user.id,
       req.body.phone,
       req.body.grade,
-      [''],
-      [new Date()],
       req.body.dark_theme || false
     )
     res.locals.user.phone = req.body.phone

@@ -44,7 +44,8 @@ router.post('/settings', (req, res) => {
       req.body.phone.match('')) &&
     (req.body.grade.match('[9]') || req.body.grade.match('[1][0-2]'))
   ) {
-    db.updateStudent(
+    db.updateUser(
+      'students',
       res.locals.user.id,
       req.body.phone,
       req.body.grade,

@@ -62,7 +62,8 @@ router.post('/settings', (req, res) => {
   if (
     req.body.phone.match('^([2-9][0-8][0-9])[-]([2-9][0-9]{2})[-]([0-9]{4})$')
   ) {
-    db.updateAdmin(
+    db.updateUser(
+      'admins',
       res.locals.user.id,
       req.body.phone,
       req.body.dark_theme || false
