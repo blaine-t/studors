@@ -13,6 +13,11 @@ services:
   db:
     image: 'studors-postgres:latest'
     container_name: 'studors-postgres'
+    # Enable ports for dev work. Leave off for prod because it's an attack vector
+    #ports:
+    #  - '5432:5432/tcp'
+
+    # Make sure to create the db folder as user before docker does otherwise permission issues will happen
     volumes:
       - ./db:/var/lib/postgresql/data
     user: '1000:1000'
