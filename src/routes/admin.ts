@@ -37,6 +37,7 @@ router.get('/list', async (req, res) => {
   const studentAllowed = await db.listAllowed('students')
   const tutorAllowed = await db.listAllowed('tutors')
   const adminAllowed = await db.listAllowed('admins')
+  const holidays = await db.listHolidays()
   const pastSessions = await db.listSessions(false)
   const upcomingSessions = await db.listSessions(true)
   res.render('pages/admin/list', {
@@ -46,6 +47,7 @@ router.get('/list', async (req, res) => {
     studentAllowed: studentAllowed,
     tutorAllowed: tutorAllowed,
     adminAllowed: adminAllowed,
+    holidays: holidays,
     pastSessions: pastSessions,
     upcomingSessions: upcomingSessions,
     functions: functions
@@ -70,7 +72,7 @@ router.post('/settings', (req, res) => {
     ) &&
       sanitize.phone(req.body.phone)) ||
       req.body.phone.match('^$')) &&
-    (req.body.grade.match('[9]') || req.body.grade.match('[1][0-2]'))
+    (req.body.grade.match('[9]') || req.body.grade.match('[1][0-3]'))
   ) {
     const phone = String(sanitize.phone(req.body.phone))
     db.updateUser(
@@ -83,7 +85,7 @@ router.post('/settings', (req, res) => {
     res.locals.user.phone = phone
     res.locals.user.grade = req.body.grade
     res.locals.user.dark_theme = req.body.dark_theme
-    res.redirect('home')
+    res.redirect('panel')
     return
   }
   res.render('pages/admin/settings', {
@@ -138,6 +140,12 @@ router.post('/manage', async (req, res) => {
     'Failed to save removed admins\n'
   )
 
+  if (req.body.add_hol) {
+    db.createHoliday(req.body.add_hol)
+  }
+  if (req.body.rem_hol) {
+    db.deleteHoliday(req.body.rem_hol)
+  }
   if (req.body.adv_term) {
     db.advanceTerm()
   }

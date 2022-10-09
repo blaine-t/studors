@@ -251,14 +251,23 @@ function getSunday(date = new Date()) {
 async function createDates() {
   try {
     let times = ''
-    const res = await pool.query(`SELECT hour, minute from increments`)
+    const res = await pool.query(`SELECT hour from increments`)
+    const offDays = await pool.query('SELECT holiday from holidays')
     if (res.rows.length != 0) {
       for (let i = 1; i < 6; i++) {
         for (let j = 0; j < res.rows.length; j++) {
           const time = getSunday()
+          let holiday = false
           time.setDate(time.getDate() + i)
-          time.setHours(res.rows[j].hour, res.rows[j].minute, 0, 0)
-          times += "('" + new Date(time).toISOString() + ")'),"
+          for (let k = 0; k < offDays.rows.length; k++) {
+            if (time.getDate() === offDays.rows[k].holiday.getDate()) {
+              holiday = true
+            }
+          }
+          if (!holiday) {
+            time.setHours(res.rows[j].hour, (res.rows[j].hour % 1) * 60, 0, 0)
+            times += "('" + new Date(time).toISOString() + ")'),"
+          }
         }
       }
       times = times.replace(/,$/, '')
@@ -266,6 +275,33 @@ async function createDates() {
         `INSERT into times (time) VALUES ${times} ON CONFLICT DO NOTHING`
       )
     }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+async function createHoliday(date: Date) {
+  pool.query('INSERT INTO holidays (holiday) VALUES ($1)', [date], (err) => {
+    if (err) {
+      console.log(err)
+    }
+  })
+}
+
+async function deleteHoliday(date: Date) {
+  pool.query('DELETE FROM holidays WHERE holiday = $1', [date], (err) => {
+    if (err) {
+      console.log(err)
+    }
+  })
+}
+
+async function listHolidays() {
+  try {
+    const res = await pool.query(
+      'SELECT holiday FROM holidays WHERE holiday > now()'
+    )
+    return res.rows
   } catch (err) {
     console.log(err)
   }
@@ -290,5 +326,8 @@ export default {
   incrementGrade,
   removeOldUsers,
   advanceTerm,
-  createDates
+  createDates,
+  createHoliday,
+  deleteHoliday,
+  listHolidays
 }

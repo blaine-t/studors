@@ -45,7 +45,6 @@ create table
 
 create table
     sessions(
-        id uuid primary key default gen_random_uuid(),
         time_id timestamp
         with
             time zone references times(time) not null,
@@ -53,7 +52,8 @@ create table
             student_id text references students(id) not null,
             tutor_id text references tutors(id) not null,
             school text default 'LSW',
-            hours decimal
+            hours decimal,
+            primary key (time_id, tutor_id)
     );
 
 create table subjects( subject text primary key );
@@ -67,12 +67,9 @@ create table
 
 create table times( time timestamp with time zone primary key );
 
-create table
-    increments(
-        increment uuid primary key default gen_random_uuid(),
-        hour int not null,
-        minute int not null
-    );
+create table increments( hour decimal primary key );
+
+create table holidays ( holiday date primary key );
 
 create table
     availabilitymap(

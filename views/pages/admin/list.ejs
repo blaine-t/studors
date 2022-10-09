@@ -141,6 +141,21 @@
       </tbody>
       </table>
       <hr>
+      <h2> Off Days: </h2>
+      <table id="offDaysTable">
+        <thead>
+        <tr>
+          <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for(const obj of holidays){ %>
+        <tr>
+          <td><%= functions.formatDate(obj['holiday']).replace('00:00:00','') %></td>
+        </tr>
+        <% } %>
+      </tbody>
+      </table>
       <h2> Upcoming Sessions: </h2>
       <table id="upcomingSessionTable">
         <thead>
@@ -211,6 +226,7 @@
     $('#allowedStudentsTable').DataTable();
     $('#allowedTutorsTable').DataTable();
     $('#allowedAdminsTable').DataTable();
+    $('#offDaysTable').DataTable();
     $('#upcomingSessionTable').DataTable();
     $('#pastSessionTable').DataTable();
   });

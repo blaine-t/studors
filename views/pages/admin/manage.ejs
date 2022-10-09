@@ -4,6 +4,8 @@
 <head>
     <%- include('../../components/head'); %>
         <title>Studors - Admin</title>
+
+    <script type="text/javascript" src="/public/js/DropCalendar.js"></script>
 </head>
 
 <style>
@@ -26,6 +28,8 @@
     margin-left: 0;
     margin-bottom: 55px;
     }
+
+    
 </style>
 
 <body>
@@ -76,6 +80,12 @@
                     oninput="setCustomValidity('')">
                 <br><hr>
                 <label style="width: 350px;display: block;">
+                    <label for="add_hol">Add an off day:</label>
+                    <input type="date" id="add_hol" name="add_hol">
+                    <br><hr>
+                    <label for="rem_hol">Remove an off day:</label>
+                    <input type="date" id="rem_hol" name="rem_hol">
+                    <br><hr>
                     <label for="adv_term">Advance the term:</label>
                     <label class="check"><input style="display: none;" type="checkbox" id="adv_term" name="adv_term"><span></span></label>
                     <br><hr>
