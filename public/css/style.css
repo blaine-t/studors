@@ -377,10 +377,11 @@ header hr {
     font-size: 20pt;
     text-align: center;
     float: right;
+    font-family: 'Roboto Flex', "Open Sans", Verdana, sans-serif;
 }
 
 .check span:hover {
-    background-color: #CCC;
+    background-color: #BBB;
 }
 
 [type=checkbox]:checked+span:after {
