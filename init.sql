@@ -49,9 +49,9 @@ create table subjects( subject text primary key );
 
 create table
     subjectmap(
-        id uuid primary key default gen_random_uuid(),
         subject_id text references subjects(subject) not null,
-        tutor_id text references tutors(id) not null
+        tutor_id text references tutors(id) not null,
+        primary key (subject_id, tutor_id)
     );
 
 create table
@@ -73,11 +73,18 @@ create table holidays ( holiday date primary key );
 
 create table
     availabilitymap(
-        id uuid primary key default gen_random_uuid(),
         time_id timestamp
         with
             time zone references times(time) not null,
-            tutor_id text references tutors(id) not null
+            tutor_id text references tutors(id) not null,
+            primary key (time_id, tutor_id)
+    );
+
+create table
+    weeklyavailability(
+        dow int not null,
+        increment_id decimal references increments(hour) not null,
+        primary key (dow, increment_id)
     );
 
 -- Create whitelist for users so that only certain emails can sign up

@@ -280,6 +280,42 @@ async function createDates() {
   }
 }
 
+async function listTimesBetweenDates(afterTime: Date, beforeTime: Date) {
+  try {
+    const res = await pool.query(
+      'SELECT time FROM times WHERE time > $1 AND time < $2',
+      [afterTime, beforeTime]
+    )
+    return res.rows
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+async function listCurrentDatesWeek() {
+  const res = []
+  const sun = getSunday()
+  for (let i = 1; i < 6; i++) {
+    const afterTime = new Date()
+    afterTime.setDate(sun.getDate() + i)
+    afterTime.setHours(0, 0, 0, 0)
+    const beforeTime = new Date()
+    beforeTime.setDate(afterTime.getDate() + 1)
+    beforeTime.setHours(0, 0, 0, 0)
+    res.push(await listTimesBetweenDates(afterTime, beforeTime))
+  }
+  return res
+}
+
+async function listIncrements() {
+  try {
+    const res = await pool.query('SELECT hour FROM increments')
+    return res.rows
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 async function createHoliday(date: Date) {
   pool.query('INSERT INTO holidays (holiday) VALUES ($1)', [date], (err) => {
     if (err) {
@@ -307,6 +343,39 @@ async function listHolidays() {
   }
 }
 
+async function listTutorAvailability(id: string) {
+  try {
+    const res = await pool.query(
+      'SELECT time_id FROM availabilitymap WHERE tutor_id = $1',
+      [id]
+    )
+    return res.rows
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+async function createWeeklyAvailability() {
+  try {
+    let string = ''
+    const increments = await listIncrements()
+    if (increments != undefined) {
+      for (let i = 0; i < increments.length; i++) {
+        for (let j = 1; j < 6; j++) {
+          string += '(' + j + ',' + increments[i]['hour'] + '),'
+        }
+      }
+      string = string.replace(/,$/, '')
+      const res = await pool.query(
+        `INSERT into weeklyavailability (dow,increment_id) VALUES ${string} ON CONFLICT DO NOTHING`
+      )
+      return res.rows
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export default {
   createUser,
   updateUser,
@@ -327,7 +396,12 @@ export default {
   removeOldUsers,
   advanceTerm,
   createDates,
+  listTimesBetweenDates,
+  listCurrentDatesWeek,
+  listIncrements,
   createHoliday,
   deleteHoliday,
-  listHolidays
+  listHolidays,
+  listTutorAvailability,
+  createWeeklyAvailability
 }

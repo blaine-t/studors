@@ -21,11 +21,15 @@
                 </tr>
             </thead>
             <tbody>
-                <% for(const obj of tutors){ %>
+                <% for(const obj of times){ %>
                     <tr>
                         <% for(const key in obj) { %>
-                            <td><%= obj[key] %></td>
-                        <% } %>
+                            <% if (key == 0) { %>
+                                <td><%= functions.formatTime(obj[key]) %></td>
+                            <% } else { %>
+                                <td><%= obj[key]['time'] %></td>
+                            <% }
+                            } %>
                     </tr>
                 <% } %>
             </tbody>
