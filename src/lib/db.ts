@@ -376,11 +376,58 @@ async function createWeeklyAvailability() {
   }
 }
 
+async function listWeeklyAvailability() {
+  try {
+    const res = await pool.query(
+      'SELECT id, dow, increment_id FROM weeklyavailability'
+    )
+    return res.rows
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 async function listWeeklyAvailabilityAtTime(increment: number) {
   try {
     const res = await pool.query(
       'SELECT id, dow, increment_id FROM weeklyavailability WHERE increment_id = $1',
       [increment]
+    )
+    return res.rows
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+async function addWeeklyAvailability(tid: string, aid: string) {
+  pool.query(
+    'INSERT INTO weeklyavailabilitymap (tutor_id,weeklyavailability_id) VALUES ($1,$2) ON CONFLICT DO NOTHING',
+    [tid, aid],
+    (err) => {
+      if (err) {
+        console.log(err)
+      }
+    }
+  )
+}
+
+async function removeWeeklyAvailability(tid: string, aid: string) {
+  pool.query(
+    'DELETE FROM weeklyavailabilitymap WHERE tutor_id = $1 AND weeklyavailability_id = $2',
+    [tid, aid],
+    (err) => {
+      if (err) {
+        console.log(err)
+      }
+    }
+  )
+}
+
+async function listTutorWeeklyAvailability(id: string) {
+  try {
+    const res = await pool.query(
+      'SELECT weeklyavailability_id FROM weeklyavailabilitymap WHERE tutor_id = $1',
+      [id]
     )
     return res.rows
   } catch (err) {
@@ -416,5 +463,9 @@ export default {
   listHolidays,
   listTutorAvailability,
   createWeeklyAvailability,
-  listWeeklyAvailabilityAtTime
+  listWeeklyAvailability,
+  listWeeklyAvailabilityAtTime,
+  addWeeklyAvailability,
+  removeWeeklyAvailability,
+  listTutorWeeklyAvailability
 }

@@ -82,10 +82,20 @@ create table
 
 create table
     weeklyavailability(
-        id uuid default gen_random_uuid(),
+        id serial unique,
         dow int not null,
         increment_id decimal references increments(hour) not null,
         primary key (dow, increment_id)
+    );
+
+create table
+    weeklyavailabilitymap(
+        weeklyavailability_id serial references weeklyavailability(id) not null,
+        tutor_id text references tutors(id) not null,
+        primary key (
+            weeklyavailability_id,
+            tutor_id
+        )
     );
 
 -- Create whitelist for users so that only certain emails can sign up

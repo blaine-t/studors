@@ -9,6 +9,7 @@
 <body>
     <%- include('../../components/header'); %>
     <label>Availability:</label>
+    <form action="" method="post">
         <table id="availabilityTable">
             <thead>
                 <tr class="header">
@@ -27,13 +28,18 @@
                             <% if (key == 0) { %>
                                 <td><%= functions.formatTime(obj[key]) %></td>
                             <% } else { %>
-                                <td><%= (obj[key]) %></td>
+                                <td><input type="checkbox" name="<%= (obj[key]) %>" <% if(checked.includes(obj[key])) { %>
+                                checked <%}%>/></td>
                             <% }
                             } %>
                     </tr>
                 <% } %>
             </tbody>
         </table>
+        <button type="submit">Save</button>
+    </form>
 
     <%- include('../../components/footer'); %>
 </body>
+
+</html>

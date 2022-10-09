@@ -37,7 +37,6 @@ router.get('/settings', (req, res) => {
 router.get('/availability', async (req, res) => {
   const increments = await db.listIncrements()
   const times = []
-  let j = 0
   if (increments == undefined) {
     return
   }
@@ -48,16 +47,47 @@ router.get('/availability', async (req, res) => {
     if (week == undefined) {
       return
     }
-    for (j = 0; j < 5; j++) {
+    for (let j = 0; j < 5; j++) {
       const h = week[j]['dow']
       push[h] = week[j]['id']
     }
     times.push(push)
   }
+  res.locals.user = req.user
+  const id = res.locals.user.id
+  const availability = await db.listTutorWeeklyAvailability(id)
+  const checked = []
+  if (availability != undefined) {
+    for (let k = 0; k < availability.length; k++) {
+      checked.push(availability[k]['weeklyavailability_id'])
+    }
+  }
   res.render('pages/tutor/availability', {
     times: times,
+    checked: checked,
     functions: functions
   })
+})
+
+router.post('/availability', async (req, res) => {
+  const week = await db.listWeeklyAvailability()
+  const body = req.body
+  res.locals.user = req.user
+  const id = res.locals.user.id
+  if (week == undefined) {
+    res.redirect('availability')
+    return
+  }
+  for (let i = 0; i < week.length; i++) {
+    const name: string = week[i]['id']
+    if (name in body) {
+      db.addWeeklyAvailability(id, name)
+    } else {
+      db.removeWeeklyAvailability(id, name)
+    }
+  }
+  res.redirect('home')
+  return
 })
 
 router.get('/subjects', (req, res) => {
@@ -80,7 +110,7 @@ router.post('/settings', (req, res) => {
     ) &&
       sanitizedPhone) ||
       req.body.phone.match('^$')) &&
-    (req.body.grade.match('[9]') || req.body.grade.match('[1][0-3]'))
+    (req.body.grade.match('[9]') || req.body.grade.match('[1][0-2]'))
   ) {
     let phone = ''
     if (sanitizedPhone) {
