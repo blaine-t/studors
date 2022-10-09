@@ -84,13 +84,13 @@ create table
     weeklyavailability(
         id serial unique,
         dow int not null,
-        increment_id decimal references increments(hour) not null,
+        increment_id decimal references increments(hour) ON delete cascade not null,
         primary key (dow, increment_id)
     );
 
 create table
     weeklyavailabilitymap(
-        weeklyavailability_id serial references weeklyavailability(id) not null,
+        weeklyavailability_id serial references weeklyavailability(id) ON delete cascade not null,
         tutor_id text references tutors(id) not null,
         primary key (
             weeklyavailability_id,

@@ -137,6 +137,21 @@
       </tbody>
       </table>
       <hr>
+      <h2> Time Slots: </h2>
+      <table id="incrementsTable">
+        <thead>
+        <tr>
+          <th>Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for(const obj of increments){ %>
+        <tr>
+          <td><%= functions.formatTime(obj['hour']) %></td>
+        </tr>
+        <% } %>
+      </tbody>
+      </table>
       <h2> Off Days: </h2>
       <table id="offDaysTable">
         <thead>
@@ -222,6 +237,7 @@
     $('#allowedStudentsTable').DataTable();
     $('#allowedTutorsTable').DataTable();
     $('#allowedAdminsTable').DataTable();
+    $('#incrementsTable').DataTable();
     $('#offDaysTable').DataTable();
     $('#upcomingSessionTable').DataTable();
     $('#pastSessionTable').DataTable();

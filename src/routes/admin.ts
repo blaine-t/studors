@@ -37,6 +37,7 @@ router.get('/list', async (req, res) => {
   const studentAllowed = await db.listAllowed('students')
   const tutorAllowed = await db.listAllowed('tutors')
   const adminAllowed = await db.listAllowed('admins')
+  const increments = await db.listIncrements()
   const holidays = await db.listHolidays()
   const pastSessions = await db.listSessions(false)
   const upcomingSessions = await db.listSessions(true)
@@ -47,6 +48,7 @@ router.get('/list', async (req, res) => {
     studentAllowed: studentAllowed,
     tutorAllowed: tutorAllowed,
     adminAllowed: adminAllowed,
+    increments: increments,
     holidays: holidays,
     pastSessions: pastSessions,
     upcomingSessions: upcomingSessions,
@@ -150,6 +152,18 @@ router.post('/manage', async (req, res) => {
   if (req.body.rem_hol) {
     db.deleteHoliday(req.body.rem_hol)
   }
+
+  if (req.body.add_inc_h != '-') {
+    db.createIncrement(
+      Number(req.body.add_inc_h) + Number(req.body.add_inc_m / 60)
+    )
+  }
+  if (req.body.add_inc_h) {
+    db.removeIncrement(
+      Number(req.body.rem_inc_h) + Number(req.body.rem_inc_m / 60)
+    )
+  }
+
   if (req.body.adv_term) {
     db.advanceTerm()
   }

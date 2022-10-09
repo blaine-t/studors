@@ -307,6 +307,35 @@ async function listCurrentDatesWeek() {
   return res
 }
 
+async function createIncrement(hour: number) {
+  pool.query(
+    'INSERT INTO increments (hour) VALUES ($1) ON CONFLICT DO NOTHING',
+    [hour],
+    (err) => {
+      if (err) {
+        console.log(err)
+      }
+    }
+  )
+}
+
+async function removeIncrement(hour: number) {
+  pool.query(
+    'DELETE FROM weeklyavailability WHERE increment_id = $1',
+    [hour],
+    (err) => {
+      if (err) {
+        console.log(err)
+      }
+    }
+  )
+  pool.query('DELETE FROM increments WHERE hour = $1', [hour], (err) => {
+    if (err) {
+      console.log(err)
+    }
+  })
+}
+
 async function listIncrements() {
   try {
     const res = await pool.query('SELECT hour FROM increments')
@@ -457,6 +486,8 @@ export default {
   createDates,
   listTimesBetweenDates,
   listCurrentDatesWeek,
+  createIncrement,
+  removeIncrement,
   listIncrements,
   createHoliday,
   deleteHoliday,

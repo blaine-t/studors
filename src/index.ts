@@ -100,4 +100,3 @@ app.listen(port, () => {
 })
 
 db.createDates()
-db.createWeeklyAvailability()
