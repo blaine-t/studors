@@ -3,7 +3,7 @@
 
 <head>
     <%- include('../../components/head'); %>
-        <title>Studors - Admin</title>
+    <title>Studors - Admin</title>
 </head>
 
 <style>
@@ -36,14 +36,13 @@
     <%- include('../../components/header'); %>
     <div id="flex-box">
         <div id="holder">
-            <div id="settings-box" <% if(user.grade>8){ %> style="width: fit-content;" <% } %>>
+            <div class="settings-box" <% if(user.grade>8){ %> style="width: fit-content;" <% } %>>
                 <% if(user.grade>8){ %>
                 <div id="apiKey">
                     <p style="margin-right: 12px">
                         API KEY: 
                     </p>
-                    <p id="key"> <%= user.api_key %>
-                    </p>
+                    <p id="key"> <%= user.api_key %></p>
                     <button class="button" id="toggleButton" onclick="showMask()">Show</button>
                     <form method="post" action="apiReset">
                         <button class="button" onclick="if(confirm('Are you sure?\nResetting will require you to replace any API keys in any applications that you use. For example google sheets.')){}else{return false;};" type="submit">Reset</button>

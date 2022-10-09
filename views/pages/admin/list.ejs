@@ -8,12 +8,8 @@
     #user-list {
       white-space: pre-line;
     }
-
     body {
-      margin-bottom: 10vh;
       height: 100%;
-      margin-left: 10px;
-      margin-right: 10px;
     }
   </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -23,7 +19,7 @@
 
 <body>
   <%- include('../../components/header'); %>
-  <div id="flex-box">
+  <div class="admin-list">
     <div id="user-list">
       <h2> Students: </h2>
       <table id="studentsTable">
@@ -207,7 +203,7 @@
               }
               else { %>
           <td><%= obj[key] %></td>
-          <% } 
+          <% }
           } %>
         </tr>
         <% } %>

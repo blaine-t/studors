@@ -8,14 +8,14 @@
 
 <body>
     <%- include('../../components/header'); %>
-    <div id="flex-box">
+    <div class="flex-box">
         <div id="holder">
-            <div id="settings-box">
+            <div class="settings-box">
                 <form action="" method="post">
                     <label for="grade">Grade</label>
                     <input type="tel" id="grade" name="grade" pattern="^[9]$|^[1][0-2]$"
-                    oninvalid="setCustomValidity('Please enter a grade between 9-12')"
-                    oninput="setCustomValidity('')" placeholder="9-12" <% if(user.grade>8) { %>value="<%=user.grade %>"<%}%> >
+                        oninvalid="setCustomValidity('Please enter a grade between 9-12')"
+                        oninput="setCustomValidity('')" placeholder="9-12" <% if(user.grade>8) { %>value="<%=user.grade %>"<%}%> >
                     <span style="color:red;">*</span><br>
                     <br>
                     <label for="phone">Phone</label>
@@ -31,10 +31,10 @@
                         : "" %>>
                         <span></span>
                     </label>
-                    <br>
-                    <p id="small-error">
+                    <span class="small-error">
                         <%=error %>
-                    </p>
+                    </span>
+                    <br>
                     <button type="submit">Save</button>
                 </form>
             </div>

@@ -114,6 +114,14 @@ li a:active {
     justify-content: space-between;
 }
 
+.admin-list {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1600px;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
 /* Footer setup */
 footer {
     right: 0;
@@ -321,7 +329,7 @@ header hr {
 }
 
 /* Settings specific */
-#settings-box {
+.settings-box {
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -334,20 +342,21 @@ header hr {
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
+    margin-bottom: 55px;
 }
 
-#settings-box form {
+.settings-box form {
     text-align: left;
 }
 
-#settings-box input {
+.settings-box input {
     width: 250px;
     font-size: 20pt;
     padding: 5px;
     float: right;
 }
 
-#settings-box button {
+.settings-box button {
     color: #434343;
     font-size: 20pt;
     text-align: center;
@@ -361,20 +370,20 @@ header hr {
     transform: translatex(-50%);
 }
 
-#settings-box .check span {
+.settings-box .check span {
     float: right;
 }
 
 .check span {
-    height: 20pt;
-    width: 20pt;
+    height: 30px;
+    width: 30px;
     border: 2px solid grey;
     border-radius: 3px;
     display: inline-block;
     position: relative;
     color: #CCC;
     background-color: #d9d9d9;
-    font-size: 20pt;
+    font-size: 30px;
     text-align: center;
     float: right;
     font-family: 'Roboto Flex', "Open Sans", Verdana, sans-serif;
@@ -385,19 +394,22 @@ header hr {
 }
 
 [type=checkbox]:checked+span:after {
-    content: '\1F5F8';
-    position: relative;
-    top: -25%;
+    content: '\2713';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 [type=checkbox]:checked+span {
     background-color: #444;
 }
 
-#small-error {
+.small-error {
     color: #e8413c;
     white-space: pre-line;
     height: 20px;
+    font-size: 15pt;
 }
 
 /* Mobile device and other things support */
@@ -487,8 +499,8 @@ header hr {
         width: 90%;
     }
 
-    #settings-box input {
-        width: 190px;
+    .settings-box input {
+        width: 170px;
     }
 
     /*Footer things*/
@@ -512,8 +524,8 @@ header hr {
     }
 
     footer li a {
-        padding-left: 0px;
-        padding-right: 0px;
+        padding-left: 0;
+        padding-right: 0;
     }
 
     .about-info {
@@ -555,7 +567,7 @@ header hr {
         width: 30%;
         height: 4em;
         font-size: 15pt;
-        padding: 0px
+        padding: 0;
     }
 
     .profile img {
@@ -569,12 +581,12 @@ header hr {
 
     .login-buttons button {
         height: 100px;
-        padding: 0px;
+        padding: 0;
         padding-left: 10px;
         padding-right: 10px;
     }
 
-    #settings-box {
+    .settings-box {
         top: 15%;
         transform: translate(-50%, 0%);
     }
