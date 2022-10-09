@@ -107,11 +107,11 @@ li a:active {
 
 .flex-box {
     position: relative;
-    top: 40%;
-    transform: translatey(-50%);
     padding: 0;
     margin: 0;
     justify-content: space-between;
+    top: 40vh;
+    transform: translatey(-50%);
 }
 
 .admin-list {
@@ -120,6 +120,7 @@ li a:active {
     max-width: 1600px;
     padding-right: 5px;
     padding-left: 5px;
+    margin-bottom: 55px;
 }
 
 /* Footer setup */
@@ -330,7 +331,6 @@ header hr {
 
 /* Settings specific */
 .settings-box {
-    display: flex;
     flex-direction: column;
     padding: 10px;
     border: 2px solid #434343;
@@ -338,10 +338,9 @@ header hr {
     width: 500px;
     max-width: 90%;
     font-size: 25pt;
-    top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    position: absolute;
+    transform: translatex(-50%);
+    position: relative;
     margin-bottom: 55px;
 }
 
@@ -354,6 +353,9 @@ header hr {
     font-size: 20pt;
     padding: 5px;
     float: right;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: black;
 }
 
 .settings-box button {
@@ -540,15 +542,29 @@ header hr {
 
 
 /* Fallback stuff, for weird resolutions and things */
-@media (max-height: 680px) {
-    body {
-        margin-bottom: 8%;
-    }
-}
 
 @media (max-height: 625px) and (min-width: 600px) {
+    .flex-box {
+        top: 0;
+        transform: none;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    body {
+        margin-bottom: 60px;
+    }
+
     .navbar {
         display: none;
+    }
+
+    #topbar ul {
+        display: flex;
+    }
+
+    #holder {
+        top: 12vh;
     }
 
     #right-hidden-navbar {
@@ -584,10 +600,5 @@ header hr {
         padding: 0;
         padding-left: 10px;
         padding-right: 10px;
-    }
-
-    .settings-box {
-        top: 15%;
-        transform: translate(-50%, 0%);
     }
 }
