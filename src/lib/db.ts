@@ -376,6 +376,18 @@ async function createWeeklyAvailability() {
   }
 }
 
+async function listWeeklyAvailabilityAtTime(increment: number) {
+  try {
+    const res = await pool.query(
+      'SELECT id, dow, increment_id FROM weeklyavailability WHERE increment_id = $1',
+      [increment]
+    )
+    return res.rows
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export default {
   createUser,
   updateUser,
@@ -403,5 +415,6 @@ export default {
   deleteHoliday,
   listHolidays,
   listTutorAvailability,
-  createWeeklyAvailability
+  createWeeklyAvailability,
+  listWeeklyAvailabilityAtTime
 }

@@ -35,22 +35,24 @@ router.get('/settings', (req, res) => {
 })
 
 router.get('/availability', async (req, res) => {
-  const week = await db.listCurrentDatesWeek()
   const increments = await db.listIncrements()
   const times = []
-  if (increments != undefined) {
-    for (let i = 0; i < increments.length; i++) {
-      const time = increments[i]['hour']
-      const push = [time]
-      for (let j = 0; j < 5; j++) {
-        if (week[j]![i] == undefined) {
-          push.push('')
-        } else {
-          push.push(week[j]![i]!)
-        }
-      }
-      times.push(push)
+  let j = 0
+  if (increments == undefined) {
+    return
+  }
+  for (let i = 0; i < increments.length; i++) {
+    const time = increments[i]['hour']
+    const push = [time, '', '', '', '', '']
+    const week = await db.listWeeklyAvailabilityAtTime(time)
+    if (week == undefined) {
+      return
     }
+    for (j = 0; j < 5; j++) {
+      const h = week[j]['dow']
+      push[h] = week[j]['id']
+    }
+    times.push(push)
   }
   res.render('pages/tutor/availability', {
     times: times,
@@ -71,15 +73,19 @@ router.get('/history', (req, res) => {
 })
 
 router.post('/settings', (req, res) => {
+  const sanitizedPhone = sanitize.phone(req.body.phone)
   if (
     ((req.body.phone.match(
       '^[(]?([2-9][0-8][0-9])[)]?[-|\\s]?([2-9][0-9]{2})[-|\\s]?([0-9]{4})$'
     ) &&
-      sanitize.phone(req.body.phone)) ||
+      sanitizedPhone) ||
       req.body.phone.match('^$')) &&
-    (req.body.grade.match('[9]') || req.body.grade.match('[1][0-2]'))
+    (req.body.grade.match('[9]') || req.body.grade.match('[1][0-3]'))
   ) {
-    const phone = String(sanitize.phone(req.body.phone))
+    let phone = ''
+    if (sanitizedPhone) {
+      phone = sanitizedPhone
+    }
     db.updateUser(
       'tutors',
       res.locals.user.id,

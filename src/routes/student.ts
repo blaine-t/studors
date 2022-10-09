@@ -38,15 +38,19 @@ router.get('/settings', (req, res) => {
 })
 
 router.post('/settings', (req, res) => {
+  const sanitizedPhone = sanitize.phone(req.body.phone)
   if (
     ((req.body.phone.match(
       '^[(]?([2-9][0-8][0-9])[)]?[-|\\s]?([2-9][0-9]{2})[-|\\s]?([0-9]{4})$'
     ) &&
-      sanitize.phone(req.body.phone)) ||
+      sanitizedPhone) ||
       req.body.phone.match('^$')) &&
     (req.body.grade.match('[9]') || req.body.grade.match('[1][0-2]'))
   ) {
-    const phone = String(sanitize.phone(req.body.phone))
+    let phone = ''
+    if (sanitizedPhone) {
+      phone = sanitizedPhone
+    }
     db.updateUser(
       'students',
       res.locals.user.id,

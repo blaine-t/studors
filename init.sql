@@ -82,6 +82,7 @@ create table
 
 create table
     weeklyavailability(
+        id uuid default gen_random_uuid(),
         dow int not null,
         increment_id decimal references increments(hour) not null,
         primary key (dow, increment_id)
