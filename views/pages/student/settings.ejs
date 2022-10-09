@@ -4,13 +4,6 @@
 <head>
     <%- include('../../components/head'); %>
     <title>Studors - Student</title>
-    <style>
-        @media (max-height: 625px) {
-            body {
-                margin-bottom: 200px;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -21,28 +14,28 @@
                 <form action="" method="post">
                     <label for="grade">Grade</label>
                     <input type="tel" id="grade" name="grade" pattern="^[9]$|^[1][0-2]$"
-                        oninvalid="setCustomValidity('Please enter a grade between 9-12')"
-                        oninput="setCustomValidity('')" placeholder="9-12" <% if(user.grade>8) { %>value="<%=user.grade %>"<%}%> >
-                            <span style="color:red;">*</span><br>
-                            <br>
-                            <label for="phone">Phone</label>
-                            <input type="tel" id="phone" name="phone"
-                                pattern="^[(]?([2-9][0-8][0-9])[)]?[-|\s]?([2-9][0-9]{2})[-|\s]?([0-9]{4})$"
-                                value="<%=user.phone %>" placeholder="800-555-0101"
-                                oninvalid="setCustomValidity('Please enter a valid phone number or leave blank')"
-                                oninput="this.setCustomValidity('')">
-                            <br>
-                            <br>
-                            <label for="dark_theme">Dark Mode</label>
-                            <label class="check"><input style="display: none;" type="checkbox" id="dark_theme" name="dark_theme" <%=user.dark_theme ? "checked"
-                                : "" %>>
-                                <span></span>
-                            </label>
-                            <br>
-                            <p id="small-error">
-                                <%=error %>
-                            </p>
-                            <button type="submit">Save</button>
+                    oninvalid="setCustomValidity('Please enter a grade between 9-12')"
+                    oninput="setCustomValidity('')" placeholder="9-12" <% if(user.grade>8) { %>value="<%=user.grade %>"<%}%> >
+                    <span style="color:red;">*</span><br>
+                    <br>
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone"
+                        pattern="^[(]?([2-9][0-8][0-9])[)]?[-|\s]?([2-9][0-9]{2})[-|\s]?([0-9]{4})$"
+                        value="<%=user.phone %>" placeholder="800-555-0101"
+                        oninvalid="setCustomValidity('Please enter a valid phone number or leave blank')"
+                        oninput="this.setCustomValidity('')">
+                    <br>
+                    <br>
+                    <label for="dark_theme">Dark Mode</label>
+                    <label class="check"><input style="display: none;" type="checkbox" id="dark_theme" name="dark_theme" <%=user.dark_theme ? "checked"
+                        : "" %>>
+                        <span></span>
+                    </label>
+                    <br>
+                    <p id="small-error">
+                        <%=error %>
+                    </p>
+                    <button type="submit">Save</button>
                 </form>
             </div>
         </div>
