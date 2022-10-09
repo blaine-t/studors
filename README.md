@@ -17,7 +17,7 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 - [x] Add space in with comma separation support (for batch email additions in admin panel)
 - [x] Fix DB functions for new structure
 - [x] Handle phone numbers better
-- [ ] Extra admin actions (e.g. add holidays)
+- [x] Extra admin actions (e.g. add holidays)
 - [ ] Add proper matching
 - [ ] Add unavailability options
 - [ ] Test suite from start to finish
@@ -40,7 +40,7 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 
 /student/request?
 
-/student/settings // Done besides styling
+/student/settings
 
 /student/upcoming
 
@@ -48,6 +48,6 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 
 /tutor/request
 
-/tutor/settings // Done besides styling
+/tutor/settings
 
 /tutor/upcoming
