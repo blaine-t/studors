@@ -69,6 +69,7 @@ import { router as tutor } from './routes/tutor'
 import { router as admin } from './routes/admin'
 import { router as api } from './routes/api'
 import { router as auth } from './routes/auth'
+import db from './lib/db'
 
 // Require authentication for certain routes on the site
 app.use('/', root)
@@ -98,6 +99,10 @@ app.listen(port, () => {
   console.log(`Studors is listening on http://127.0.0.1:${port}`)
 })
 
-import sanitize from './lib/sanitize'
-
-console.log(sanitize.phone('(402) a540-5790'))
+db.createDates()
+db.createSession(
+  '109860147740419632587',
+  '109860147740419632587',
+  new Date('2022-10-07 7:15:00'),
+  'Algebra'
+)

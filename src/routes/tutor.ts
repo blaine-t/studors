@@ -37,6 +37,10 @@ router.get('/availability', (req, res) => {
   res.render('pages/tutor/availability', { error: '' })
 })
 
+router.get('/subjects', (req, res) => {
+  res.render('pages/tutor/subjects', { error: '' })
+})
+
 router.get('/upcoming', (req, res) => {
   res.render('pages/tutor/upcoming')
 })

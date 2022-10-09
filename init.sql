@@ -46,12 +46,14 @@ create table
 create table
     sessions(
         id uuid primary key default gen_random_uuid(),
-        time_id date references times(time) not null,
-        subject_id text references subjects(subject) not null,
-        student_id text references students(id) not null,
-        tutor_id text references tutors(id) not null,
-        school text default 'LSW',
-        hours decimal
+        time_id timestamp
+        with
+            time zone references times(time) not null,
+            subject_id text references subjects(subject) not null,
+            student_id text references students(id) not null,
+            tutor_id text references tutors(id) not null,
+            school text default 'LSW',
+            hours decimal
     );
 
 create table subjects( subject text primary key );
@@ -63,13 +65,22 @@ create table
         tutor_id text references tutors(id) not null
     );
 
-create table times( time date primary key );
+create table times( time timestamp with time zone primary key );
+
+create table
+    increments(
+        increment uuid primary key default gen_random_uuid(),
+        hour int not null,
+        minute int not null
+    );
 
 create table
     availabilitymap(
         id uuid primary key default gen_random_uuid(),
-        time_id date references times(time) not null,
-        tutor_id text references tutors(id) not null
+        time_id timestamp
+        with
+            time zone references times(time) not null,
+            tutor_id text references tutors(id) not null
     );
 
 -- Create whitelist for users so that only certain emails can sign up

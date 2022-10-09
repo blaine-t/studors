@@ -10,32 +10,25 @@
     <%- include('../../components/header'); %>
     <label>Availability:</label>
         <table id="availabilityTable">
-            <tr class="header">
-                <th style="width:16%">Time</th>
-                <th style="width:16%">Mon</th>
-                <th style="width:16%">Tue</th>
-                <th style="width:16%">Wed</th>
-                <th style="width:16%">Thu</th>
-                <th style="width:16%">Fri</th>
-            </tr>
-            <tr>
-                <td>7:00 AM</td>
-            </tr>
-            <tr>
-                <td>7:30 AM</td>
-            </tr>
-            <tr>
-                <td>3:00 PM</td>
-            </tr>
-            <tr>
-                <td>3:30 PM</td>
-            </tr>
-            <tr>
-                <td>4:00 PM</td>
-            </tr>
-            <tr>
-                <td>4:30 PM</td>
-            </tr>
+            <thead>
+                <tr class="header">
+                    <th style="width:16%">Time</th>
+                    <th style="width:16%">Mon</th>
+                    <th style="width:16%">Tue</th>
+                    <th style="width:16%">Wed</th>
+                    <th style="width:16%">Thu</th>
+                    <th style="width:16%">Fri</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(const obj of tutors){ %>
+                    <tr>
+                        <% for(const key in obj) { %>
+                            <td><%= obj[key] %></td>
+                        <% } %>
+                    </tr>
+                <% } %>
+            </tbody>
         </table>
 
     <%- include('../../components/footer'); %>

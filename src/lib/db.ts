@@ -238,6 +238,39 @@ async function advanceTerm() {
   })
 }
 
+function getSunday(date = new Date()) {
+  const previousSunday = new Date()
+
+  previousSunday.setDate(date.getDate() - date.getDay())
+
+  previousSunday.setHours(0, 0, 0, 0)
+
+  return previousSunday
+}
+
+async function createDates() {
+  try {
+    let times = ''
+    const res = await pool.query(`SELECT hour, minute from increments`)
+    if (res.rows.length != 0) {
+      for (let i = 1; i < 6; i++) {
+        for (let j = 0; j < res.rows.length; j++) {
+          const time = getSunday()
+          time.setDate(time.getDate() + i)
+          time.setHours(res.rows[j].hour, res.rows[j].minute, 0, 0)
+          times += "('" + new Date(time).toISOString() + ")'),"
+        }
+      }
+      times = times.replace(/,$/, '')
+      pool.query(
+        `INSERT into times (time) VALUES ${times} ON CONFLICT DO NOTHING`
+      )
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export default {
   createUser,
   updateUser,
@@ -256,5 +289,6 @@ export default {
   truncateTable,
   incrementGrade,
   removeOldUsers,
-  advanceTerm
+  advanceTerm,
+  createDates
 }
