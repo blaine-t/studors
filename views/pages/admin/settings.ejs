@@ -4,37 +4,37 @@
 <head>
     <%- include('../../components/head'); %>
     <title>Studors - Admin</title>
+
+    <style>
+        #apiKey {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        #apiKey p {
+            font-size: 12pt;
+            color: #e8413c;
+        }
+        #apiKey p#key {
+            visibility: hidden;
+        }
+
+        button {
+            width: 90px;
+        }
+
+        #settings-box #apiKey #toggleButton {
+            left: 0%;
+            transform: none;
+            margin-left: 12px;
+            margin-right: 12px;
+        }
+    </style>
 </head>
-
-<style>
-    #apiKey {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    #apiKey p {
-        font-size: 12pt;
-        color: #e8413c;
-    }
-    #apiKey p#key {
-        visibility: hidden;
-    }
-
-    button {
-        width: 90px;
-    }
-
-    #settings-box #apiKey #toggleButton {
-        left: 0%;
-        transform: none;
-        margin-left: 12px;
-        margin-right: 12px;
-    }
-</style>
 
 <body>
     <%- include('../../components/header'); %>
-    <div id="flex-box">
+    <div class="flex-box">
         <div id="holder">
             <div class="settings-box" <% if(user.grade>8){ %> style="width: fit-content;" <% } %>>
                 <% if(user.grade>8){ %>
@@ -43,12 +43,14 @@
                         API KEY: 
                     </p>
                     <p id="key"> <%= user.api_key %></p>
+                    <p>
                     <button class="button" id="toggleButton" onclick="showMask()">Show</button>
+                    </p>
                     <form method="post" action="apiReset">
                         <button class="button" onclick="if(confirm('Are you sure?\nResetting will require you to replace any API keys in any applications that you use. For example google sheets.')){}else{return false;};" type="submit">Reset</button>
                     </form>
                 </div>
-                <br><hr style="width: 100%">
+                <hr style="width: 100%">
                 <% } %>
                 <form action="" method="post">
                     <label for="grade">Grade</label>
