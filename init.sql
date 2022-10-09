@@ -45,6 +45,15 @@ create table
 
 create table times( time timestamp with time zone primary key );
 
+create table subjects( subject text primary key );
+
+create table
+    subjectmap(
+        id uuid primary key default gen_random_uuid(),
+        subject_id text references subjects(subject) not null,
+        tutor_id text references tutors(id) not null
+    );
+
 create table
     sessions(
         time_id timestamp
@@ -56,15 +65,6 @@ create table
             school text default 'LSW',
             hours decimal,
             primary key (time_id, tutor_id)
-    );
-
-create table subjects( subject text primary key );
-
-create table
-    subjectmap(
-        id uuid primary key default gen_random_uuid(),
-        subject_id text references subjects(subject) not null,
-        tutor_id text references tutors(id) not null
     );
 
 create table increments( hour decimal primary key );
