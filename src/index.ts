@@ -69,6 +69,7 @@ import { router as tutor } from './routes/tutor'
 import { router as admin } from './routes/admin'
 import { router as api } from './routes/api'
 import { router as auth } from './routes/auth'
+import db from './lib/db'
 
 // Require authentication for certain routes on the site
 app.use('/', root)
@@ -97,3 +98,6 @@ app.use(function (req, res) {
 app.listen(port, () => {
   console.log(`Studors is listening on http://127.0.0.1:${port}`)
 })
+
+db.createDates()
+db.createWeeklyAvailability()

@@ -17,6 +17,22 @@ function formatDate(date: Date) {
     ].join(':')
   )
 }
+
+function formatTime(input: string) {
+  let hour = Number(input)
+  let state = 'AM'
+  if (hour > 12) {
+    state = 'PM'
+    if (hour > 13) {
+      hour -= 12
+    }
+  }
+  const res =
+    Math.floor(hour) + ':' + padTo2Digits((hour % 1) * 60) + ' ' + state
+  return res
+}
+
 export default {
-  formatDate
+  formatDate,
+  formatTime
 }

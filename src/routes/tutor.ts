@@ -3,6 +3,7 @@ const router = express.Router()
 
 import db from '../lib/db'
 import sanitize from '../lib/sanitize'
+import functions from '../../views/components/functions'
 
 function checkAuthentication(req: Request, res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
@@ -33,8 +34,28 @@ router.get('/settings', (req, res) => {
   res.render('pages/tutor/settings', { error: '' })
 })
 
-router.get('/availability', (req, res) => {
-  res.render('pages/tutor/availability', { error: '' })
+router.get('/availability', async (req, res) => {
+  const week = await db.listCurrentDatesWeek()
+  const increments = await db.listIncrements()
+  const times = []
+  if (increments != undefined) {
+    for (let i = 0; i < increments.length; i++) {
+      const time = increments[i]['hour']
+      const push = [time]
+      for (let j = 0; j < 5; j++) {
+        if (week[j]![i] == undefined) {
+          push.push('')
+        } else {
+          push.push(week[j]![i]!)
+        }
+      }
+      times.push(push)
+    }
+  }
+  res.render('pages/tutor/availability', {
+    times: times,
+    functions: functions
+  })
 })
 
 router.get('/subjects', (req, res) => {
