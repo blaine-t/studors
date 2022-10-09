@@ -43,6 +43,8 @@ create table
         pos text default 'admin'
     );
 
+create table times( time timestamp with time zone primary key );
+
 create table
     sessions(
         time_id timestamp
@@ -64,8 +66,6 @@ create table
         subject_id text references subjects(subject) not null,
         tutor_id text references tutors(id) not null
     );
-
-create table times( time timestamp with time zone primary key );
 
 create table increments( hour decimal primary key );
 
