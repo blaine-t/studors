@@ -483,6 +483,51 @@ async function removeSubject(string: string) {
   })
 }
 
+async function listSubjects() {
+  try {
+    const res = await pool.query('SELECT subject FROM subjects')
+    return res.rows
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+async function addTutorsSubject(sid: string, tid: string) {
+  pool.query(
+    'INSERT INTO subjectmap (subject_id,tutor_id) VALUES ($1,$2) ON CONFLICT DO NOTHING',
+    [sid, tid],
+    (err) => {
+      if (err) {
+        console.log(err)
+      }
+    }
+  )
+}
+
+async function removeTutorsSubject(sid: string, tid: string) {
+  pool.query(
+    'DELETE FROM subjectmap WHERE subject_id = $1 AND tutor_id = $2',
+    [sid, tid],
+    (err) => {
+      if (err) {
+        console.log(err)
+      }
+    }
+  )
+}
+
+async function listTutorsSubjects(id: string) {
+  try {
+    const res = await pool.query(
+      'SELECT subject_id FROM subjectmap WHERE tutor_id = $1',
+      [id]
+    )
+    return res.rows
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export default {
   createUser,
   updateUser,
@@ -519,5 +564,9 @@ export default {
   removeWeeklyAvailability,
   listTutorWeeklyAvailability,
   createSubject,
-  removeSubject
+  removeSubject,
+  listSubjects,
+  listTutorsSubjects,
+  addTutorsSubject,
+  removeTutorsSubject
 }

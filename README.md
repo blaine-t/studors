@@ -18,7 +18,7 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 - [x] Fix DB functions for new structure
 - [x] Handle phone numbers better
 - [x] Extra admin actions (e.g. add holidays)
-- [ ] Implement subjects and subject matching
+- [x] Implement subjects and subject matching
 - [ ] Add proper matching
 - [ ] Add unavailability options
 - [ ] Make admin placeholders have current data instead of example
@@ -32,6 +32,8 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 
 /admin/list // Styling required
 
+/admin/settings // Convert to dialog?
+
 /about // Done but waiting for info
 
 /contact // Done but waiting for info
@@ -44,18 +46,18 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 
 /student/request?
 
-/student/settings
+/student/settings // Convert to dialog?
 
 /student/upcoming
 
 /tutor/availability // Styling required
 
-/tutor/subjects
+/tutor/subjects // Styling required
 
 /tutor/history
 
 /tutor/request
 
-/tutor/settings
+/tutor/settings // Convert to dialog?
 
 /tutor/upcoming
