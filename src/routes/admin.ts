@@ -210,13 +210,19 @@ function allowUserInput(
   error: string
 ) {
   if (request.match(regex)) {
-    const array = request
-      .split(/[, ]+/)
-      .map((element: string) => element.trim())
+    let split = /[, ]+/
+    if (database === 'subjects') {
+      split = /[,]+/
+    }
+    const array = request.split(split).map((element: string) => element.trim())
 
     let string = ''
     for (let i = 0; i < array.length; i++) {
-      string += "('" + array[i].toLowerCase() + "'),"
+      if (database === 'subjects') {
+        string += "('" + functions.toTitleCase(array[i]) + "'),"
+      } else {
+        string += "('" + array[i].toLowerCase() + "'),"
+      }
     }
     string = string.replace(/,$/, '')
     if (database === 'subjects') {
@@ -239,13 +245,18 @@ function revokeUserInput(
   error: string
 ) {
   if (request.match(regex)) {
-    const array = request
-      .split(/[, ]+/)
-      .map((element: string) => element.trim())
-
+    let split = /[, ]+/
+    if (database === 'subjects') {
+      split = /[,]+/
+    }
+    const array = request.split(split).map((element: string) => element.trim())
     let string = '('
     for (let i = 0; i < array.length; i++) {
-      string += "'" + array[i].toLowerCase() + "',"
+      if (database === 'subjects') {
+        string += "('" + functions.toTitleCase(array[i]) + "'),"
+      } else {
+        string += "('" + array[i].toLowerCase() + "'),"
+      }
     }
     string = string.replace(/,$/, ')')
     if (database === 'subjects') {

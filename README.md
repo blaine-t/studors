@@ -18,6 +18,7 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 - [x] Fix DB functions for new structure
 - [x] Handle phone numbers better
 - [x] Extra admin actions (e.g. add holidays)
+- [ ] Implement subjects and subject matching
 - [ ] Add proper matching
 - [ ] Add unavailability options
 - [ ] Make admin placeholders have current data instead of example
