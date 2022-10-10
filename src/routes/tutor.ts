@@ -35,8 +35,12 @@ router.get('/settings', (req, res) => {
 })
 
 router.get('/availability', async (req, res) => {
-  await db.createWeeklyAvailability()
   const increments = await db.listIncrements()
+  if (increments != undefined) {
+    if (increments.length != 0) {
+      await db.createWeeklyAvailability()
+    }
+  }
   const times = []
   if (increments == undefined) {
     return
