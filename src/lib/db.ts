@@ -464,6 +464,25 @@ async function listTutorWeeklyAvailability(id: string) {
   }
 }
 
+async function createSubject(string: string) {
+  pool.query(
+    `INSERT INTO subjects (subject) VALUES ${string} ON CONFLICT DO NOTHING`,
+    (err) => {
+      if (err) {
+        console.log(err)
+      }
+    }
+  )
+}
+
+async function removeSubject(string: string) {
+  pool.query(`DELETE FROM subjects WHERE subject IN ${string}`, (err) => {
+    if (err) {
+      console.log(err)
+    }
+  })
+}
+
 export default {
   createUser,
   updateUser,
@@ -498,5 +517,7 @@ export default {
   listWeeklyAvailabilityAtTime,
   addWeeklyAvailability,
   removeWeeklyAvailability,
-  listTutorWeeklyAvailability
+  listTutorWeeklyAvailability,
+  createSubject,
+  removeSubject
 }

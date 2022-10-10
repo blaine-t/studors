@@ -108,6 +108,7 @@ router.post('/manage', async (req, res) => {
     '^(@[\\w\\-.]+\\.[A-Za-z]{2,4}[\\W]*[,\\s]{1}[\\W]*)*(@[\\w\\-.]+\\.[A-Za-z]+)[\\W]*$'
   const emailRegex =
     '^[\\W]*([\\w+\\-.%]+@[\\w\\-.]+\\.[A-Za-z]{2,4}[\\W]*[,\\s]{1}[\\W]*)*([\\w+\\-.%]+@[\\w\\-.]+\\.[A-Za-z]{2,4})[\\W]*$'
+  const anyRegex = '^(?!\\s$).+'
   let error = ''
   error += allowUserInput(
     req.body.allowedStudentDomain,
@@ -125,6 +126,18 @@ router.post('/manage', async (req, res) => {
     req.body.allowedAdmins,
     emailRegex,
     'admins',
+    'Failed to save allowed admins\n'
+  )
+  error += allowUserInput(
+    req.body.addSub,
+    anyRegex,
+    'subjects',
+    'Failed to save allowed admins\n'
+  )
+  error += revokeUserInput(
+    req.body.remSub,
+    anyRegex,
+    'subjects',
     'Failed to save allowed admins\n'
   )
   error += revokeUserInput(
@@ -206,7 +219,11 @@ function allowUserInput(
       string += "('" + array[i].toLowerCase() + "'),"
     }
     string = string.replace(/,$/, '')
-    db.allowUser(database, string)
+    if (database === 'subjects') {
+      db.createSubject(string)
+    } else {
+      db.allowUser(database, string)
+    }
     return ''
   }
   if (!request.match('^$')) {
@@ -231,7 +248,11 @@ function revokeUserInput(
       string += "'" + array[i].toLowerCase() + "',"
     }
     string = string.replace(/,$/, ')')
-    db.revokeUser(database, string)
+    if (database === 'subjects') {
+      db.removeSubject(string)
+    } else {
+      db.revokeUser(database, string)
+    }
     return ''
   }
   if (!request.match('^$')) {
