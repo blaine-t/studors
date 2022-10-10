@@ -20,11 +20,14 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 - [x] Extra admin actions (e.g. add holidays)
 - [ ] Add proper matching
 - [ ] Add unavailability options
+- [ ] Make admin placeholders have current data instead of example
 - [ ] Test suite from start to finish
 - [ ] Refactor all code and ensure proper function use and proper security
 - [ ] Write pages
 
 ### WEB PAGES NOT DONE:
+
+/admin/manage // Light styling required
 
 /admin/list // Styling required
 
@@ -43,6 +46,10 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 /student/settings
 
 /student/upcoming
+
+/tutor/availability // Styling required
+
+/tutor/subjects
 
 /tutor/history
 

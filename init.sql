@@ -82,7 +82,7 @@ create table
 
 create table
     weeklyavailability(
-        id serial unique,
+        id uuid unique default gen_random_uuid(),
         dow int not null,
         increment_id decimal references increments(hour) ON delete cascade not null,
         primary key (dow, increment_id)
@@ -90,7 +90,7 @@ create table
 
 create table
     weeklyavailabilitymap(
-        weeklyavailability_id serial references weeklyavailability(id) ON delete cascade not null,
+        weeklyavailability_id uuid references weeklyavailability(id) ON delete cascade not null,
         tutor_id text references tutors(id) not null,
         primary key (
             weeklyavailability_id,
