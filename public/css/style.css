@@ -381,7 +381,6 @@ header hr {
     width: 30px;
     border: 2px solid grey;
     border-radius: 3px;
-    display: inline-block;
     position: relative;
     color: #CCC;
     background-color: #d9d9d9;
@@ -601,4 +600,11 @@ header hr {
         padding-left: 10px;
         padding-right: 10px;
     }
+}
+
+/* Fix later */
+#manage-form input[type=text] {
+    font-size: 20pt;
+    padding: 0.3vw 0vw 0.3vw 0.3vw;
+    width: 95vw;
 }
