@@ -266,7 +266,7 @@ async function createDates() {
           }
           if (!holiday) {
             time.setHours(res.rows[j].hour, (res.rows[j].hour % 1) * 60, 0, 0)
-            times += "('" + new Date(time).toISOString() + ")'),"
+            times += "('" + new Date(time).toISOString() + "'),"
           }
         }
       }
@@ -464,6 +464,51 @@ async function listTutorWeeklyAvailability(id: string) {
   }
 }
 
+async function listWeeklyAvailabilityMap() {
+  try {
+    const res = await pool.query(
+      `SELECT weeklyavailabilitymap.tutor_id, weeklyavailability.dow, weeklyavailability.increment_id 
+      FROM weeklyavailabilitymap
+      INNER JOIN weeklyavailability on weeklyavailabilitymap.weeklyavailability_id = weeklyavailability.id`
+    )
+    return res.rows
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+async function migrateWeeklyToDates() {
+  const weeklyAvailability = await listWeeklyAvailabilityMap()
+  let string = ''
+
+  if (weeklyAvailability == undefined || weeklyAvailability.length == 0) {
+    return
+  }
+
+  for (let i = 0; i < weeklyAvailability.length; i++) {
+    const time = getSunday()
+    const increment = weeklyAvailability[i]['increment_id']
+    time.setDate(time.getDate() + weeklyAvailability[i]['dow'])
+    time.setHours(increment, (increment % 1) * 60, 0, 0)
+    string +=
+      "('" +
+      new Date(time).toISOString() +
+      "','" +
+      weeklyAvailability[i]['tutor_id'] +
+      "'),"
+  }
+  string = string.replace(/,$/, '')
+  console.log(string)
+  pool.query(
+    `INSERT INTO availabilitymap (time_id, tutor_id) VALUES ${string} ON CONFLICT DO NOTHING`,
+    (err) => {
+      if (err) {
+        console.log(err)
+      }
+    }
+  )
+}
+
 async function createSubject(string: string) {
   pool.query(
     `INSERT INTO subjects (subject) VALUES ${string} ON CONFLICT DO NOTHING`,
@@ -528,6 +573,23 @@ async function listTutorsSubjects(id: string) {
   }
 }
 
+async function listAvailabilityForSubject(subject: string) {
+  try {
+    const res = await pool.query(
+      `SELECT time_id 
+      FROM availabilitymap 
+      WHERE tutor_id IN 
+      (SELECT tutor_id 
+        FROM subjectmap
+        WHERE subject = $1)`,
+      [subject]
+    )
+    return res.rows
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export default {
   createUser,
   updateUser,
@@ -568,5 +630,7 @@ export default {
   listSubjects,
   listTutorsSubjects,
   addTutorsSubject,
-  removeTutorsSubject
+  removeTutorsSubject,
+  listAvailabilityForSubject,
+  migrateWeeklyToDates
 }
