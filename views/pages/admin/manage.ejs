@@ -14,12 +14,6 @@
         margin-left: 1vw;
     }
 
-    #manage-form input[type=text] {
-        font-size: 20pt;
-        padding: 0.3vw 0vw 0.3vw 0.3vw;
-        width: 95vw;
-    }
-
     body {
         height: 100%;
     }
@@ -34,7 +28,7 @@
 
 <body>
     <%- include('../../components/header'); %>
-    <div id="flex-box">
+    <div class="admin-list">
         <div id="manage-form">
             <form action="" method="post">
                 <label for="allowedStudentDomain">Allow student domain(s):</label>
@@ -42,42 +36,48 @@
                     pattern="^(@[\w\-.]+\.[A-Za-z]{2,4}[\W]*[,\s]{1}[\W]*)*(@[\w\-.]+\.[A-Za-z]+)[\W]*$"
                     placeholder="@example.org,@example.com"
                     oninvalid="setCustomValidity('Please enter an email or list of emails with this format: @example.com,@example.org')"
-                    oninput="setCustomValidity('')">
+                    oninput="setCustomValidity('')"
+                    class="text-input">
                 <br>
                 <label for="allowedTutors">Allow tutor(s):</label>
                 <input type="text" id="allowedTutors" name="allowedTutors"
                     pattern="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4}[\W]*[,\s]{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4})[\W]*$"
                     placeholder="test@example.com,test2@example.com"
                     oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')"
-                    oninput="setCustomValidity('')">
+                    oninput="setCustomValidity('')"
+                    class="text-input">
                 <br>
                 <label for="allowedAdmins">Allow admin(s):</label>
                 <input type="text" id="allowedAdmins" name="allowedAdmins"
                     pattern="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4}[\W]*[,\s]{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4})[\W]*$"
                     placeholder="test@example.com,test2@example.com"
                     oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')"
-                    oninput="setCustomValidity('')">
+                    oninput="setCustomValidity('')"
+                    class="text-input">
                 <br>
                 <label for="revokedStudentDomain">Revoke student domain(s):</label>
                 <input type="text" id="revokedStudentDomain" name="revokedStudentDomain"
                     pattern="^(@[\w\-.]+\.[A-Za-z]{2,4}[\W]*[,\s]{1}[\W]*)*(@[\w\-.]+\.[A-Za-z]+)[\W]*$"
                     placeholder="@example.org,@example.com"
                     oninvalid="setCustomValidity('Please enter an email or list of emails with this format: @example.com,@example.org')"
-                    oninput="setCustomValidity('')">
+                    oninput="setCustomValidity('')"
+                    class="text-input">
                 <br>
                 <label for="revokedTutors">Revoke tutor(s):</label>
                 <input type="text" id="revokedTutors" name="revokedTutors"
                     pattern="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4}[\W]*[,\s]{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4})[\W]*$"
                     placeholder="test@example.com,test2@example.com"
                     oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')"
-                    oninput="setCustomValidity('')">
+                    oninput="setCustomValidity('')"
+                    class="text-input">
                 <br>
                 <label for="revokedAdmins">Revoke admin(s):</label>
                 <input type="text" id="revokedAdmins" name="revokedAdmins"
                     pattern="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4}[\W]*[,\s]{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4})[\W]*$"
                     placeholder="test@example.com,test2@example.com"
                     oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')"
-                    oninput="setCustomValidity('')">
+                    oninput="setCustomValidity('')"
+                    class="text-input">
                 <br><hr>
                     <label for="add_hol">Add an off day:</label>
                     <input type="date" id="add_hol" name="add_hol">
