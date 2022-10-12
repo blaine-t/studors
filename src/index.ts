@@ -100,3 +100,4 @@ app.listen(port, () => {
 })
 
 db.createDates()
+db.migrateWeeklyToDates()

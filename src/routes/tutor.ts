@@ -35,8 +35,12 @@ router.get('/settings', (req, res) => {
 })
 
 router.get('/availability', async (req, res) => {
-  await db.createWeeklyAvailability()
   const increments = await db.listIncrements()
+  if (increments != undefined) {
+    if (increments.length != 0) {
+      await db.createWeeklyAvailability()
+    }
+  }
   const times = []
   if (increments == undefined) {
     return
@@ -91,8 +95,39 @@ router.post('/availability', async (req, res) => {
   return
 })
 
-router.get('/subjects', (req, res) => {
-  res.render('pages/tutor/subjects', { error: '' })
+router.get('/subjects', async (req, res) => {
+  const subjects = await db.listSubjects()
+  res.locals.user = req.user
+  const id = res.locals.user.id
+  const tutorsSubjects = await db.listTutorsSubjects(id)
+  const checked = ['']
+  if (tutorsSubjects != undefined) {
+    for (let i = 0; i < tutorsSubjects.length; i++) {
+      checked.push(tutorsSubjects[i]['subject_id'])
+    }
+  }
+  res.render('pages/tutor/subjects', { subjects: subjects, checked: checked })
+})
+
+router.post('/subjects', async (req, res) => {
+  const subjects = await db.listSubjects()
+  const body = req.body
+  res.locals.user = req.user
+  const id = res.locals.user.id
+  if (subjects == undefined) {
+    res.redirect('subjects')
+    return
+  }
+  for (let i = 0; i < subjects.length; i++) {
+    const name: string = subjects[i]['subject']
+    if (name in body) {
+      db.addTutorsSubject(name, id)
+    } else {
+      db.removeTutorsSubject(name, id)
+    }
+  }
+  res.redirect('home')
+  return
 })
 
 router.get('/upcoming', (req, res) => {

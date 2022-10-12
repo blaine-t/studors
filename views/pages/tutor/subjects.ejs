@@ -7,7 +7,20 @@
 </head>
 
 <body>
-    
-</body>
+    <%- include('../../components/header'); %>
 
+    <form action="" method="post">
+        <% for ( const obj of subjects ) { %>
+            <label for ="<%= obj['subject'] %>"><%= obj['subject'] %> </label>
+            <input type="checkbox" name="<%= obj['subject'] %>" 
+            <% if(checked.includes(obj['subject'])) { %>
+                checked 
+            <% } %>/>
+            <br>
+        <% } %>
+        <button type="submit">Save</button>
+    </form>
+
+    <%- include('../../components/footer'); %>
+</body>
 </html>

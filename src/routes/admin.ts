@@ -108,6 +108,7 @@ router.post('/manage', async (req, res) => {
     '^(@[\\w\\-.]+\\.[A-Za-z]{2,4}[\\W]*[,\\s]{1}[\\W]*)*(@[\\w\\-.]+\\.[A-Za-z]+)[\\W]*$'
   const emailRegex =
     '^[\\W]*([\\w+\\-.%]+@[\\w\\-.]+\\.[A-Za-z]{2,4}[\\W]*[,\\s]{1}[\\W]*)*([\\w+\\-.%]+@[\\w\\-.]+\\.[A-Za-z]{2,4})[\\W]*$'
+  const anyRegex = '^(?!\\s$).+'
   let error = ''
   error += allowUserInput(
     req.body.allowedStudentDomain,
@@ -125,6 +126,18 @@ router.post('/manage', async (req, res) => {
     req.body.allowedAdmins,
     emailRegex,
     'admins',
+    'Failed to save allowed admins\n'
+  )
+  error += allowUserInput(
+    req.body.addSub,
+    anyRegex,
+    'subjects',
+    'Failed to save allowed admins\n'
+  )
+  error += revokeUserInput(
+    req.body.remSub,
+    anyRegex,
+    'subjects',
     'Failed to save allowed admins\n'
   )
   error += revokeUserInput(
@@ -197,16 +210,26 @@ function allowUserInput(
   error: string
 ) {
   if (request.match(regex)) {
-    const array = request
-      .split(/[, ]+/)
-      .map((element: string) => element.trim())
+    let split = /[, ]+/
+    if (database === 'subjects') {
+      split = /[,]+/
+    }
+    const array = request.split(split).map((element: string) => element.trim())
 
     let string = ''
     for (let i = 0; i < array.length; i++) {
-      string += "('" + array[i].toLowerCase() + "'),"
+      if (database === 'subjects') {
+        string += "('" + functions.toTitleCase(array[i]) + "'),"
+      } else {
+        string += "('" + array[i].toLowerCase() + "'),"
+      }
     }
     string = string.replace(/,$/, '')
-    db.allowUser(database, string)
+    if (database === 'subjects') {
+      db.createSubject(string)
+    } else {
+      db.allowUser(database, string)
+    }
     return ''
   }
   if (!request.match('^$')) {
@@ -222,16 +245,25 @@ function revokeUserInput(
   error: string
 ) {
   if (request.match(regex)) {
-    const array = request
-      .split(/[, ]+/)
-      .map((element: string) => element.trim())
-
+    let split = /[, ]+/
+    if (database === 'subjects') {
+      split = /[,]+/
+    }
+    const array = request.split(split).map((element: string) => element.trim())
     let string = '('
     for (let i = 0; i < array.length; i++) {
-      string += "'" + array[i].toLowerCase() + "',"
+      if (database === 'subjects') {
+        string += "('" + functions.toTitleCase(array[i]) + "'),"
+      } else {
+        string += "('" + array[i].toLowerCase() + "'),"
+      }
     }
     string = string.replace(/,$/, ')')
-    db.revokeUser(database, string)
+    if (database === 'subjects') {
+      db.removeSubject(string)
+    } else {
+      db.revokeUser(database, string)
+    }
     return ''
   }
   if (!request.match('^$')) {

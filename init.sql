@@ -49,7 +49,7 @@ create table subjects( subject text primary key );
 
 create table
     subjectmap(
-        subject_id text references subjects(subject) not null,
+        subject_id text references subjects(subject) ON delete cascade not null,
         tutor_id text references tutors(id) not null,
         primary key (subject_id, tutor_id)
     );
@@ -59,7 +59,7 @@ create table
         time_id timestamp
         with
             time zone references times(time) not null,
-            subject_id text references subjects(subject) not null,
+            subject_id text references subjects(subject) ON delete cascade not null,
             student_id text references students(id) not null,
             tutor_id text references tutors(id) not null,
             school text default 'LSW',
@@ -82,7 +82,7 @@ create table
 
 create table
     weeklyavailability(
-        id serial unique,
+        id uuid unique default gen_random_uuid(),
         dow int not null,
         increment_id decimal references increments(hour) ON delete cascade not null,
         primary key (dow, increment_id)
@@ -90,7 +90,7 @@ create table
 
 create table
     weeklyavailabilitymap(
-        weeklyavailability_id serial references weeklyavailability(id) ON delete cascade not null,
+        weeklyavailability_id uuid references weeklyavailability(id) ON delete cascade not null,
         tutor_id text references tutors(id) not null,
         primary key (
             weeklyavailability_id,
