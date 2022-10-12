@@ -120,7 +120,27 @@ li a:active {
     max-width: 1600px;
     padding-right: 5px;
     padding-left: 5px;
-    margin-bottom: 55px;
+    margin-bottom: 60px;
+}
+
+.text-input {
+    width: 100%;
+    margin-right: -10px;
+    font-size: 20pt;
+}
+
+.admin-list button {
+    color: #434343;
+    font-size: 20pt;
+    text-align: center;
+    border-radius: 12px;
+    padding: 10px;
+    margin: 0;
+    font-family: "Roboto Flex", "Open Sans", Verdana;
+    font-weight: 500;
+    position: relative;
+    left: 50%;
+    transform: translatex(-50%);
 }
 
 /* Footer setup */
@@ -387,7 +407,6 @@ header hr {
     background-color: #d9d9d9;
     font-size: 30px;
     text-align: center;
-    float: right;
     font-family: 'Roboto Flex', "Open Sans", Verdana, sans-serif;
 }
 
