@@ -48,7 +48,7 @@ router.get('/availability', async (req, res) => {
   for (let i = 0; i < increments.length; i++) {
     const time = increments[i]['hour']
     const push = [time, '', '', '', '', '']
-    const week = await db.listWeeklyAvailabilityAtTime(time)
+    const week = await db.listWeeklyAvailabilityAtIncrement(time)
     if (week == undefined) {
       return
     }
@@ -86,9 +86,9 @@ router.post('/availability', async (req, res) => {
   for (let i = 0; i < week.length; i++) {
     const name: string = week[i]['id']
     if (name in body) {
-      db.addWeeklyAvailability(id, name)
+      db.addTutorWeeklyAvailability(id, name)
     } else {
-      db.removeWeeklyAvailability(id, name)
+      db.removeTutorWeeklyAvailability(id, name)
     }
   }
   res.redirect('home')
