@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../../components/head'); %>
+    <title>Studors - Student</title>
+</head>
+
+<body>
+    <%- include('../../components/header'); %>
+    <h1> Select a subject that you would like help in</h1>
+    <select id="subject" name="subject">
+        <option value=""></option>
+        <% for ( const obj of subjects ) { %>
+            <option value="<%= obj['subject'] %>"><%= obj['subject'] %></option>
+        <% } %>
+    </select>
+    <%- include('../../components/footer'); %>
+</body>
+
+</html>
+
+<script>
+</script>

@@ -25,8 +25,9 @@ router.get('/home', (req, res) => {
   res.render('pages/student/home')
 })
 
-router.get('/find', (req, res) => {
-  res.render('pages/student/find')
+router.get('/find', async (req, res) => {
+  const subjects = await db.listSubjects()
+  res.render('pages/student/find', { subjects: subjects })
 })
 
 router.get('/request', (req, res) => {
