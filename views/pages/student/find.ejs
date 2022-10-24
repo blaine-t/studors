@@ -9,16 +9,141 @@
 <body>
     <%- include('../../components/header'); %>
     <h1> Select a subject that you would like help in</h1>
-    <select id="subject" name="subject">
-        <option value=""></option>
-        <% for ( const obj of subjects ) { %>
-            <option value="<%= obj['subject'] %>"><%= obj['subject'] %></option>
-        <% } %>
-    </select>
-    <%- include('../../components/footer'); %>
+    <form action="" method="post">
+        <select id="subject" name="subject" onchange="dateUpdate()">
+            <option value=""></option>
+            <% for ( const obj of subjects ) { %>
+                <option value="<%= obj['subject'] %>"><%= obj['subject'] %></option>
+            <% } %>
+        </select>
+        <%- include('../../components/footer'); %>
+        <br>
+        <input id="datepicker" onchange="timeUpdate()"></input>
+        <br>
+        <input id="timepicker" onchange="sequentialTime()"></input>
+        <br>
+        <select id="duration" name="duration"></select>
+        <br>
+        <button type="submit">Schedule</button>
+
+        <input type="hidden" id ="time" name="time" />
+        <input type="hidden" id="tutor" name="tutor" />
+    </form>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/pickadate/picker.js"></script>
+    <script src="/js/pickadate/picker.date.js"></script>
+    <script src="/js/pickadate/picker.time.js"></script>
+    <link rel="stylesheet" href="/css/pickadate/classic.css">
+    <link rel="stylesheet" href="/css/pickadate/classic.date.css">
+    <link rel="stylesheet" href="/css/pickadate/classic.time.css">
 </body>
 
 </html>
 
 <script>
+
+    var $time = $('#timepicker').pickatime({
+        interval: 15
+    });
+    var timepicker = $time.pickatime('picker');
+
+    var $date = $('#datepicker').pickadate();
+    var datepicker = $date.pickadate('picker');
+
+    var duration = document.querySelector('#duration')
+
+    var dates = [];
+    var tutors = [];
+    var availability = <%- JSON.stringify(availability) %>;
+    var subject = '';
+    var selectedDate;
+
+    function dateUpdate() {
+        dates = []
+        tutors = []
+        subject = document.getElementById("subject").value;
+        for( var i = 0; i < availability.length; i++ ) {
+            if(availability[i]['subject_id'] === subject ) {
+                dates.push(new Date(availability[i]['time_id']));
+                tutors.push(availability[i]['tutor_id']);
+            }
+        }
+        // Disable all the dates.
+        datepicker.set('disable', true);
+        datepicker.set('enable', false);
+
+        // Disable the dates you want to enable.
+        datepicker.set('disable', dates);
+
+        // Flip the dates.
+        datepicker.set('disable', 'flip');
+        datepicker.set('enable', 'flip');
+    }
+    function timeUpdate() {
+
+        selectedDate = datepicker.get('select')['obj'];
+        var times = [];
+        for( var i = 0; i < dates.length; i++) {
+            var compareDate = new Date(dates[i]);
+            compareDate.setHours(0,0,0,0);
+            if ( compareDate.getTime() === selectedDate.getTime()) {
+                times.push(dates[i]);
+            }
+        }
+        // Disable all the times.
+        timepicker.set('disable', true);
+        timepicker.set('enable', false);
+
+        // Disable the times you want to enable.
+        timepicker.set('disable', times);
+
+        // Flip the times.
+        timepicker.set('disable', 'flip');
+        timepicker.set('enable', 'flip');
+    }
+
+    function sequentialTime() {
+        var oldTutorID;
+        var streak = [];
+        var highestStreak = [];
+        var selectedTime = new Date(selectedDate);
+        var time = timepicker.get('select');
+        var reset = false;
+        selectedTime.setHours(time['hour'],time['mins']);
+        document.getElementById("time").value = selectedTime;
+        for ( var i = 0; i < tutors.length; i++ ) {
+            if ( tutors[i] != oldTutorID || reset) {
+                if ( highestStreak.length < streak.length ) {
+                    document.getElementById("tutor").value = oldTutorID;
+                    highestStreak = streak;
+                }
+                streak = [];
+                if (selectedTime.getTime() === dates[i].getTime()) {
+                    oldTutorID = tutors[i];
+                    streak.push(dates[i]);
+                }
+            }
+            else {
+                //If interval between now and previous time is 15m
+                if ((dates[i].getTime() - dates[i-1].getTime()) === 900000) {
+                    streak.push(dates[i]);
+                }
+                else {
+                    reset = true; // Force reset the streak
+                }
+            }
+        }
+        if ( highestStreak.length < streak.length ) {
+            document.getElementById("tutor").value = oldTutorID;
+            highestStreak = streak;
+        }
+        while (duration.options.length > 0) {
+            duration.remove(0);
+        }
+        for (i = 1; i-1 < highestStreak.length; i++ ) {
+            var option = new Option(i*15 + ' Minutes', i*15);
+            duration.add(option, undefined);
+        }
+        console.log(highestStreak);
+    }
 </script>

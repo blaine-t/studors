@@ -27,7 +27,17 @@ router.get('/home', (req, res) => {
 
 router.get('/find', async (req, res) => {
   const subjects = await db.listSubjects()
-  res.render('pages/student/find', { subjects: subjects })
+  const availability = await db.listAvailability()
+  res.render('pages/student/find', {
+    subjects: subjects,
+    availability: availability
+  })
+})
+
+// Need to implement save
+router.post('/find', (req, res) => {
+  console.log(req.body)
+  res.redirect('home')
 })
 
 router.get('/request', (req, res) => {

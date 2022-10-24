@@ -336,7 +336,7 @@ async function createIncrement(hour: number) {
 // List time slots
 async function listIncrements() {
   try {
-    const res = await pool.query('SELECT hour FROM increments')
+    const res = await pool.query('SELECT hour FROM increments ORDER BY hour')
     return res.rows
   } catch (err) {
     console.log(err)
@@ -408,7 +408,7 @@ async function createWeeklyAvailability() {
 async function listWeeklyAvailability() {
   try {
     const res = await pool.query(
-      'SELECT id, dow, increment_id FROM weeklyavailability'
+      'SELECT id, dow, increment_id FROM weeklyavailability ORDER BY increment_id, dow'
     )
     return res.rows
   } catch (err) {
@@ -591,6 +591,21 @@ async function removeTutorsSubject(sid: string, tid: string) {
   }
 }
 
+// List all available time slots in db
+async function listAvailability() {
+  try {
+    const res = await pool.query(
+      `SELECT availabilitymap.time_id, availabilitymap.tutor_id, subjectmap.subject_id
+      FROM availabilitymap
+      INNER JOIN subjectmap on availabilitymap.tutor_id = subjectmap.tutor_id
+      ORDER BY availabilitymap.tutor_id, availabilitymap.time_id`
+    )
+    return res.rows
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 // List all available time slots for a specific subject
 async function listAvailabilityForSubject(subject: string) {
   try {
@@ -652,5 +667,6 @@ export default {
   addTutorsSubject,
   listTutorsSubjects,
   removeTutorsSubject,
+  listAvailability,
   listAvailabilityForSubject
 }
