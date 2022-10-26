@@ -595,9 +595,10 @@ async function removeTutorsSubject(sid: string, tid: string) {
 async function listAvailability() {
   try {
     const res = await pool.query(
-      `SELECT availabilitymap.time_id, availabilitymap.tutor_id, subjectmap.subject_id
+      `SELECT availabilitymap.time_id, availabilitymap.tutor_id, tutors.first_name, tutors.last_name, subjectmap.subject_id
       FROM availabilitymap
       INNER JOIN subjectmap on availabilitymap.tutor_id = subjectmap.tutor_id
+      INNER JOIN tutors on availabilitymap.tutor_id = tutors.id
       ORDER BY availabilitymap.tutor_id, availabilitymap.time_id`
     )
     return res.rows

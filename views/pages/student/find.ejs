@@ -10,24 +10,26 @@
     <%- include('../../components/header'); %>
     <h1> Select a subject that you would like help in</h1>
     <form action="" method="post">
-        <select id="subject" name="subject" onchange="dateUpdate()">
-            <option value=""></option>
+        <select id="subject" name="subject" onchange="dateUpdate();">
+            <option></option>
             <% for ( const obj of subjects ) { %>
                 <option value="<%= obj['subject'] %>"><%= obj['subject'] %></option>
             <% } %>
         </select>
-        <%- include('../../components/footer'); %>
         <br>
-        <input id="datepicker" onchange="timeUpdate()"></input>
+        <input id="datepicker" onchange="tutorPick();"></input>
         <br>
-        <input id="timepicker" onchange="sequentialTime()"></input>
+        <select id="tutorpicker" name="tutorpicker" onchange="timeUpdate();">
+            <option>Any</option>
+        </select>
         <br>
-        <select id="duration" name="duration"></select>
+        <input id="timepicker" onchange="; sequentialTime();"></input>
+        <br>
+        <select id="durationpicker" name="durationpicker"></select>
         <br>
         <button type="submit">Schedule</button>
 
         <input type="hidden" id ="time" name="time" />
-        <input type="hidden" id="tutor" name="tutor" />
     </form>
     <script src="/js/jquery.min.js"></script>
     <script src="/js/pickadate/picker.js"></script>
@@ -36,6 +38,7 @@
     <link rel="stylesheet" href="/css/pickadate/classic.css">
     <link rel="stylesheet" href="/css/pickadate/classic.date.css">
     <link rel="stylesheet" href="/css/pickadate/classic.time.css">
+    <%- include('../../components/footer'); %>
 </body>
 
 </html>
@@ -54,6 +57,8 @@
 
     var dates = [];
     var tutors = [];
+    var uniqueTutors = [];
+    var selectedTutor = '';
     var availability = <%- JSON.stringify(availability) %>;
     var subject = '';
     var selectedDate;
@@ -65,7 +70,7 @@
         for( var i = 0; i < availability.length; i++ ) {
             if(availability[i]['subject_id'] === subject ) {
                 dates.push(new Date(availability[i]['time_id']));
-                tutors.push(availability[i]['tutor_id']);
+                tutors.push(availability[i]);
             }
         }
         // Disable all the dates.
@@ -78,16 +83,52 @@
         // Flip the dates.
         datepicker.set('disable', 'flip');
         datepicker.set('enable', 'flip');
+
+        while (tutor.options.length > 1) {
+            tutor.remove(1);
+        }
+
+        timepicker.clear();
+        
+        while (duration.options.length > 0) {
+            duration.remove(0);
+        }
     }
+
+    function tutorPick() {
+        uniqueTutors = [];
+        for ( var i = 0; i < tutors.length; i++ ) {
+            if (!uniqueTutors.some(item => item.tutor_id === tutors[i]['tutor_id'])) {
+                uniqueTutors.push(tutors[i])
+            }
+        }
+        while (tutor.options.length > 1) {
+            tutor.remove(1);
+        }
+        for (i = 0; i < uniqueTutors.length; i++ ) {
+            var option = new Option(uniqueTutors[i]['first_name'] + " " + uniqueTutors[i]['last_name'], uniqueTutors[i]['tutor_id']);
+            tutor.add(option, undefined);
+        }
+        
+        timepicker.clear();
+        
+        while (duration.options.length > 0) {
+            duration.remove(0);
+        }
+    }
+
     function timeUpdate() {
 
+        selectedTutor = document.getElementById("tutor").value;
         selectedDate = datepicker.get('select')['obj'];
         var times = [];
         for( var i = 0; i < dates.length; i++) {
-            var compareDate = new Date(dates[i]);
-            compareDate.setHours(0,0,0,0);
-            if ( compareDate.getTime() === selectedDate.getTime()) {
-                times.push(dates[i]);
+            if ( selectedTutor === tutors[i]['tutor_id'] || selectedTutor === 'Any' ) {
+                var compareDate = new Date(dates[i]);
+                compareDate.setHours(0,0,0,0);
+                if ( compareDate.getTime() === selectedDate.getTime()) {
+                    times.push(dates[i]);
+                }
             }
         }
         // Disable all the times.
@@ -100,6 +141,10 @@
         // Flip the times.
         timepicker.set('disable', 'flip');
         timepicker.set('enable', 'flip');
+
+        while (duration.options.length > 0) {
+            duration.remove(0);
+        }
     }
 
     function sequentialTime() {
@@ -111,30 +156,33 @@
         var reset = false;
         selectedTime.setHours(time['hour'],time['mins']);
         document.getElementById("time").value = selectedTime;
+
         for ( var i = 0; i < tutors.length; i++ ) {
-            if ( tutors[i] != oldTutorID || reset) {
-                if ( highestStreak.length < streak.length ) {
-                    document.getElementById("tutor").value = oldTutorID;
-                    highestStreak = streak;
-                }
-                streak = [];
-                if (selectedTime.getTime() === dates[i].getTime()) {
-                    oldTutorID = tutors[i];
-                    streak.push(dates[i]);
-                }
-            }
-            else {
-                //If interval between now and previous time is 15m
-                if ((dates[i].getTime() - dates[i-1].getTime()) === 900000) {
-                    streak.push(dates[i]);
+            if ( selectedTutor === tutors[i]['tutor_id'] || selectedTutor === 'Any' ) {
+                if ( tutors[i]['tutor_id'] != oldTutorID || reset ) {
+                    if ( highestStreak.length < streak.length ) {
+                        document.getElementById("anyTutor").value = oldTutorID;
+                        highestStreak = streak;
+                    }
+                    streak = [];
+                    if (selectedTime.getTime() === dates[i].getTime()) {
+                        oldTutorID = tutors[i]['tutor_id'];
+                        streak.push(dates[i]);
+                    }
                 }
                 else {
-                    reset = true; // Force reset the streak
+                    //If interval between now and previous time is 15m
+                    if ((dates[i].getTime() - dates[i-1].getTime()) === 900000) {
+                        streak.push(dates[i]);
+                    }
+                    else {
+                        reset = true; // Force reset the streak
+                    }
                 }
             }
         }
         if ( highestStreak.length < streak.length ) {
-            document.getElementById("tutor").value = oldTutorID;
+            document.getElementById("anyTutor").value = oldTutorID;
             highestStreak = streak;
         }
         while (duration.options.length > 0) {
