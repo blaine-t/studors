@@ -9,7 +9,8 @@
 <body>
     <%- include('../../components/header'); %>
     <h1> Select a subject that you would like help in</h1>
-    <form action='' method='post'>
+    <p><%-error%></p>
+    <form onsubmit='return validate(this)' action='' method='post'>
         <select id='subjectpicker' name='subjectpicker' onchange='subjectUpdated(); dateSetup(); remove(0);'>
             <option></option>
             <% for ( const obj of subjects ) { %>
@@ -17,15 +18,15 @@
             <% } %>
         </select>
         <br>
-        <select id='tutorpicker' name='tutorpicker' onchange='tutorUpdated(); remove(0);'>
+        <select style='display: none;' id='tutorpicker' name='tutorpicker' onchange='tutorUpdated(); remove(0);'>
             <option>Any</option>
         </select>
         <br>
-        <input id='datepicker' onchange='dateUpdated(); remove(1);'></input>
+        <input style='display: none;' id='datepicker' onchange='dateUpdated(); remove(1);'></input>
         <br>
-        <input id='timepicker' onchange='; timeUpdated();'></input>
+        <input style='display: none;' id='timepicker' onchange='; timeUpdated();'></input>
         <br>
-        <select id='durationpicker' name='durationpicker'></select>
+        <select style='display: none;' id='durationpicker' name='durationpicker'></select>
         <br>
         <button type='submit'>Schedule</button>
 
@@ -59,13 +60,30 @@
     var validSessions = [];
     var availableDays = [];
     var uniqueTutors = [];
+    var generatedTutor = '';
     var selectedSubject = '';
     var selectedTutor = 'Any';
     var selectedDate;
     var selectedTime;
     var selectedDateTime;
 
+    function validate() {
+        if ( document.getElementById('subjectpicker').value != '' && 
+        document.getElementById('durationpicker').value >= 15 &&
+        document.getElementById('time').value != '' ) {
+            if (document.getElementById('tutorpicker').value === 'Any') {
+                document.getElementById('tutorpicker').value = generatedTutor;
+            }
+            return true;
+        }
+        return false;
+    }
+
     function subjectUpdated() {
+        // Remove the blank if a subject is picked
+        if ( subjectpicker.options[0].value === '' ) {
+            subjectpicker.remove(0);
+        }
         // Reset previous list of valid sessions
         validSessions = [];
 
@@ -84,6 +102,9 @@
     }
 
     function tutorSetup() {
+        // Make tutorpicker visible
+        document.getElementById('tutorpicker').style.display = "block";
+
         // Reset previous list of unique tutors
         uniqueTutors = [];
 
@@ -115,6 +136,9 @@
     }
 
     function dateSetup() {
+        // Make datepicker visible
+        document.getElementById('datepicker').style.display = "block";
+
         // Declare new list of available days
         availableDays = [];
 
@@ -152,6 +176,9 @@
     }
 
     function timeSetup() {
+        // Make timepicker visible
+        document.getElementById('timepicker').style.display = "block";
+
         // Declare new list of available times
         var availableTimes = [];
 
@@ -196,6 +223,9 @@
     }
 
     function durationSetup() {
+        // Make durationpicker visible
+        document.getElementById('durationpicker').style.display = "block";
+
         // Declare variables required to do duration math
         var oldTutorID;
         var streak = [];
@@ -214,7 +244,7 @@
                     // Check if the highest streak is smaller than the current
                     if ( highestStreak.length < streak.length ) {
                         // Update it if so
-                        document.getElementById('tutorpicker').value = oldTutorID;
+                        generatedTutor = oldTutorID;
                         highestStreak = streak;
                     }
                     
@@ -249,7 +279,7 @@
         // Final check to make sure the current streak isn't larger than the highest
         if ( highestStreak.length < streak.length ) {
             // Update it if so
-            document.getElementById('tutorpicker').value = oldTutorID;
+            generatedTutor = oldTutorID;
             highestStreak = streak;
         }
 
@@ -276,11 +306,13 @@
                     if ( datepicker.get() != '' ) {
                         datepicker.clear();
                     }
+                    document.getElementById('timepicker').style.display = "none";
                 // Remove old time info
                 case 1:
                     if ( timepicker.get() != '' ) {
                         timepicker.clear();
                     }
+                    document.getElementById('durationpicker').style.display = "none";
                 // Remove old duration info
                 case 2:
                     while (durationpicker.options.length > 0) {

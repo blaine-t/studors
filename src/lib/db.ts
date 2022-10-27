@@ -136,16 +136,18 @@ async function createSession(
   sid: string,
   tid: string,
   time: Date,
-  subject: string
+  subject: string,
+  duration: number
 ) {
   try {
     pool.query(
-      'INSERT INTO sessions (student_id,tutor_id,time_id,subject_id) VALUES ($1,$2,$3,$4)',
-      [sid, tid, time, subject]
+      'INSERT INTO sessions (student_id,tutor_id,time_id,subject_id,duration) VALUES ($1,$2,$3,$4,$5)',
+      [sid, tid, time, subject, duration]
     )
   } catch (err) {
-    console.log(err)
+    return err
   }
+  return true
 }
 
 // List out all sessions upcoming or past

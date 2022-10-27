@@ -63,7 +63,7 @@ create table
             student_id text references students(id) not null,
             tutor_id text references tutors(id) not null,
             school text default 'LSW',
-            hours decimal,
+            duration decimal,
             primary key (time_id, tutor_id)
     );
 

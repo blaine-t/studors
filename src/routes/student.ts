@@ -30,14 +30,32 @@ router.get('/find', async (req, res) => {
   const availability = await db.listAvailability()
   res.render('pages/student/find', {
     subjects: subjects,
-    availability: availability
+    availability: availability,
+    error: ''
   })
 })
 
 // Need to implement save
-router.post('/find', (req, res) => {
-  console.log(req.body)
-  res.redirect('home')
+router.post('/find', async (req, res) => {
+  const session = await db.createSession(
+    res.locals.user.id,
+    req.body.tutorpicker,
+    new Date(req.body.time),
+    req.body.subjectpicker,
+    parseInt(req.body.durationpicker) / 60
+  )
+  if (session) {
+    res.redirect('upcoming')
+    return
+  }
+  // If didn't save properly
+  const subjects = await db.listSubjects()
+  const availability = await db.listAvailability()
+  res.render('pages/student/find', {
+    subjects: subjects,
+    availability: availability,
+    error: 'Unable to save session. Try again'
+  })
 })
 
 router.get('/request', (req, res) => {
