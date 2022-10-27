@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 
 <head>
     <%- include('../../components/head'); %>
@@ -9,35 +9,35 @@
 <body>
     <%- include('../../components/header'); %>
     <h1> Select a subject that you would like help in</h1>
-    <form action="" method="post">
-        <select id="subject" name="subject" onchange="dateUpdate();">
+    <form action='' method='post'>
+        <select id='subjectpicker' name='subjectpicker' onchange='subjectUpdated(); dateSetup(); remove(0);'>
             <option></option>
             <% for ( const obj of subjects ) { %>
-                <option value="<%= obj['subject'] %>"><%= obj['subject'] %></option>
+                <option value='<%= obj['subject'] %>'><%= obj['subject'] %></option>
             <% } %>
         </select>
         <br>
-        <input id="datepicker" onchange="tutorPick();"></input>
-        <br>
-        <select id="tutorpicker" name="tutorpicker" onchange="timeUpdate();">
+        <select id='tutorpicker' name='tutorpicker' onchange='tutorUpdated(); remove(0);'>
             <option>Any</option>
         </select>
         <br>
-        <input id="timepicker" onchange="; sequentialTime();"></input>
+        <input id='datepicker' onchange='dateUpdated(); remove(1);'></input>
         <br>
-        <select id="durationpicker" name="durationpicker"></select>
+        <input id='timepicker' onchange='; timeUpdated();'></input>
         <br>
-        <button type="submit">Schedule</button>
+        <select id='durationpicker' name='durationpicker'></select>
+        <br>
+        <button type='submit'>Schedule</button>
 
-        <input type="hidden" id ="time" name="time" />
+        <input type='hidden' id ='time' name='time' />
     </form>
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/pickadate/picker.js"></script>
-    <script src="/js/pickadate/picker.date.js"></script>
-    <script src="/js/pickadate/picker.time.js"></script>
-    <link rel="stylesheet" href="/css/pickadate/classic.css">
-    <link rel="stylesheet" href="/css/pickadate/classic.date.css">
-    <link rel="stylesheet" href="/css/pickadate/classic.time.css">
+    <script src='/js/jquery.min.js'></script>
+    <script src='/js/pickadate/picker.js'></script>
+    <script src='/js/pickadate/picker.date.js'></script>
+    <script src='/js/pickadate/picker.time.js'></script>
+    <link rel='stylesheet' href='/css/pickadate/classic.css'>
+    <link rel='stylesheet' href='/css/pickadate/classic.date.css'>
+    <link rel='stylesheet' href='/css/pickadate/classic.time.css'>
     <%- include('../../components/footer'); %>
 </body>
 
@@ -53,145 +53,240 @@
     var $date = $('#datepicker').pickadate();
     var datepicker = $date.pickadate('picker');
 
-    var duration = document.querySelector('#duration')
+    var duration = document.querySelector('#duration');
 
-    var dates = [];
-    var tutors = [];
+    var sessions = <%- JSON.stringify(availability) %>;
+    var validSessions = [];
+    var availableDays = [];
     var uniqueTutors = [];
-    var selectedTutor = '';
-    var availability = <%- JSON.stringify(availability) %>;
-    var subject = '';
+    var selectedSubject = '';
+    var selectedTutor = 'Any';
     var selectedDate;
+    var selectedTime;
+    var selectedDateTime;
 
-    function dateUpdate() {
-        dates = []
-        tutors = []
-        subject = document.getElementById("subject").value;
-        for( var i = 0; i < availability.length; i++ ) {
-            if(availability[i]['subject_id'] === subject ) {
-                dates.push(new Date(availability[i]['time_id']));
-                tutors.push(availability[i]);
+    function subjectUpdated() {
+        // Reset previous list of valid sessions
+        validSessions = [];
+
+        // Grab the selected subject
+        selectedSubject = document.getElementById('subjectpicker').value;
+
+        // Iterate through list of sessions and find sessions that can have that subject
+        for( var i = 0; i < sessions.length; i++ ) {
+            if( sessions[i]['subject_id'] === selectedSubject ) {
+                validSessions.push(sessions[i]);
             }
         }
+
+        // Call function that prepares list of available tutors
+        tutorSetup();
+    }
+
+    function tutorSetup() {
+        // Reset previous list of unique tutors
+        uniqueTutors = [];
+
+        // Run through all valid sessions and if a tutorID is not already in the list add it
+        for ( var i = 0; i < validSessions.length; i++ ) {
+            if ( !uniqueTutors.some(item => item.tutor_id === validSessions[i]['tutor_id']) ) {
+                uniqueTutors.push(validSessions[i])
+            }
+        }
+
+        // Remove all entries from the tutors dropdown besides "Any"
+        while (tutorpicker.options.length > 1) {
+            tutorpicker.remove(1);
+        }
+
+        // Populate the drop down with tutor names
+        for (i = 0; i < uniqueTutors.length; i++ ) {
+            var option = new Option(uniqueTutors[i]['first_name'] + ' ' + uniqueTutors[i]['last_name'], uniqueTutors[i]['tutor_id']);
+            tutorpicker.add(option, undefined);
+        }
+    }
+
+    function tutorUpdated() {
+        // Update the selected tutor
+        selectedTutor = document.getElementById('tutorpicker').value;
+
+        // Call function that updates the date picker
+        dateSetup();
+    }
+
+    function dateSetup() {
+        // Declare new list of available days
+        availableDays = [];
+
+        // For each valid session, if the user has any tutor selected, or the session has the selected tutor
+        for( var i = 0; i < validSessions.length; i++ ) {
+            if( selectedTutor === 'Any' || validSessions[i]['tutor_id'] === selectedTutor ) {
+                availableDays.push(new Date(validSessions[i]['time_id']));
+            }
+        }
+        
+        // WORKAROUND FOR PICKADATE.JS https://github.com/amsul/pickadate.js/issues/364#issuecomment-116980300
         // Disable all the dates.
         datepicker.set('disable', true);
         datepicker.set('enable', false);
 
         // Disable the dates you want to enable.
-        datepicker.set('disable', dates);
+        datepicker.set('disable', availableDays);
 
         // Flip the dates.
         datepicker.set('disable', 'flip');
         datepicker.set('enable', 'flip');
-
-        while (tutor.options.length > 1) {
-            tutor.remove(1);
-        }
-
-        timepicker.clear();
-        
-        while (duration.options.length > 0) {
-            duration.remove(0);
-        }
     }
 
-    function tutorPick() {
-        uniqueTutors = [];
-        for ( var i = 0; i < tutors.length; i++ ) {
-            if (!uniqueTutors.some(item => item.tutor_id === tutors[i]['tutor_id'])) {
-                uniqueTutors.push(tutors[i])
-            }
-        }
-        while (tutor.options.length > 1) {
-            tutor.remove(1);
-        }
-        for (i = 0; i < uniqueTutors.length; i++ ) {
-            var option = new Option(uniqueTutors[i]['first_name'] + " " + uniqueTutors[i]['last_name'], uniqueTutors[i]['tutor_id']);
-            tutor.add(option, undefined);
-        }
-        
-        timepicker.clear();
-        
-        while (duration.options.length > 0) {
-            duration.remove(0);
-        }
-    }
 
-    function timeUpdate() {
-
-        selectedTutor = document.getElementById("tutor").value;
+    function dateUpdated() {
+        // Update the selected date after check
+        if (datepicker.get() === '') {
+            selectedDate = null;
+            return;
+        }
         selectedDate = datepicker.get('select')['obj'];
-        var times = [];
-        for( var i = 0; i < dates.length; i++) {
-            if ( selectedTutor === tutors[i]['tutor_id'] || selectedTutor === 'Any' ) {
-                var compareDate = new Date(dates[i]);
+
+        // Call function that updates the time selector
+        timeSetup();
+    }
+
+    function timeSetup() {
+        // Declare new list of available times
+        var availableTimes = [];
+
+        // For every available date of the selected tutor see if that time is on the selected date and then push it to the array
+        for( var i = 0; i < availableDays.length; i++) {
+                var compareDate = new Date(availableDays[i]);
                 compareDate.setHours(0,0,0,0);
-                if ( compareDate.getTime() === selectedDate.getTime()) {
-                    times.push(dates[i]);
+                if ( compareDate.getTime() === selectedDate.getTime() ) {
+                    availableTimes.push(availableDays[i]);
                 }
-            }
         }
+
+        // WORKAROUND FOR PICKADATE.JS https://github.com/amsul/pickadate.js/issues/364#issuecomment-116980300
         // Disable all the times.
         timepicker.set('disable', true);
         timepicker.set('enable', false);
 
         // Disable the times you want to enable.
-        timepicker.set('disable', times);
+        timepicker.set('disable', availableTimes);
 
         // Flip the times.
         timepicker.set('disable', 'flip');
         timepicker.set('enable', 'flip');
-
-        while (duration.options.length > 0) {
-            duration.remove(0);
-        }
     }
 
-    function sequentialTime() {
+    function timeUpdated() {
+        // Update the selected date and dateAndTime after check
+        if (timepicker.get() === '') {
+            selectedTime = null;
+            document.getElementById('time').value = null;
+            return;
+        }
+        selectedTime = timepicker.get('select');
+
+        selectedDateTime = new Date(selectedDate);
+        selectedDateTime.setHours(selectedTime['hour'],selectedTime['mins']);
+
+        document.getElementById('time').value = selectedDateTime;
+
+        // Call function that updates the duration selector
+        durationSetup();
+    }
+
+    function durationSetup() {
+        // Declare variables required to do duration math
         var oldTutorID;
         var streak = [];
         var highestStreak = [];
-        var selectedTime = new Date(selectedDate);
-        var time = timepicker.get('select');
         var reset = false;
-        selectedTime.setHours(time['hour'],time['mins']);
-        document.getElementById("time").value = selectedTime;
 
-        for ( var i = 0; i < tutors.length; i++ ) {
-            if ( selectedTutor === tutors[i]['tutor_id'] || selectedTutor === 'Any' ) {
-                if ( tutors[i]['tutor_id'] != oldTutorID || reset ) {
+        // For every valid session for the selected subject
+        for ( var i = 0; i < validSessions.length; i++ ) {
+            
+            // If the tutor is set to any or the selected tutor
+            if ( selectedTutor === 'Any' || validSessions[i]['tutor_id'] === selectedTutor ) {
+                
+                // If the tutorID doesn't equal the one of the last run of the for loop or if reset isn't called
+                if ( validSessions[i]['tutor_id'] != oldTutorID || reset ) {
+                    
+                    // Check if the highest streak is smaller than the current
                     if ( highestStreak.length < streak.length ) {
-                        document.getElementById("anyTutor").value = oldTutorID;
+                        // Update it if so
+                        document.getElementById('tutorpicker').value = oldTutorID;
                         highestStreak = streak;
                     }
+                    
+                    // Reset the streak
                     streak = [];
-                    if (selectedTime.getTime() === dates[i].getTime()) {
-                        oldTutorID = tutors[i]['tutor_id'];
-                        streak.push(dates[i]);
+
+                    // Check if the selectedTime equals the sessions time
+                    if ( selectedDateTime.getTime() === new Date(validSessions[i]['time_id']).getTime() ) {
+                        // Update the oldTutorID for next loop and push the date to the streak
+                        oldTutorID = validSessions[i]['tutor_id'];
+                        streak.push(validSessions[i]['time_id']);
                     }
+
                 }
+
+                // If this is a tutor ID that was saw in the last for loop
                 else {
-                    //If interval between now and previous time is 15m
-                    if ((dates[i].getTime() - dates[i-1].getTime()) === 900000) {
-                        streak.push(dates[i]);
+                    //Check if the interval between now and previous time is 15m
+                    if ( ( new Date(validSessions[i]['time_id']).getTime() - new Date(validSessions[i-1]['time_id']).getTime() ) === 900000 ) {
+                        // Push the date to the streak
+                        streak.push(validSessions[i]['time_id']);
                     }
+
+                    // Else force reset the streak
                     else {
-                        reset = true; // Force reset the streak
+                        reset = true;
                     }
                 }
             }
         }
+
+        // Final check to make sure the current streak isn't larger than the highest
         if ( highestStreak.length < streak.length ) {
-            document.getElementById("anyTutor").value = oldTutorID;
+            // Update it if so
+            document.getElementById('tutorpicker').value = oldTutorID;
             highestStreak = streak;
         }
-        while (duration.options.length > 0) {
-            duration.remove(0);
+
+        // Remove all previous duration options
+        while (durationpicker.options.length > 0) {
+            durationpicker.remove(0);
         }
+
+        // Add new duration options
         for (i = 1; i-1 < highestStreak.length; i++ ) {
             var option = new Option(i*15 + ' Minutes', i*15);
-            duration.add(option, undefined);
+            durationpicker.add(option, undefined);
         }
-        console.log(highestStreak);
+    }
+
+    // Reset info after value changed
+    function remove(i) {
+        // Until reached resetting duration
+        for( i; i < 3; i++ ) {
+            // Check the i and perform the action
+            switch (i) {
+                // Remove old date info
+                case 0:
+                    if ( datepicker.get() != '' ) {
+                        datepicker.clear();
+                    }
+                // Remove old time info
+                case 1:
+                    if ( timepicker.get() != '' ) {
+                        timepicker.clear();
+                    }
+                // Remove old duration info
+                case 2:
+                    while (durationpicker.options.length > 0) {
+                        durationpicker.remove(0);
+                    }
+            }
+        }
     }
 </script>
