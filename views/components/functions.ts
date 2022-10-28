@@ -28,7 +28,11 @@ function formatTime(input: string) {
     }
   }
   const res =
-    Math.floor(hour) + ':' + padTo2Digits((hour % 1) * 60) + ' ' + state
+    padTo2Digits(Math.floor(hour)) +
+    ':' +
+    padTo2Digits((hour % 1) * 60) +
+    ' ' +
+    state
   return res
 }
 

@@ -2,6 +2,8 @@ import express, { NextFunction, Request, Response } from 'express'
 const router = express.Router()
 
 import db from '../lib/db'
+
+import functions from '../../views/components/functions'
 import sanitize from '../lib/sanitize'
 
 function checkAuthentication(req: Request, res: Response, next: NextFunction) {
@@ -98,12 +100,28 @@ router.post('/settings', (req, res) => {
   })
 })
 
-router.get('/upcoming', (req, res) => {
-  res.render('pages/student/upcoming')
+router.get('/upcoming', async (req, res) => {
+  const upcomingSessions = await db.listSessions(
+    true,
+    'students',
+    res.locals.user.id
+  )
+  res.render('pages/student/upcoming', {
+    upcomingSessions: upcomingSessions,
+    functions: functions
+  })
 })
 
-router.get('/history', (req, res) => {
-  res.render('pages/student/history')
+router.get('/history', async (req, res) => {
+  const pastSessions = await db.listSessions(
+    false,
+    'students',
+    res.locals.user.id
+  )
+  res.render('pages/student/history', {
+    pastSessions: pastSessions,
+    functions: functions
+  })
 })
 
 export { router }

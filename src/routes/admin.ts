@@ -39,8 +39,8 @@ router.get('/list', async (req, res) => {
   const adminAllowed = await db.listAllowed('admins')
   const increments = await db.listIncrements()
   const holidays = await db.listHolidays()
-  const pastSessions = await db.listSessions(false)
-  const upcomingSessions = await db.listSessions(true)
+  const pastSessions = await db.listSessions(false, 'admins', 'Any')
+  const upcomingSessions = await db.listSessions(true, 'admins', 'Any')
   res.render('pages/admin/list', {
     students: students,
     tutors: tutors,

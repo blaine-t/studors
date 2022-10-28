@@ -130,12 +130,28 @@ router.post('/subjects', async (req, res) => {
   return
 })
 
-router.get('/upcoming', (req, res) => {
-  res.render('pages/tutor/upcoming')
+router.get('/upcoming', async (req, res) => {
+  const upcomingSessions = await db.listSessions(
+    true,
+    'tutors',
+    res.locals.user.id
+  )
+  res.render('pages/tutor/upcoming', {
+    upcomingSessions: upcomingSessions,
+    functions: functions
+  })
 })
 
-router.get('/history', (req, res) => {
-  res.render('pages/tutor/history')
+router.get('/history', async (req, res) => {
+  const pastSessions = await db.listSessions(
+    false,
+    'tutors',
+    res.locals.user.id
+  )
+  res.render('pages/tutor/history', {
+    pastSessions: pastSessions,
+    functions: functions
+  })
 })
 
 router.post('/settings', (req, res) => {

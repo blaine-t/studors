@@ -24,6 +24,7 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 - [ ] Make admin placeholders have current data instead of example
 - [ ] Test suite from start to finish
 - [ ] Refactor all code and ensure proper function use and proper security
+- [ ] Check error handling
 - [ ] Write pages
 
 ## KNOWN ISSUES:
@@ -31,6 +32,10 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 When scheduling a session the time used is the user's browser time instead of the servers time leading to possible confusion
 
 Error handling in db.ts is _possibly_ broken
+
+Students can pick dates before today
+
+Times don't auto populate in to database
 
 ### WEB PAGES NOT DONE:
 
@@ -48,22 +53,22 @@ Error handling in db.ts is _possibly_ broken
 
 /student/find // Styling required
 
-/student/history
+/student/history // MAJOR restyling/refactoring required
 
 /student/request?
 
 /student/settings // Convert to dialog?
 
-/student/upcoming
+/student/upcoming // MAJOR restyling/refactoring required
 
 /tutor/availability // Styling required
 
 /tutor/subjects // Styling required
 
-/tutor/history
+/tutor/history // MAJOR restyling/refactoring required
 
-/tutor/request
+/tutor/request?
 
 /tutor/settings // Convert to dialog?
 
-/tutor/upcoming
+/tutor/upcoming // MAJOR restyling/refactoring required

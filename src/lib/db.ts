@@ -131,7 +131,7 @@ async function revokeUser(role: string, email: string) {
   }
 }
 
-// Create a tutoring session
+// Create a tutoring session (Use proper programming techniques)
 async function createSession(
   sid: string,
   tid: string,
@@ -140,11 +140,18 @@ async function createSession(
   duration: number
 ) {
   try {
+    pool.query(
+      'DELETE FROM availabilitymap WHERE time_id = $1 AND tutor_id = $2',
+      [time, tid]
+    )
     const res = await pool.query(
       'INSERT INTO sessions (student_id,tutor_id,time_id,subject_id,duration) VALUES ($1,$2,$3,$4,$5)',
       [sid, tid, time, subject, duration]
     )
-    console.log(res)
+    pool.query(
+      'DELETE FROM availabilitymap WHERE time_id = $1 AND tutor_id = $2',
+      [time, tid]
+    )
     if (res) {
       try {
         pool.query(
@@ -154,10 +161,6 @@ async function createSession(
         pool.query(
           'UPDATE tutors SET hours_total = hours_total + $1 WHERE id = $2',
           [duration, tid]
-        )
-        pool.query(
-          'DELETE FROM availabilitymap WHERE time_id = $1 AND tutor_id = $2',
-          [time, tid]
         )
       } catch (err) {
         console.log(err)
@@ -171,12 +174,16 @@ async function createSession(
 }
 
 // List out all sessions upcoming or past
-async function listSessions(upcoming: boolean) {
+async function listSessions(upcoming: boolean, pos: string, id: string) {
   let operator = ''
+  let tutorQuery = ''
   if (upcoming) {
     operator = '>'
   } else {
     operator = '<'
+  }
+  if (id != 'Any') {
+    tutorQuery = ` AND ${pos}.id = '${id}'`
   }
   try {
     const res = await pool.query(
@@ -185,7 +192,7 @@ async function listSessions(upcoming: boolean) {
       FROM sessions
       INNER JOIN tutors on sessions.tutor_id = tutors.id
       INNER JOIN students on sessions.student_id = students.id
-      WHERE time_id ${operator} now()
+      WHERE time_id ${operator} now() ${tutorQuery}
       ORDER BY time_id`
     )
     return res.rows

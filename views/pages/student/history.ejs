@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../../components/head'); %>
+  <title>Studors - Student</title>
+  <style>
+    #user-list {
+      white-space: pre-line;
+    }
+    body {
+      height: 100%;
+    }
+  </style>
+  <script src="/js/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/jquery.dataTables.css">
+  <script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.js"></script>
+</head>
+
+<body>
+  <%- include('../../components/header'); %>
+  <div class="admin-list">
+    <div id="user-list">
+      <h2> Past Sessions: </h2>
+      <table id="pastSessionTable">
+        <thead>
+        <tr>
+          <th>Time</th>
+          <th>Tutor name</th>
+          <th>Tutor surname</th>
+          <th>Student name</th>
+          <th>Student surname</th>
+          <th>Subject</th>
+          <th>Hours</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for(const obj of pastSessions){ %>
+        <tr>
+          <% for(const key in obj) { %>
+            <% if( key == "time_id") { %>
+              <td><%= functions.formatDate(obj[key]) %></td><%
+              }
+              else { %>
+          <td><%= obj[key] %></td>
+          <% }
+          } %>
+        </tr>
+        <% } %>
+      </tbody>
+      </table>
+    </div>
+  </div>
+  <%- include('../../components/footer'); %>
+</body>
+
+<script>
+  $(document).ready(function () {
+    $('#pastSessionTable').DataTable();
+  });
+</script>
+
+</html>
