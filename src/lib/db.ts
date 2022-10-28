@@ -140,14 +140,34 @@ async function createSession(
   duration: number
 ) {
   try {
-    pool.query(
+    const res = await pool.query(
       'INSERT INTO sessions (student_id,tutor_id,time_id,subject_id,duration) VALUES ($1,$2,$3,$4,$5)',
       [sid, tid, time, subject, duration]
     )
+    console.log(res)
+    if (res) {
+      try {
+        pool.query(
+          'UPDATE tutors SET hours_term = hours_term + $1 WHERE id = $2',
+          [duration, tid]
+        )
+        pool.query(
+          'UPDATE tutors SET hours_total = hours_total + $1 WHERE id = $2',
+          [duration, tid]
+        )
+        pool.query(
+          'DELETE FROM availabilitymap WHERE time_id = $1 AND tutor_id = $2',
+          [time, tid]
+        )
+      } catch (err) {
+        console.log(err)
+      }
+      return true
+    }
   } catch (err) {
-    return err
+    console.log(err)
+    return false
   }
-  return true
 }
 
 // List out all sessions upcoming or past
@@ -161,7 +181,7 @@ async function listSessions(upcoming: boolean) {
   try {
     const res = await pool.query(
       `SELECT sessions.time_id, tutors.first_name as tutor_name, tutors.last_name as tutor_surname, 
-      students.first_name as student_name, students.last_name as student_surname, sessions.subject_id, sessions.hours
+      students.first_name as student_name, students.last_name as student_surname, sessions.subject_id, sessions.duration
       FROM sessions
       INNER JOIN tutors on sessions.tutor_id = tutors.id
       INNER JOIN students on sessions.student_id = students.id

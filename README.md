@@ -19,12 +19,18 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 - [x] Handle phone numbers better
 - [x] Extra admin actions (e.g. add holidays)
 - [x] Implement subjects and subject matching
-- [ ] Add proper matching
+- [x] Add proper matching
 - [ ] Add unavailability options
 - [ ] Make admin placeholders have current data instead of example
 - [ ] Test suite from start to finish
 - [ ] Refactor all code and ensure proper function use and proper security
 - [ ] Write pages
+
+## KNOWN ISSUES:
+
+When scheduling a session the time used is the user's browser time instead of the servers time leading to possible confusion
+
+Error handling in db.ts is _possibly_ broken
 
 ### WEB PAGES NOT DONE:
 
@@ -40,7 +46,7 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 
 /mission // Done but waiting for info
 
-/student/find
+/student/find // Styling required
 
 /student/history
 
