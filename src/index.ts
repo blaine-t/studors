@@ -9,7 +9,6 @@ app.use(
   helmet({
     contentSecurityPolicy: false,
     crossOriginEmbedderPolicy: false
-    // ...
   })
 )
 
@@ -17,7 +16,7 @@ app.use(
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-// Allows variable HTML AKA EJS
+// Allows server side rendering
 app.set('view engine', 'ejs')
 const port = 19090
 
@@ -69,7 +68,6 @@ import { router as tutor } from './routes/tutor'
 import { router as admin } from './routes/admin'
 import { router as api } from './routes/api'
 import { router as auth } from './routes/auth'
-import db from './lib/db'
 
 // Require authentication for certain routes on the site
 app.use('/', root)
@@ -94,10 +92,12 @@ app.use(function (req, res) {
   return
 })
 
+// Enable automated date population through cronjob
+import scheduler from './lib/scheduler'
+scheduler.scheduleDates()
+scheduler.purgeOldDates()
+
 // Have the server listen for incoming requests
 app.listen(port, () => {
   console.log(`Studors is listening on http://127.0.0.1:${port}`)
 })
-
-db.createDates()
-db.migrateWeeklyToDates()

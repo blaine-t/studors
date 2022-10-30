@@ -29,13 +29,11 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 
 ## KNOWN ISSUES:
 
-When scheduling a session the time used is the user's browser time instead of the servers time leading to possible confusion
-
 Error handling in db.ts is _possibly_ broken
 
-Students can pick dates before today
+Possible SQL injection in multiple locations
 
-Times don't auto populate in to database
+Times don't auto populate in to database (Works now but doesn't populate enough, will fix in refactor)
 
 ### WEB PAGES NOT DONE:
 

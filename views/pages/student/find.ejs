@@ -9,6 +9,7 @@
 <body>
     <%- include('../../components/header'); %>
     <h1> Select a subject that you would like help in</h1>
+    <p>(Timezone is your school's timezone)</p>
     <p><%-error%></p>
     <form onsubmit='return validate(this)' action='' method='post'>
         <select id='subjectpicker' name='subjectpicker' onchange='subjectUpdated(); dateSetup(); remove(0);'>
@@ -45,6 +46,9 @@
 </html>
 
 <script>
+
+    var serverOffset = <%- new Date(Date.now()).getTimezoneOffset() %>;
+    var clientOffset = new Date(Date.now()).getTimezoneOffset();
 
     var $time = $('#timepicker').pickatime({
         interval: 15
@@ -187,7 +191,10 @@
                 var compareDate = new Date(availableDays[i]);
                 compareDate.setHours(0,0,0,0);
                 if ( compareDate.getTime() === selectedDate.getTime() ) {
-                    availableTimes.push(availableDays[i]);
+                    var date = new Date(availableDays[i]);
+                    date.setHours((availableDays[i].getHours() + (clientOffset/60 - serverOffset/60)));
+                    console.log(date)
+                    availableTimes.push(date);
                 }
         }
 
@@ -214,7 +221,7 @@
         selectedTime = timepicker.get('select');
 
         selectedDateTime = new Date(selectedDate);
-        selectedDateTime.setHours(selectedTime['hour'],selectedTime['mins']);
+        selectedDateTime.setHours(selectedTime['hour'] - (clientOffset/60 - serverOffset/60),selectedTime['mins']);
 
         document.getElementById('time').value = selectedDateTime;
 

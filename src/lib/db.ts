@@ -1,4 +1,5 @@
 import { Pool } from 'pg'
+import functions from './functions'
 // Pulls connection info from .env variables. See: https://node-postgres.com/features/connecting
 const pool = new Pool()
 
@@ -277,17 +278,6 @@ async function removeOldUsers(role: string) {
   }
 }
 
-// Gets the previous Sunday
-function getSunday(date = new Date()) {
-  const previousSunday = new Date()
-
-  previousSunday.setDate(date.getDate() - date.getDay())
-
-  previousSunday.setHours(0, 0, 0, 0)
-
-  return previousSunday
-}
-
 // Creates the times for the week
 async function createDates() {
   try {
@@ -297,7 +287,7 @@ async function createDates() {
     if (res.rows.length != 0) {
       for (let i = 1; i < 6; i++) {
         for (let j = 0; j < res.rows.length; j++) {
-          const time = getSunday()
+          const time = functions.getSunday()
           let holiday = false
           time.setDate(time.getDate() + i)
           for (let k = 0; k < offDays.rows.length; k++) {
@@ -337,7 +327,7 @@ async function listTimesBetweenDates(afterTime: Date, beforeTime: Date) {
 // Lists the current times available this week
 async function listCurrentWeekTimes() {
   const res = []
-  const sun = getSunday()
+  const sun = functions.getSunday()
   for (let i = 1; i < 6; i++) {
     const afterTime = new Date()
     afterTime.setDate(sun.getDate() + i)
@@ -520,7 +510,7 @@ async function migrateWeeklyToDates() {
   }
 
   for (let i = 0; i < weeklyAvailability.length; i++) {
-    const time = getSunday()
+    const time = functions.getSunday()
     const increment = weeklyAvailability[i]['increment_id']
     time.setDate(time.getDate() + weeklyAvailability[i]['dow'])
     time.setHours(increment, (increment % 1) * 60, 0, 0)
@@ -654,6 +644,14 @@ async function listAvailabilityForSubject(subject: string) {
   }
 }
 
+async function purgeOldAvailability() {
+  try {
+    pool.query('DELETE FROM availabilitymap WHERE time_id < now()')
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export default {
   deleteWhere,
   truncateTable,
@@ -698,5 +696,6 @@ export default {
   listTutorsSubjects,
   removeTutorsSubject,
   listAvailability,
-  listAvailabilityForSubject
+  listAvailabilityForSubject,
+  purgeOldAvailability
 }
