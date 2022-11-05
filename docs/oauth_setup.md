@@ -2,11 +2,11 @@
 
 ## Google Cloud Console
 
-Go to the google cloud console: https://console.cloud.google.com
+Go to the Google Cloud Console: https://console.cloud.google.com
 
 Create a new project
 
-Go to the API dashboard: https://console.cloud.google.com/apis/dashboard
+Go to the API Dashboard: https://console.cloud.google.com/apis/dashboard
 
 ## OAuth consent screen
 
@@ -42,4 +42,4 @@ Create
 
 Copy the client ID and client Secret into the .env file for the project
 
-Now you should be able to use Google OAuth in the project as soon as the URIs goes through Google's servers
+Now you should be able to use Google OAuth in the project as soon as the URIs propagate in Google's servers
