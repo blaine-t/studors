@@ -1,5 +1,10 @@
 import db from './db'
 
+/**
+ * Checks if the user's API Key is supplied, a string, and valid in the DB
+ * @param apiKey API Key the user gives in POST request to API endpoint
+ * @returns Response to send user in JSON
+ */
 async function acceptHoursRequest(apiKey: string) {
   //Checks if API key is not a string and then tells user invalid type
   if (typeof apiKey !== 'string') {
@@ -9,11 +14,11 @@ async function acceptHoursRequest(apiKey: string) {
     }
     return { invalid: 'TYPE' }
   }
-  // Return the hours worked by tutors
+  // Return the hours of tutors if valid key
   if ((await db.confirmApiKey(apiKey)) != null) {
     return await db.getHours()
   }
-  // If API key is supplied but isn't right report unauthorized
+  // If API key is supplied but isn't valid report unauthorized
   return { user: 'UNAUTHORIZED' }
 }
 

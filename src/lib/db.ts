@@ -3,26 +3,36 @@ import functions from './functions'
 // Pulls connection info from .env variables. See: https://node-postgres.com/features/connecting
 const pool = new Pool()
 
-// Perform a simple delete from the database
-async function deleteWhere(database: string, key: string, value: string) {
-  try {
-    pool.query(`DELETE FROM ${database} WHERE ${key} = ${value}`)
-  } catch (err) {
-    console.log(err)
-  }
+/**
+ * Perform a simple delete from the database
+ * @param table Which table to delete from
+ * @param key Where this key
+ * @param value Equals this value
+ */
+function deleteWhere(table: string, key: string, value: string) {
+  pool
+    .query(`DELETE FROM ${table} WHERE ${key} = ${value}`)
+    .catch((e) => console.error(e))
 }
 
-// Used for removing student and tutor rosters
-async function truncateTable(table: string) {
-  try {
-    pool.query(`TRUNCATE TABLE ${table} CASCADE`)
-  } catch (err) {
-    console.log(err)
-  }
+/**
+ * Remove rosters from the database
+ * @param table Which table to truncate
+ */
+function truncateTable(table: string) {
+  pool.query(`TRUNCATE TABLE ${table} CASCADE`).catch((e) => console.error(e))
 }
 
-// Create a student, tutor, or admin
-async function createUser(
+/**
+ * Create a student, tutor, or admin
+ * @param role students, tutors, or admins
+ * @param id OAuth ID (string)
+ * @param first_name
+ * @param last_name
+ * @param picture profile picture URL
+ * @param email Will be lowercased
+ */
+function createUser(
   role: string,
   id: string,
   first_name: string,
@@ -30,17 +40,20 @@ async function createUser(
   picture: string,
   email: string
 ) {
-  try {
-    pool.query(
+  pool
+    .query(
       `INSERT INTO ${role} (id,first_name,last_name,picture,email) VALUES ($1,$2,$3,$4,$5)`,
       [id, first_name, last_name, picture, email.toLowerCase()]
     )
-  } catch (err) {
-    console.log(err)
-  }
+    .catch((e) => console.error(e))
 }
 
-// Ensure that the user is in the database
+/**
+ * Ensure that the user is in the database
+ * @param role students, tutors, or admins
+ * @param id OAuth ID (string)
+ * @returns User's DB entry
+ */
 async function authUser(role: string, id: string) {
   try {
     const res = await pool.query(`SELECT * FROM ${role} WHERE id = $1`, [id])
@@ -50,7 +63,11 @@ async function authUser(role: string, id: string) {
   }
 }
 
-// List all users in the database based on role
+/**
+ * List all users in the database based on role
+ * @param role students, tutors, or admins
+ * @returns Array of users
+ */
 async function listUsers(role: string) {
   let extraQuery = ''
   if (role == 'tutors') {
@@ -69,41 +86,53 @@ async function listUsers(role: string) {
   }
 }
 
-// Update a user's settings
-async function updateUser(
+/**
+ * Update a user's settings
+ * @param role students, tutors, or admins
+ * @param id OAuth ID (string)
+ * @param phone User supplied phone number AFTER sanitization
+ * @param grade 9-12 (number)
+ * @param dark_theme
+ */
+function updateUser(
   role: string,
   id: string,
   phone: string,
   grade: number,
   dark_theme: boolean
 ) {
-  try {
-    pool.query(
+  pool
+    .query(
       `UPDATE ${role} SET phone = $2, grade = $3, dark_theme = $4 WHERE id = $1`,
       [id, phone, grade, dark_theme]
     )
-  } catch (err) {
-    console.log(err)
-  }
+    .catch((e) => console.error(e))
 }
 
-// Manage the whitelist of different roles
-async function allowUser(role: string, email: string) {
-  try {
-    pool.query(
-      `INSERT INTO allowed${role} (email) VALUES ${email} ON CONFLICT DO NOTHING`
+/**
+ * Add to the whitelist of different roles
+ * @param role students, tutors, or admins
+ * @param emailQuery Generated email query
+ */
+async function allowUser(role: string, emailQuery: string) {
+  pool
+    .query(
+      `INSERT INTO allowed${role} (email) VALUES ${emailQuery} ON CONFLICT DO NOTHING`
     )
-  } catch (err) {
-    console.log(err)
-  }
+    .catch((e) => console.error(e))
 }
 
-// Check on registration if user is allowed to register
+/**
+ * Check on registration if user is allowed to register
+ * @param role students, tutors, or admins
+ * @param email Will be lowercased
+ * @returns Array of users
+ */
 async function checkUser(role: string, email: string) {
   try {
     const res = await pool.query(
       `SELECT * FROM allowed${role} WHERE email = $1`,
-      [email]
+      [email.toLowerCase()]
     )
     return res.rows[0]
   } catch (err) {
@@ -111,7 +140,11 @@ async function checkUser(role: string, email: string) {
   }
 }
 
-// List allowed users for admin page
+/**
+ * List allowed users for admin page
+ * @param role students, tutors, or admins
+ * @returns Array of users
+ */
 async function listAllowed(role: string) {
   try {
     const res = await pool.query(
@@ -123,16 +156,26 @@ async function listAllowed(role: string) {
   }
 }
 
-// Remove a user from a whitelist
-async function revokeUser(role: string, email: string) {
-  try {
-    pool.query(`DELETE FROM allowed${role} WHERE email IN ${email}`)
-  } catch (err) {
-    console.log(err)
-  }
+/**
+ * Remove from the whitelist of different roles
+ * @param role students, tutors, or admins
+ * @param emailQuery Generated email query
+ */
+async function revokeUser(role: string, emailQuery: string) {
+  pool
+    .query(`DELETE FROM allowed${role} WHERE email IN ${emailQuery}`)
+    .catch((e) => console.error(e))
 }
 
-// Create a tutoring session (Use proper programming techniques)
+/**
+ * Create a tutoring session (Use proper programming techniques)
+ * @param sid OAuth ID (string)
+ * @param tid OAuth ID (string)
+ * @param time JS Date format
+ * @param subject
+ * @param duration Decimal in DB
+ * @returns True if booking successful, false if booking fails
+ */
 async function createSession(
   sid: string,
   tid: string,
@@ -174,17 +217,25 @@ async function createSession(
   }
 }
 
-// List out all sessions upcoming or past
+/**
+ * List out all sessions upcoming or past
+ * @param upcoming True is upcoming. False is past
+ * @param pos students, tutors, or admins
+ * @param id OAuth ID (string)
+ * @returns Array of sessions
+ */
 async function listSessions(upcoming: boolean, pos: string, id: string) {
   let operator = ''
-  let tutorQuery = ''
+  let userQuery = ''
+  // Set the operator to check if before or after now
   if (upcoming) {
     operator = '>'
   } else {
     operator = '<'
   }
+  // If looking for a specific users's id add extra query to check
   if (id != 'Any') {
-    tutorQuery = ` AND ${pos}.id = '${id}'`
+    userQuery = ` AND ${pos}.id = '${id}'`
   }
   try {
     const res = await pool.query(
@@ -193,7 +244,7 @@ async function listSessions(upcoming: boolean, pos: string, id: string) {
       FROM sessions
       INNER JOIN tutors on sessions.tutor_id = tutors.id
       INNER JOIN students on sessions.student_id = students.id
-      WHERE time_id ${operator} now() ${tutorQuery}
+      WHERE time_id ${operator} now() ${userQuery}
       ORDER BY time_id`
     )
     return res.rows
@@ -202,7 +253,10 @@ async function listSessions(upcoming: boolean, pos: string, id: string) {
   }
 }
 
-// Get a list of hours for tutors
+/**
+ * Get a list of hours for tutors
+ * @returns Array of tutors hours
+ */
 async function getHours() {
   try {
     const res = await pool.query(
@@ -214,7 +268,11 @@ async function getHours() {
   }
 }
 
-// Makes sure API key is valid
+/**
+ * Makes sure API key is valid
+ * @param apiKey API Key
+ * @returns User if API Key valid else nothing
+ */
 async function confirmApiKey(apiKey: string) {
   if (apiKey != null) {
     try {
@@ -229,16 +287,15 @@ async function confirmApiKey(apiKey: string) {
   }
 }
 
-// Changes API Key on user request
+/**
+ * Changes API Key on user request
+ * @param id OAuth ID
+ * @param apiKey
+ */
 async function updateApiKey(id: string, apiKey: string) {
-  try {
-    pool.query('UPDATE admins SET api_key = $2::uuid WHERE id = $1', [
-      id,
-      apiKey
-    ])
-  } catch (err) {
-    console.log(err)
-  }
+  pool
+    .query('UPDATE admins SET api_key = $2::uuid WHERE id = $1', [id, apiKey])
+    .catch((e) => console.error(e))
 }
 
 // Deletes students current term hours

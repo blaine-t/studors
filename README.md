@@ -20,6 +20,7 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 - [x] Extra admin actions (e.g. add holidays)
 - [x] Implement subjects and subject matching
 - [x] Add proper matching
+- [ ] Fix createSession in db.ts
 - [ ] Add unavailability options
 - [ ] Make admin placeholders have current data instead of example
 - [ ] Test suite from start to finish
