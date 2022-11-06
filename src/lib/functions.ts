@@ -1,4 +1,8 @@
-// Gets the Sunday of given day in a week
+/**
+ * Gets the Sunday of given day in a week
+ * @param date Day of a week
+ * @returns Sunday of that week
+ */
 function getSunday(date: Date) {
   const previousSunday = new Date()
 

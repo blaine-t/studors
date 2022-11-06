@@ -69,33 +69,41 @@ router.post('/apiReset', (req, res) => {
 
 router.post('/settings', (req, res) => {
   const sanitizedPhone = sanitize.phone(req.body.phone)
+  const sanitizedGrade = sanitize.grade(req.body.grade, 'admin')
+  let sanitizedDarkTheme = true
+  if (req.body.dark_theme != undefined) {
+    sanitizedDarkTheme = sanitize.boolean(req.body.dark_theme)
+  }
   if (
-    ((req.body.phone.match(
-      '^[(]?([2-9][0-8][0-9])[)]?[-|\\s]?([2-9][0-9]{2})[-|\\s]?([0-9]{4})$'
-    ) &&
-      sanitizedPhone) ||
-      req.body.phone.match('^$')) &&
-    (req.body.grade.match('[9]') || req.body.grade.match('[1][0-3]'))
+    typeof sanitizedPhone == 'string' &&
+    sanitizedGrade &&
+    sanitizedDarkTheme
   ) {
-    let phone = ''
-    if (sanitizedPhone) {
-      phone = sanitizedPhone
-    }
     db.updateUser(
       'admins',
       res.locals.user.id,
-      phone,
+      sanitizedPhone,
       req.body.grade,
       req.body.dark_theme || false
     )
-    res.locals.user.phone = phone
+    res.locals.user.phone = sanitizedPhone
     res.locals.user.grade = req.body.grade
     res.locals.user.dark_theme = req.body.dark_theme
     res.redirect('panel')
     return
   }
+  let error = 'Invalid '
+  if (!sanitizedGrade) {
+    error += 'grade'
+  }
+  if (!sanitizedGrade && typeof sanitizedPhone == 'boolean') {
+    error += ' and '
+  }
+  if (typeof sanitizedPhone == 'boolean') {
+    error += 'phone number'
+  }
   res.render('pages/admin/settings', {
-    error: 'Invalid grade or phone number'
+    error: error
   })
 })
 

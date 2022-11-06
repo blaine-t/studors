@@ -1,5 +1,6 @@
 import { Pool } from 'pg'
 import functions from './functions'
+import sanitize from './sanitize'
 // Pulls connection info from .env variables. See: https://node-postgres.com/features/connecting
 const pool = new Pool()
 
