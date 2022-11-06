@@ -1,10 +1,11 @@
 import schedule from 'node-schedule'
 import db from './db'
+import functions from './functions'
 
 function scheduleDates() {
   schedule.scheduleJob('0 17 * * 1', function () {
-    db.createDates()
-    db.migrateWeeklyToDates()
+    db.createDates(functions.getSunday()) // Fix later
+    db.migrateWeeklyToDates(functions.getSunday()) // Fix later
   })
 }
 

@@ -4,18 +4,6 @@ import functions from './functions'
 const pool = new Pool()
 
 /**
- * Perform a simple delete from the database
- * @param table Which table to delete from
- * @param key Where this key
- * @param value Equals this value
- */
-function deleteWhere(table: string, key: string, value: string) {
-  pool
-    .query(`DELETE FROM ${table} WHERE ${key} = ${value}`)
-    .catch((e) => console.error(e))
-}
-
-/**
  * Remove rosters from the database
  * @param table Which table to truncate
  */
@@ -114,7 +102,7 @@ function updateUser(
  * @param role students, tutors, or admins
  * @param emailQuery Generated email query
  */
-async function allowUser(role: string, emailQuery: string) {
+function allowUser(role: string, emailQuery: string) {
   pool
     .query(
       `INSERT INTO allowed${role} (email) VALUES ${emailQuery} ON CONFLICT DO NOTHING`
@@ -161,7 +149,7 @@ async function listAllowed(role: string) {
  * @param role students, tutors, or admins
  * @param emailQuery Generated email query
  */
-async function revokeUser(role: string, emailQuery: string) {
+function revokeUser(role: string, emailQuery: string) {
   pool
     .query(`DELETE FROM allowed${role} WHERE email IN ${emailQuery}`)
     .catch((e) => console.error(e))
@@ -292,124 +280,102 @@ async function confirmApiKey(apiKey: string) {
  * @param id OAuth ID
  * @param apiKey
  */
-async function updateApiKey(id: string, apiKey: string) {
+function updateApiKey(id: string, apiKey: string) {
   pool
     .query('UPDATE admins SET api_key = $2::uuid WHERE id = $1', [id, apiKey])
     .catch((e) => console.error(e))
 }
 
-// Deletes students current term hours
-async function advanceTerm() {
-  try {
-    pool.query('UPDATE tutors SET hours_term = 0')
-  } catch (err) {
-    console.log(err)
-  }
+/**
+ * Deletes tutors current term hours
+ */
+function advanceTerm() {
+  pool.query('UPDATE tutors SET hours_term = 0').catch((e) => console.error(e))
 }
 
-// Ups grade of all accounts below grade 13
-async function incrementGrade() {
-  try {
-    pool.query('UPDATE students SET grade = grade + 1 WHERE grade < 13')
-  } catch (err) {
-    console.log(err)
-  }
-  try {
-    pool.query('UPDATE tutors SET grade = grade + 1 WHERE grade < 13')
-  } catch (err) {
-    console.log(err)
-  }
-  try {
-    pool.query('UPDATE admins SET grade = grade + 1 WHERE grade < 13')
-  } catch (err) {
-    console.log(err)
-  }
+/**
+ * Increments grade of all accounts below grade 13
+ */
+function incrementGrade() {
+  pool
+    .query('UPDATE students SET grade = grade + 1 WHERE grade < 13')
+    .catch((e) => console.error(e))
+  pool
+    .query('UPDATE tutors SET grade = grade + 1 WHERE grade < 13')
+    .catch((e) => console.error(e))
+  pool
+    .query('UPDATE admins SET grade = grade + 1 WHERE grade < 13')
+    .catch((e) => console.error(e))
 }
 
-// Removes users that have grade above 12
-async function removeOldUsers(role: string) {
-  try {
-    pool.query(`DELETE FROM ${role} WHERE grade > 12`)
-  } catch (err) {
-    console.log(err)
-  }
+/**
+ * Removes users that have grade above 12
+ * @param role students, tutors, admins
+ */
+function removeOldUsers(role: string) {
+  pool
+    .query(`DELETE FROM ${role} WHERE grade > 12`)
+    .catch((e) => console.error(e))
 }
 
-// Creates the times for the week
-async function createDates() {
+/**
+ * Creates the times for the week from the increments and holidays
+ * @param week The sunday of the week that you would like to populate dates for
+ */
+async function createDates(week: Date) {
   try {
     let times = ''
-    const res = await pool.query(`SELECT hour from increments`)
-    const offDays = await pool.query('SELECT holiday from holidays')
-    if (res.rows.length != 0) {
+    const inc = await pool.query(`SELECT hour from increments`)
+    const holidays = await pool.query('SELECT holiday from holidays')
+    // If there are increments loop through the days of the week and add the increments every day
+    if (inc.rows.length != 0) {
       for (let i = 1; i < 6; i++) {
-        for (let j = 0; j < res.rows.length; j++) {
-          const time = functions.getSunday()
+        for (let j = 0; j < inc.rows.length; j++) {
+          const time = new Date(week)
           let holiday = false
           time.setDate(time.getDate() + i)
-          for (let k = 0; k < offDays.rows.length; k++) {
-            if (time.getDate() === offDays.rows[k].holiday.getDate()) {
+          for (let k = 0; k < holidays.rows.length; k++) {
+            // If time is in holiday then set boolean true
+            if (time.getDate() === holidays.rows[k].holiday.getDate()) {
               holiday = true
             }
           }
+          // If not holiday add the time slot to the query
           if (!holiday) {
-            time.setHours(res.rows[j].hour, (res.rows[j].hour % 1) * 60, 0, 0)
+            time.setHours(inc.rows[j].hour, (inc.rows[j].hour % 1) * 60, 0, 0)
             times += "('" + new Date(time).toISOString() + "'),"
           }
         }
       }
+      // Remove trailing comma in the query
       times = times.replace(/,$/, '')
-      pool.query(
-        `INSERT into times (time) VALUES ${times} ON CONFLICT DO NOTHING`
-      )
+      pool
+        .query(
+          `INSERT into times (time) VALUES ${times} ON CONFLICT DO NOTHING`
+        )
+        .catch((e) => console.error(e))
     }
   } catch (err) {
     console.log(err)
   }
 }
 
-// List times available in between two dates
-async function listTimesBetweenDates(afterTime: Date, beforeTime: Date) {
-  try {
-    const res = await pool.query(
-      'SELECT time FROM times WHERE time > $1 AND time < $2',
-      [afterTime, beforeTime]
-    )
-    return res.rows
-  } catch (err) {
-    console.log(err)
-  }
+/**
+ * Creates a time slot
+ * @param hour Hour in decimal format 0-23.75
+ */
+function createIncrement(hour: number) {
+  pool
+    .query('INSERT INTO increments (hour) VALUES ($1) ON CONFLICT DO NOTHING', [
+      hour
+    ])
+    .catch((e) => console.error(e))
 }
 
-// Lists the current times available this week
-async function listCurrentWeekTimes() {
-  const res = []
-  const sun = functions.getSunday()
-  for (let i = 1; i < 6; i++) {
-    const afterTime = new Date()
-    afterTime.setDate(sun.getDate() + i)
-    afterTime.setHours(0, 0, 0, 0)
-    const beforeTime = new Date()
-    beforeTime.setDate(afterTime.getDate() + 1)
-    beforeTime.setHours(0, 0, 0, 0)
-    res.push(await listTimesBetweenDates(afterTime, beforeTime))
-  }
-  return res
-}
-
-// Creates a time slot
-async function createIncrement(hour: number) {
-  try {
-    pool.query(
-      'INSERT INTO increments (hour) VALUES ($1) ON CONFLICT DO NOTHING',
-      [hour]
-    )
-  } catch (err) {
-    console.log(err)
-  }
-}
-
-// List time slots
+/**
+ * List time slots
+ * @returns Array of time slots
+ */
 async function listIncrements() {
   try {
     const res = await pool.query('SELECT hour FROM increments ORDER BY hour')
@@ -419,25 +385,33 @@ async function listIncrements() {
   }
 }
 
-// Remove a time slot
-async function removeIncrement(hour: number) {
-  try {
-    pool.query('DELETE FROM increments WHERE hour = $1', [hour])
-  } catch (err) {
-    console.log(err)
-  }
+/**
+ * Remove a time slot
+ * @param hour Hour in decimal format 0-23.75
+ */
+function removeIncrement(hour: number) {
+  pool
+    .query('DELETE FROM increments WHERE hour = $1', [hour])
+    .catch((e) => console.error(e))
 }
 
-// Create an off day
-async function createHoliday(date: Date) {
-  try {
-    pool.query('INSERT INTO holidays (holiday) VALUES ($1)', [date])
-  } catch (err) {
-    console.log(err)
-  }
+/**
+ * Create an off day
+ * @param date Date (time doesn't matter) of off day
+ */
+function createHoliday(date: Date) {
+  pool
+    .query(
+      'INSERT INTO holidays (holiday) VALUES ($1) ON CONFLICT DO NOTHING',
+      [date]
+    )
+    .catch((e) => console.error(e))
 }
 
-// List off days
+/**
+ * List off days
+ * @returns Off days that are after now
+ */
 async function listHolidays() {
   try {
     const res = await pool.query(
@@ -449,38 +423,41 @@ async function listHolidays() {
   }
 }
 
-// Remove an off day
-async function deleteHoliday(date: Date) {
-  try {
-    pool.query('DELETE FROM holidays WHERE holiday = $1', [date])
-  } catch (err) {
-    console.log(err)
-  }
+/**
+ * Remove an off day
+ * @param date Date (time doesn't matter) of off day
+ */
+function deleteHoliday(date: Date) {
+  pool
+    .query('DELETE FROM holidays WHERE holiday = $1', [date])
+    .catch((e) => console.error(e))
 }
 
-// Create weekly availability options based on increments
+/**
+ * Create weekly availability options based on increments
+ */
 async function createWeeklyAvailability() {
-  try {
-    let string = ''
-    const increments = await listIncrements()
-    if (increments != undefined) {
-      for (let i = 0; i < increments.length; i++) {
-        for (let j = 1; j < 6; j++) {
-          string += '(' + j + ',' + increments[i]['hour'] + '),'
-        }
+  let string = ''
+  const increments = await listIncrements()
+  if (increments != undefined) {
+    for (let i = 0; i < increments.length; i++) {
+      for (let j = 1; j < 6; j++) {
+        string += '(' + j + ',' + increments[i]['hour'] + '),'
       }
-      string = string.replace(/,$/, '')
-      const res = await pool.query(
+    }
+    string = string.replace(/,$/, '')
+    pool
+      .query(
         `INSERT into weeklyavailability (dow,increment_id) VALUES ${string} ON CONFLICT DO NOTHING`
       )
-      return res.rows
-    }
-  } catch (err) {
-    console.log(err)
+      .catch((e) => console.error(e))
   }
 }
 
-// List weekly availability options
+/**
+ * List weekly availability options
+ * @returns Array of weekly availability dow and time
+ */
 async function listWeeklyAvailability() {
   try {
     const res = await pool.query(
@@ -492,32 +469,25 @@ async function listWeeklyAvailability() {
   }
 }
 
-// Add a tutor to a weekly availability slot
-async function addTutorWeeklyAvailability(tid: string, aid: string) {
-  try {
-    pool.query(
+/**
+ * Add a tutor to a weekly availability slot
+ * @param tid Tutor OAuth ID (string)
+ * @param aid weekly availability ID
+ */
+function addTutorWeeklyAvailability(tid: string, aid: string) {
+  pool
+    .query(
       'INSERT INTO weeklyavailabilitymap (tutor_id,weeklyavailability_id) VALUES ($1,$2) ON CONFLICT DO NOTHING',
       [tid, aid]
     )
-  } catch (err) {
-    console.log(err)
-  }
+    .catch((e) => console.error(e))
 }
 
-// List what times a tutor is available
-async function listTutorAvailability(id: string) {
-  try {
-    const res = await pool.query(
-      'SELECT time_id FROM availabilitymap WHERE tutor_id = $1',
-      [id]
-    )
-    return res.rows
-  } catch (err) {
-    console.log(err)
-  }
-}
-
-// List what times of week a tutor is available
+/**
+ * List what times of week a tutor is available
+ * @param id Tutor OAuth ID (string)
+ * @returns Array of weekly availability ids where tutor is available
+ */
 async function listTutorWeeklyAvailability(id: string) {
   try {
     const res = await pool.query(
@@ -530,7 +500,11 @@ async function listTutorWeeklyAvailability(id: string) {
   }
 }
 
-// Don't know what this does but it's required
+/**
+ * List the weekly availability for a specific time of day
+ * @param increment Increment to check
+ * @returns Array of weeklyavailability
+ */
 async function listWeeklyAvailabilityAtIncrement(increment: number) {
   try {
     const res = await pool.query(
@@ -543,7 +517,10 @@ async function listWeeklyAvailabilityAtIncrement(increment: number) {
   }
 }
 
-// Give data to allow migration from weekly to exact times
+/**
+ * Provide data to allow migration from weekly to exact times
+ * @returns Array of combined data from weeklyavailability and weeklyavailabilitymap
+ */
 async function listWeeklyAvailabilityMap() {
   try {
     const res = await pool.query(
@@ -557,20 +534,27 @@ async function listWeeklyAvailabilityMap() {
   }
 }
 
-// Migrate relative weekly times to exact times
-async function migrateWeeklyToDates() {
+/**
+ * Migrate relative weekly times to exact times
+ * @param week The sunday of the week that you would like to populate dates for
+ * @returns Returns if weeklyAvailability doesn't exist
+ */
+async function migrateWeeklyToDates(week: Date) {
   const weeklyAvailability = await listWeeklyAvailabilityMap()
-  let string = ''
 
   if (weeklyAvailability == undefined || weeklyAvailability.length == 0) {
     return
   }
 
+  let string = ''
+
   for (let i = 0; i < weeklyAvailability.length; i++) {
-    const time = functions.getSunday()
+    const time = new Date(week)
     const increment = weeklyAvailability[i]['increment_id']
+    // Some fun translation stuff
     time.setDate(time.getDate() + weeklyAvailability[i]['dow'])
     time.setHours(increment, (increment % 1) * 60, 0, 0)
+    // Create the string to insert in to the database
     string +=
       "('" +
       new Date(time).toISOString() +
@@ -578,40 +562,46 @@ async function migrateWeeklyToDates() {
       weeklyAvailability[i]['tutor_id'] +
       "'),"
   }
+  // Remove trailing comma
   string = string.replace(/,$/, '')
-  try {
-    pool.query(
+
+  pool
+    .query(
       `INSERT INTO availabilitymap (time_id, tutor_id) VALUES ${string} ON CONFLICT DO NOTHING`
     )
-  } catch (err) {
-    console.log(err)
-  }
+    .catch((e) => console.error(e))
 }
 
-// Removes a tutor from a weekly availability slot
-async function removeTutorWeeklyAvailability(tid: string, aid: string) {
-  try {
-    pool.query(
+/**
+ * Removes a tutor from a weekly availability slot
+ * @param tid Tutor OAuth ID (string)
+ * @param aid weekly availability ID
+ */
+function removeTutorWeeklyAvailability(tid: string, aid: string) {
+  pool
+    .query(
       'DELETE FROM weeklyavailabilitymap WHERE tutor_id = $1 AND weeklyavailability_id = $2',
       [tid, aid]
     )
-  } catch (err) {
-    console.log(err)
-  }
+    .catch((e) => console.error(e))
 }
 
-// Create a subject name
-async function createSubject(string: string) {
-  try {
-    pool.query(
+/**
+ * Create a subject
+ * @param string Preprocessed subject string
+ */
+function createSubject(string: string) {
+  pool
+    .query(
       `INSERT INTO subjects (subject) VALUES ${string} ON CONFLICT DO NOTHING`
     )
-  } catch (err) {
-    console.log(err)
-  }
+    .catch((e) => console.error(e))
 }
 
-// List subjects from list
+/**
+ * List subjects
+ * @returns Array of subject names
+ */
 async function listSubjects() {
   try {
     const res = await pool.query('SELECT subject FROM subjects')
@@ -621,28 +611,35 @@ async function listSubjects() {
   }
 }
 
-// Remove a subject from the list
-async function removeSubject(string: string) {
-  try {
-    pool.query(`DELETE FROM subjects WHERE subject IN ${string}`)
-  } catch (err) {
-    console.log(err)
-  }
+/**
+ * Remove a subject
+ * @param string Preprocessed subject string
+ */
+function removeSubject(string: string) {
+  pool
+    .query(`DELETE FROM subjects WHERE subject IN ${string}`)
+    .catch((e) => console.error(e))
 }
 
-// Add a tutor to a subject
-async function addTutorsSubject(sid: string, tid: string) {
-  try {
-    pool.query(
+/**
+ * Add a tutor to a subject
+ * @param sid Subject ID
+ * @param tid Tutor OAuthID (string)
+ */
+function addTutorsSubject(sid: string, tid: string) {
+  pool
+    .query(
       'INSERT INTO subjectmap (subject_id,tutor_id) VALUES ($1,$2) ON CONFLICT DO NOTHING',
       [sid, tid]
     )
-  } catch (err) {
-    console.log(err)
-  }
+    .catch((e) => console.error(e))
 }
 
-// List what subjects a tutor is in
+/**
+ * List what subjects a tutor is able to tutor
+ * @param id Tutor OAuthID (string)
+ * @returns Array of subjects
+ */
 async function listTutorsSubjects(id: string) {
   try {
     const res = await pool.query(
@@ -655,19 +652,24 @@ async function listTutorsSubjects(id: string) {
   }
 }
 
-// Remove a tutor from a subject
-async function removeTutorsSubject(sid: string, tid: string) {
-  try {
-    pool.query(
-      'DELETE FROM subjectmap WHERE subject_id = $1 AND tutor_id = $2',
-      [sid, tid]
-    )
-  } catch (err) {
-    console.log(err)
-  }
+/**
+ * Remove a tutor from a subject
+ * @param sid Subject ID
+ * @param tid Tutor OAuthID (string)
+ */
+function removeTutorsSubject(sid: string, tid: string) {
+  pool
+    .query('DELETE FROM subjectmap WHERE subject_id = $1 AND tutor_id = $2', [
+      sid,
+      tid
+    ])
+    .catch((e) => console.error(e))
 }
 
-// List all available time slots in db
+/**
+ * List all available time slots in db
+ * @returns Array of time slots with extra data
+ */
 async function listAvailability() {
   try {
     const res = await pool.query(
@@ -683,7 +685,80 @@ async function listAvailability() {
   }
 }
 
-// List all available time slots for a specific subject
+/**
+ * Remove old availability past current time
+ */
+async function purgeOldAvailability() {
+  try {
+    pool.query('DELETE FROM availabilitymap WHERE time_id < now()')
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+/**
+ * NOT IN USE RIGHT NOW
+ * List times available in between two dates
+ * @param afterTime Later date
+ * @param beforeTime Earlier date
+ * @returns Array of times in between two dates
+ */
+async function listTimesBetweenDates(afterTime: Date, beforeTime: Date) {
+  try {
+    const res = await pool.query(
+      'SELECT time FROM times WHERE time > $1 AND time < $2',
+      [afterTime, beforeTime]
+    )
+    return res.rows
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+/**
+ * NOT IN USE RIGHT NOW
+ * Lists the current times available this week
+ * @returns Array of times for this week
+ */
+async function listCurrentWeekTimes() {
+  const res = []
+  const sun = functions.getSunday()
+  for (let i = 1; i < 6; i++) {
+    const afterTime = new Date()
+    afterTime.setDate(sun.getDate() + i)
+    afterTime.setHours(0, 0, 0, 0)
+    const beforeTime = new Date()
+    beforeTime.setDate(afterTime.getDate() + 1)
+    beforeTime.setHours(0, 0, 0, 0)
+    res.push(await listTimesBetweenDates(afterTime, beforeTime))
+  }
+  return res
+}
+
+/**
+ * NOT IN USE RIGHT NOW
+ * List what times a tutor is available
+ * @param id Tutor OAuth ID (string)
+ * @returns Array of times where tutor is available
+ */
+async function listTutorAvailability(id: string) {
+  try {
+    const res = await pool.query(
+      'SELECT time_id FROM availabilitymap WHERE tutor_id = $1',
+      [id]
+    )
+    return res.rows
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+/**
+ * NOT IN USE RIGHT NOW
+ * List all available time slots for a specific subject
+ * @param subject Subject name
+ * @returns Array of times available for select subject
+ */
 async function listAvailabilityForSubject(subject: string) {
   try {
     const res = await pool.query(
@@ -701,16 +776,7 @@ async function listAvailabilityForSubject(subject: string) {
   }
 }
 
-async function purgeOldAvailability() {
-  try {
-    pool.query('DELETE FROM availabilitymap WHERE time_id < now()')
-  } catch (err) {
-    console.log(err)
-  }
-}
-
 export default {
-  deleteWhere,
   truncateTable,
   createUser,
   authUser,
@@ -729,8 +795,6 @@ export default {
   incrementGrade,
   removeOldUsers,
   createDates,
-  listTimesBetweenDates,
-  listCurrentWeekTimes,
   createIncrement,
   listIncrements,
   removeIncrement,
@@ -740,7 +804,6 @@ export default {
   createWeeklyAvailability,
   listWeeklyAvailability,
   addTutorWeeklyAvailability,
-  listTutorAvailability,
   listTutorWeeklyAvailability,
   listWeeklyAvailabilityAtIncrement,
   listWeeklyAvailabilityMap,
@@ -753,6 +816,9 @@ export default {
   listTutorsSubjects,
   removeTutorsSubject,
   listAvailability,
-  listAvailabilityForSubject,
-  purgeOldAvailability
+  purgeOldAvailability,
+  listTimesBetweenDates,
+  listCurrentWeekTimes,
+  listTutorAvailability,
+  listAvailabilityForSubject
 }
