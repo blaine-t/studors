@@ -1,5 +1,5 @@
-// Gets the previous Sunday
-function getSunday(date = new Date()) {
+// Gets the Sunday of given day in a week
+function getSunday(date: Date) {
   const previousSunday = new Date()
 
   previousSunday.setDate(date.getDate() - date.getDay())

@@ -92,7 +92,7 @@ app.use(function (req, res) {
   return
 })
 
-// Enable automated date population through cronjob
+// Enable automated date population through cronjobs
 import scheduler from './lib/scheduler'
 scheduler.scheduleDates()
 scheduler.purgeOldDates()

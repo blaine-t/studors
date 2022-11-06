@@ -722,7 +722,7 @@ async function listTimesBetweenDates(afterTime: Date, beforeTime: Date) {
  */
 async function listCurrentWeekTimes() {
   const res = []
-  const sun = functions.getSunday()
+  const sun = functions.getSunday(new Date())
   for (let i = 1; i < 6; i++) {
     const afterTime = new Date()
     afterTime.setDate(sun.getDate() + i)
