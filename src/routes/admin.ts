@@ -116,7 +116,7 @@ router.post('/manage', async (req, res) => {
     '^(@[\\w\\-.]+\\.[A-Za-z]{2,4}[\\W]*[,\\s]{1}[\\W]*)*(@[\\w\\-.]+\\.[A-Za-z]+)[\\W]*$'
   const emailRegex =
     '^[\\W]*([\\w+\\-.%]+@[\\w\\-.]+\\.[A-Za-z]{2,4}[\\W]*[,\\s]{1}[\\W]*)*([\\w+\\-.%]+@[\\w\\-.]+\\.[A-Za-z]{2,4})[\\W]*$'
-  const anyRegex = '^(?!\\s$).+'
+  const anyRegex = '^[\\w ,]+$'
   let error = ''
   error += allowUserInput(
     req.body.allowedStudentDomain,
@@ -140,13 +140,13 @@ router.post('/manage', async (req, res) => {
     req.body.addSub,
     anyRegex,
     'subjects',
-    'Failed to save allowed admins\n'
+    'Failed to save subjects\n'
   )
   error += revokeUserInput(
     req.body.remSub,
     anyRegex,
     'subjects',
-    'Failed to save allowed admins\n'
+    'Failed to save removed subjects\n'
   )
   error += revokeUserInput(
     req.body.revokedStudentDomain,
@@ -179,7 +179,7 @@ router.post('/manage', async (req, res) => {
       Number(req.body.add_inc_h) + Number(req.body.add_inc_m / 60)
     )
   }
-  if (req.body.add_inc_h) {
+  if (req.body.rem_inc_h != '-') {
     db.removeIncrement(
       Number(req.body.rem_inc_h) + Number(req.body.rem_inc_m / 60)
     )

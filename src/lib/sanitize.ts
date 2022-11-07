@@ -1,4 +1,15 @@
 /**
+ * Checks to make sure API Key is UUID4
+ * @param key String to sanitize
+ * @returns True if correct false if not
+ */
+function apiKey(key: string) {
+  return key.match(
+    '^[0-9a-f]{8}\\-[0-9a-f]{4}\\-4[0-9a-f]{3}\\-[89ab][0-9a-f]{3}\\-[0-9a-f]{12}$'
+  )
+}
+
+/**
  * Checks to make sure phone is valid and clean it if it's just missing formatting
  * @param phone String to sanitize
  * @returns valid returned if clean false if not
@@ -76,6 +87,7 @@ function boolean(boolean: unknown) {
 }
 
 export default {
+  apiKey,
   phone,
   pos,
   id,

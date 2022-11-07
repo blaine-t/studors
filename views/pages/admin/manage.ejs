@@ -78,10 +78,20 @@
                     class="text-input">
                 <br>
                 <label for="addSub">Add subject(s):</label>
-                <input type="text" id="addSub" name="addSub" placeholder="Algebra, World History">
+                <input type="text" id="addSub" name="addSub" 
+                pattern="^[\w ,]+$"
+                placeholder="Algebra, World History"
+                oninvalid="setCustomValidity('Please enter a subject or list of subjects with this format: Geometry, Calc D')"
+                oninput="setCustomValidity('')"
+                class="text-input">
                 <br>
                 <label for="remSub">Remove subject(s):</label>
-                <input type="text" id="remSub" name="remSub" placeholder="US History, Geometry">
+                <input type="text" id="remSub" name="remSub" 
+                pattern="^[\w ,]+$"
+                placeholder="US History, Geometry"
+                oninvalid="setCustomValidity('Please enter a subject or list of subjects with this format: English 9, AP Lang')"
+                oninput="setCustomValidity('')"
+                class="text-input">
                 <br><hr>
                     <label for="add_hol">Add an off day:</label>
                     <input type="date" id="add_hol" name="add_hol">

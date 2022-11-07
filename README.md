@@ -21,6 +21,7 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 - [x] Implement subjects and subject matching
 - [x] Add proper matching
 - [ ] Fix createSession in db.ts
+- [ ] Have sanitize.id check against DB
 - [ ] Add unavailability options
 - [ ] Make admin placeholders have current data instead of example
 - [ ] Test suite from start to finish
