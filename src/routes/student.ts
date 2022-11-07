@@ -2,10 +2,16 @@ import express, { NextFunction, Request, Response } from 'express'
 const router = express.Router()
 
 import db from '../lib/db'
-
-import functions from '../../views/components/functions'
 import sanitize from '../lib/sanitize'
+import functions from '../../views/components/functions'
 
+/**
+ * Ensures that the user is authenticated and signed up, if not signed up redirect to settings and if not authed then redirect to auth page
+ * @param req Request
+ * @param res Response
+ * @param next Next Step
+ * @returns Nothing
+ */
 function checkAuthentication(req: Request, res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
     res.locals.user = req.user
@@ -21,6 +27,7 @@ function checkAuthentication(req: Request, res: Response, next: NextFunction) {
   res.redirect('/auth/student')
 }
 
+// Use above function in routing
 router.use(checkAuthentication)
 
 router.get('/home', (req, res) => {
@@ -37,7 +44,7 @@ router.get('/find', async (req, res) => {
   })
 })
 
-// Need to implement save
+// Take in data given from user for selecting a session
 router.post('/find', async (req, res) => {
   const session = await db.createSession(
     res.locals.user.id,
@@ -68,31 +75,33 @@ router.get('/settings', (req, res) => {
   res.render('pages/student/settings', { error: '' })
 })
 
+// Take in data given by user in settings
 router.post('/settings', (req, res) => {
+  // Sanitize user given data
   const sanitizedPhone = sanitize.phone(req.body.phone)
   const sanitizedGrade = sanitize.grade(req.body.grade, 'student')
-  let sanitizedDarkTheme = true
-  if (req.body.dark_theme != undefined) {
-    sanitizedDarkTheme = sanitize.boolean(req.body.dark_theme)
+  let sanitizedDarkTheme = false
+  if (req.body.dark_theme != undefined && req.body.dark_theme === 'on') {
+    sanitizedDarkTheme = true
   }
-  if (
-    typeof sanitizedPhone == 'string' &&
-    sanitizedGrade &&
-    sanitizedDarkTheme
-  ) {
+  if (typeof sanitizedPhone == 'string' && sanitizedGrade) {
+    // Update user info if pass sanitization
     db.updateUser(
       'students',
       res.locals.user.id,
       sanitizedPhone,
       req.body.grade,
-      req.body.dark_theme || false
+      sanitizedDarkTheme
     )
+    // Update user cookies
     res.locals.user.phone = sanitizedPhone
     res.locals.user.grade = req.body.grade
     res.locals.user.dark_theme = req.body.dark_theme
+    // Redirect to home page
     res.redirect('home')
     return
   }
+  // Tabulate error
   let error = 'Invalid '
   if (!sanitizedGrade) {
     error += 'grade'
@@ -103,6 +112,7 @@ router.post('/settings', (req, res) => {
   if (typeof sanitizedPhone == 'boolean') {
     error += 'phone number'
   }
+  // Rerender settings page with error
   res.render('pages/student/settings', {
     error: error
   })

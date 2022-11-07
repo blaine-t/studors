@@ -42,6 +42,7 @@ router.get('/failure', (req, res) => {
   res.render('pages/auth/failure')
 })
 
+// Change this to a post request
 router.get('/logout', function (req, res, next) {
   req.session.destroy(function (err) {
     if (err) {

@@ -1,6 +1,13 @@
 import express, { NextFunction, Request, Response } from 'express'
 const router = express.Router()
 
+/**
+ * Checks to see which home the user should be directed to
+ * @param req Request
+ * @param res Response
+ * @param next Next Step
+ * @returns Nothing
+ */
 function checkHome(req: Request, res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
     res.locals.user = req.user
@@ -10,16 +17,13 @@ function checkHome(req: Request, res: Response, next: NextFunction) {
       res.redirect('/tutor/home')
     } else if (res.locals.user.pos === 'admin') {
       res.redirect('/admin/panel')
-    } else {
-      next()
-      return
     }
-  } else {
-    next()
-    return
   }
+  next()
+  return
 }
 
+// Use above function in routing
 router.use(checkHome)
 
 router.get('/', (req, res) => {

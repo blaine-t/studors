@@ -8,6 +8,13 @@ import db from '../lib/db'
 import functions from '../../views/components/functions'
 import sanitize from '../lib/sanitize'
 
+/**
+ * Ensures that the user is authenticated and signed up, if not signed up redirect to settings and if not authed then redirect to auth page
+ * @param req Request
+ * @param res Response
+ * @param next Next Step
+ * @returns Nothing
+ */
 function checkAuthentication(req: Request, res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
     res.locals.user = req.user
@@ -23,6 +30,7 @@ function checkAuthentication(req: Request, res: Response, next: NextFunction) {
   res.redirect('/auth/admin')
 }
 
+// Use above function in routing
 router.use(checkAuthentication)
 
 router.get('/panel', (req, res) => {
@@ -30,7 +38,7 @@ router.get('/panel', (req, res) => {
 })
 
 router.get('/list', async (req, res) => {
-  // Sequential because parallel connections harm runtime in tests. Confirm later
+  // Sequential because parallel connections harm runtime in tests
   const students = await db.listUsers('students')
   const tutors = await db.listUsers('tutors')
   const admins = await db.listUsers('admins')
@@ -60,6 +68,7 @@ router.get('/settings', (req, res) => {
   res.render('pages/admin/settings', { error: '' })
 })
 
+// On API key reset distribute a new API key and redirect back to settings
 router.post('/apiReset', (req, res) => {
   const newApiKey = uuidv4()
   db.updateApiKey(res.locals.user.id, newApiKey)
@@ -67,31 +76,33 @@ router.post('/apiReset', (req, res) => {
   res.redirect('settings')
 })
 
+// Take in data given by user in settings
 router.post('/settings', (req, res) => {
+  // Sanitize user given data
   const sanitizedPhone = sanitize.phone(req.body.phone)
   const sanitizedGrade = sanitize.grade(req.body.grade, 'admin')
-  let sanitizedDarkTheme = true
-  if (req.body.dark_theme != undefined) {
-    sanitizedDarkTheme = sanitize.boolean(req.body.dark_theme)
+  let sanitizedDarkTheme = false
+  if (req.body.dark_theme != undefined && req.body.dark_theme === 'on') {
+    sanitizedDarkTheme = true
   }
-  if (
-    typeof sanitizedPhone == 'string' &&
-    sanitizedGrade &&
-    sanitizedDarkTheme
-  ) {
+  if (typeof sanitizedPhone == 'string' && sanitizedGrade) {
+    // Update user info if pass sanitization
     db.updateUser(
       'admins',
       res.locals.user.id,
       sanitizedPhone,
       req.body.grade,
-      req.body.dark_theme || false
+      sanitizedDarkTheme
     )
+    // Update user cookies
     res.locals.user.phone = sanitizedPhone
     res.locals.user.grade = req.body.grade
     res.locals.user.dark_theme = req.body.dark_theme
+    // Redirect to panel page
     res.redirect('panel')
     return
   }
+  // Tabulate error
   let error = 'Invalid '
   if (!sanitizedGrade) {
     error += 'grade'
@@ -102,6 +113,7 @@ router.post('/settings', (req, res) => {
   if (typeof sanitizedPhone == 'boolean') {
     error += 'phone number'
   }
+  // Rerender settings page with error
   res.render('pages/admin/settings', {
     error: error
   })
@@ -111,12 +123,15 @@ router.get('/manage', (req, res) => {
   res.render('pages/admin/manage', { error: '' })
 })
 
+// Take in data given by user in manage panel
 router.post('/manage', async (req, res) => {
+  // Declare the different regexs used to verify info
   const domainRegex =
     '^(@[\\w\\-.]+\\.[A-Za-z]{2,4}[\\W]*[,\\s]{1}[\\W]*)*(@[\\w\\-.]+\\.[A-Za-z]+)[\\W]*$'
   const emailRegex =
     '^[\\W]*([\\w+\\-.%]+@[\\w\\-.]+\\.[A-Za-z]{2,4}[\\W]*[,\\s]{1}[\\W]*)*([\\w+\\-.%]+@[\\w\\-.]+\\.[A-Za-z]{2,4})[\\W]*$'
   const anyRegex = '^[\\w ,]+$'
+  // Tabulate errors and process provided data
   let error = ''
   error += allowUserInput(
     req.body.allowedStudentDomain,
@@ -167,6 +182,7 @@ router.post('/manage', async (req, res) => {
     'Failed to save removed admins\n'
   )
 
+  // Check check boxes and drop downs for info and add or remove from DB
   if (req.body.add_hol) {
     db.createHoliday(req.body.add_hol)
   }
@@ -189,7 +205,7 @@ router.post('/manage', async (req, res) => {
     db.advanceTerm()
   }
   if (req.body.inc_grade != undefined) {
-    await db.incrementGrade()
+    db.incrementGrade()
   }
   if (req.body.rem_students != undefined) {
     db.truncateTable('students')
@@ -202,15 +218,25 @@ router.post('/manage', async (req, res) => {
     db.removeOldUsers('tutors')
   }
 
+  // If there was error then load the manage page with error
   if (error != '') {
     res.render('pages/admin/manage', { error: error })
     return
   }
+  // Else redirect to panel
   res.redirect('panel')
 })
 
 export { router }
 
+/**
+ * Filter and tabulate allow requests
+ * @param request User submitted info
+ * @param regex Regex to evaluate user info with
+ * @param database students, tutors, admins, subjects
+ * @param error error string to manipulate
+ * @returns error string
+ */
 function allowUserInput(
   request: string,
   regex: string,
@@ -246,6 +272,14 @@ function allowUserInput(
   return ''
 }
 
+/**
+ * Filter and tabulate revoke requests
+ * @param request User submitted info
+ * @param regex Regex to evaluate user info with
+ * @param database students, tutors, admins, subjects
+ * @param error error string to manipulate
+ * @returns error string
+ */
 function revokeUserInput(
   request: string,
   regex: string,

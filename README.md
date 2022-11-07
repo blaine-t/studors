@@ -20,22 +20,15 @@ Logo by Louis Quattrocchi under the CC BY-NC 3.0 License
 - [x] Extra admin actions (e.g. add holidays)
 - [x] Implement subjects and subject matching
 - [x] Add proper matching
+- [x] Check error handling
+- [ ] Change logout to POST request
 - [ ] Fix createSession in db.ts
 - [ ] Have sanitize.id check against DB
 - [ ] Add unavailability options
 - [ ] Make admin placeholders have current data instead of example
 - [ ] Test suite from start to finish
 - [ ] Refactor all code and ensure proper function use and proper security
-- [ ] Check error handling
 - [ ] Write pages
-
-## KNOWN ISSUES:
-
-Error handling in db.ts is _possibly_ broken
-
-Possible SQL injection in multiple locations
-
-Times don't auto populate in to database (Works now but doesn't populate enough, will fix in refactor)
 
 ### WEB PAGES NOT DONE:
 

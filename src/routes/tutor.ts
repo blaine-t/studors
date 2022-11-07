@@ -5,6 +5,13 @@ import db from '../lib/db'
 import sanitize from '../lib/sanitize'
 import functions from '../../views/components/functions'
 
+/**
+ * Ensures that the user is authenticated and signed up, if not signed up redirect to settings and if not authed then redirect to auth page
+ * @param req Request
+ * @param res Response
+ * @param next Next Step
+ * @returns Nothing
+ */
 function checkAuthentication(req: Request, res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
     res.locals.user = req.user
@@ -20,6 +27,7 @@ function checkAuthentication(req: Request, res: Response, next: NextFunction) {
   res.redirect('/auth/tutor')
 }
 
+// Use above function in routing
 router.use(checkAuthentication)
 
 router.get('/home', (req, res) => {
@@ -35,29 +43,36 @@ router.get('/settings', (req, res) => {
 })
 
 router.get('/availability', async (req, res) => {
+  // Check to make sure that increments exist and if they do create weekly availability
   const increments = await db.listIncrements()
-  if (increments != undefined) {
-    if (increments.length != 0) {
-      await db.createWeeklyAvailability()
-    }
-  }
-  const times = []
-  if (increments == undefined) {
+  if (increments != undefined && increments.length != 0) {
+    await db.createWeeklyAvailability()
+  } else {
+    res.render('pages/tutor/settings', {
+      error: 'No time slots have been set by your admin'
+    })
     return
   }
+
+  const times = []
+
   for (let i = 0; i < increments.length; i++) {
+    // Creates schedule layout
     const time = increments[i]['hour']
     const push = [time, '', '', '', '', '']
     const week = await db.listWeeklyAvailabilityAtIncrement(time)
-    if (week == undefined) {
+    if (week === undefined) {
       return
     }
+    // Populate push for each dow
     for (let j = 0; j < 5; j++) {
       const h = week[j]['dow']
       push[h] = week[j]['id']
     }
     times.push(push)
   }
+
+  // Check to see what the user has checked previously
   res.locals.user = req.user
   const id = res.locals.user.id
   const availability = await db.listTutorWeeklyAvailability(id)
@@ -67,57 +82,74 @@ router.get('/availability', async (req, res) => {
       checked.push(availability[k]['weeklyavailability_id'])
     }
   }
+
+  // Render the page with all the data collected
   res.render('pages/tutor/availability', {
     times: times,
     checked: checked,
-    functions: functions
+    functions: functions,
+    error: req.query.error
   })
 })
 
+// Take in data given from user for selecting availability
 router.post('/availability', async (req, res) => {
   const week = await db.listWeeklyAvailability()
-  const body = req.body
   res.locals.user = req.user
   const id = res.locals.user.id
-  if (week == undefined) {
-    res.redirect('availability')
+  // If for some odd reason time slots disappear while user is selecting availability redirect with error
+  if (week === undefined) {
+    res.redirect(
+      'availability?error=No%20time%20slots%20have%20been%20set%20by%20your%20admin'
+    )
     return
   }
+  // For every value add or remove based off checks by user
   for (let i = 0; i < week.length; i++) {
     const name: string = week[i]['id']
-    if (name in body) {
+    if (name in req.body) {
       db.addTutorWeeklyAvailability(id, name)
     } else {
       db.removeTutorWeeklyAvailability(id, name)
     }
   }
-  res.redirect('home')
+  res.redirect('settings')
   return
 })
 
+// Show the subjects that the user can tutor in
 router.get('/subjects', async (req, res) => {
   const subjects = await db.listSubjects()
   res.locals.user = req.user
   const id = res.locals.user.id
   const tutorsSubjects = await db.listTutorsSubjects(id)
+  // Persist previously checked subjects
   const checked = ['']
   if (tutorsSubjects != undefined) {
     for (let i = 0; i < tutorsSubjects.length; i++) {
       checked.push(tutorsSubjects[i]['subject_id'])
     }
   }
-  res.render('pages/tutor/subjects', { subjects: subjects, checked: checked })
+  res.render('pages/tutor/subjects', {
+    subjects: subjects,
+    checked: checked,
+    error: req.query.error
+  })
 })
 
+// Take in data given from user for selecting subjects
 router.post('/subjects', async (req, res) => {
   const subjects = await db.listSubjects()
   const body = req.body
   res.locals.user = req.user
   const id = res.locals.user.id
-  if (subjects == undefined) {
-    res.redirect('subjects')
+  // If for some odd reason subjects disappear while user is selecting availability redirect with error
+  if (subjects === undefined) {
+    res.redirect('subjects?error=No%20subjects%20created%20by%20your%20admin')
     return
   }
+
+  // For every value add or remove based off checks by user
   for (let i = 0; i < subjects.length; i++) {
     const name: string = subjects[i]['subject']
     if (name in body) {
@@ -126,7 +158,7 @@ router.post('/subjects', async (req, res) => {
       db.removeTutorsSubject(name, id)
     }
   }
-  res.redirect('home')
+  res.redirect('settings')
   return
 })
 
@@ -154,31 +186,33 @@ router.get('/history', async (req, res) => {
   })
 })
 
+// Take in data given by user in settings
 router.post('/settings', (req, res) => {
+  // Sanitize user given data
   const sanitizedPhone = sanitize.phone(req.body.phone)
   const sanitizedGrade = sanitize.grade(req.body.grade, 'tutor')
-  let sanitizedDarkTheme = true
-  if (req.body.dark_theme != undefined) {
-    sanitizedDarkTheme = sanitize.boolean(req.body.dark_theme)
+  let sanitizedDarkTheme = false
+  if (req.body.dark_theme != undefined && req.body.dark_theme === 'on') {
+    sanitizedDarkTheme = true
   }
-  if (
-    typeof sanitizedPhone == 'string' &&
-    sanitizedGrade &&
-    sanitizedDarkTheme
-  ) {
+  if (typeof sanitizedPhone == 'string' && sanitizedGrade) {
+    // Update user info if pass sanitization
     db.updateUser(
       'tutors',
       res.locals.user.id,
       sanitizedPhone,
       req.body.grade,
-      req.body.dark_theme || false
+      sanitizedDarkTheme
     )
+    // Update user cookies
     res.locals.user.phone = sanitizedPhone
     res.locals.user.grade = req.body.grade
     res.locals.user.dark_theme = req.body.dark_theme
+    // Redirect to home page
     res.redirect('home')
     return
   }
+  // Tabulate error
   let error = 'Invalid '
   if (!sanitizedGrade) {
     error += 'grade'
@@ -189,6 +223,7 @@ router.post('/settings', (req, res) => {
   if (typeof sanitizedPhone == 'boolean') {
     error += 'phone number'
   }
+  // Rerender settings page with error
   res.render('pages/tutor/settings', {
     error: error
   })
