@@ -10,7 +10,7 @@
     <%- include('../../components/header'); %>
     <h1> Select a subject that you would like help in</h1>
     <p>(Timezone is your school's timezone)</p>
-    <p><%-error%></p>
+    <span class="small-error"><%-error%></span>
     <form onsubmit='return validate(this)' action='' method='post'>
         <select id='subjectpicker' name='subjectpicker' onchange='subjectUpdated(); dateSetup(); remove(0);'>
             <option></option>

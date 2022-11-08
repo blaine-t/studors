@@ -173,11 +173,15 @@ async function createSession(
 ) {
   // Check to make sure that the IDs given are IDs
   if (!sanitize.id(sid) || !sanitize.id(tid)) {
-    return false
+    return 'Student or tutor ID is invalid, please try logging out and back in again'
+  }
+  // Check if user is trying to schedule themselves
+  if (sid === tid) {
+    return "You can't tutor yourself"
   }
   // Check if duration given is a number
   if (isNaN(duration)) {
-    return false
+    return "Duration wasn't a number, try again"
   }
   // Check if subject is in list of subjects
   const subjects = await listSubjects()
@@ -211,10 +215,10 @@ async function createSession(
       }
     } catch (err) {
       console.log(err)
-      return false
+      return 'Database error, try again'
     }
   }
-  return false
+  return 'Invalid subject, try again'
 }
 
 /**

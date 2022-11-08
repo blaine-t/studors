@@ -53,7 +53,7 @@ router.post('/find', async (req, res) => {
     req.body.subjectpicker,
     parseInt(req.body.durationpicker) / 60
   )
-  if (session) {
+  if (typeof session === 'boolean') {
     res.redirect('upcoming')
     return
   }
@@ -63,7 +63,7 @@ router.post('/find', async (req, res) => {
   res.render('pages/student/find', {
     subjects: subjects,
     availability: availability,
-    error: 'Unable to save session. Try again'
+    error: session
   })
 })
 
