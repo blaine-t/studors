@@ -18,6 +18,7 @@ function checkHome(req: Request, res: Response, next: NextFunction) {
     } else if (res.locals.user.pos === 'admin') {
       res.redirect('/admin/panel')
     }
+    return
   }
   next()
   return
