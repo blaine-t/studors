@@ -8,22 +8,26 @@
 
 <body>
     <%- include('../../components/header'); %>
-
-    <form action="" method="post">
-        <% for ( const obj of subjects ) { %>
-            <label for ="<%= obj['subject'] %>"><%= obj['subject'] %> </label>
-            <input type="checkbox" name="<%= obj['subject'] %>" 
-            <% if(checked.includes(obj['subject'])) { %>
-                checked 
-            <% } %>/>
-            <br>
-        <% } %>
-        <span class="small-error">
-            <%=error %>
-        </span>
-        <button type="submit">Save</button>
-    </form>
-
+    <div id="holder" style="padding: 10px;">
+        <div class="settings-box">
+            <form action="" method="post">
+                <% for ( const obj of subjects ) { %>
+                    <label for ="<%= obj['subject'] %>"><%= obj['subject'] %> </label>
+                    <label class="check"><input style="display: none;" type="checkbox" name="<%= obj['subject'] %>"
+                        <% if(checked.includes(obj['subject'])) { %>
+                            checked
+                        <% } %>/>
+                        <span></span>
+                    </label>
+                    <br>
+                <% } %>
+                <span class="small-error">
+                    <%=error %>
+                </span>
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </div>
     <%- include('../../components/footer'); %>
 </body>
 </html>

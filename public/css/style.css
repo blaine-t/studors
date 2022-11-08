@@ -124,8 +124,7 @@ li a:active {
 }
 
 .text-input {
-    width: 100%;
-    margin-right: -10px;
+    width: 95%;
     font-size: 20pt;
 }
 
@@ -368,7 +367,7 @@ header hr {
     text-align: left;
 }
 
-.settings-box input {
+.settings-box input[type="tel"] {
     width: 250px;
     font-size: 20pt;
     padding: 5px;
@@ -378,7 +377,7 @@ header hr {
     border-color: black;
 }
 
-.settings-box button {
+form button {
     color: #434343;
     font-size: 20pt;
     text-align: center;
@@ -407,6 +406,7 @@ header hr {
     font-size: 30px;
     text-align: center;
     font-family: 'Roboto Flex', "Open Sans", Verdana, sans-serif;
+    display: inline-block;
 }
 
 .check span:hover {
@@ -510,7 +510,6 @@ header hr {
         font-size: 18pt;
         text-align: center;
     }
-
 
     .home-buttons button {
         padding: 10px;
@@ -624,6 +623,6 @@ header hr {
 /* Fix later */
 #manage-form input[type=text] {
     font-size: 20pt;
-    padding: 0.3vw 0vw 0.3vw 0.3vw;
-    width: 95vw;
+    padding: 5px;
+    width: 99%;
 }
