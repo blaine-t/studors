@@ -555,10 +555,24 @@ form button {
         transform: translate(-50%, -50%);
         width: 90%;
     }
+
+    .settings-box input[type="tel"] {
+        width: 200px;
+    }
 }
 
 
 /* Fallback stuff, for weird resolutions and things */
+
+/* Hide the header when the height gets really small */
+@media (max-height: 500px) {
+    header {
+        display: none;
+    }
+    .settings-box {
+        margin-top: 15px;
+    }
+}
 
 @media (max-height: 625px) and (min-width: 600px) {
     .flex-box {
