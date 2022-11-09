@@ -559,6 +559,15 @@ form button {
     .settings-box input[type="tel"] {
         width: 200px;
     }
+
+    #availabilityTable {
+        font-size: 12pt;
+    }
+
+    .flex-box {
+        top: 0;
+        transform: none;
+    }
 }
 
 
@@ -575,12 +584,6 @@ form button {
 }
 
 @media (max-height: 625px) and (min-width: 600px) {
-    .flex-box {
-        top: 0;
-        transform: none;
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
 
     body {
         margin-bottom: 60px;

@@ -8,44 +8,46 @@
 
 <body>
     <%- include('../../components/header'); %>
-    <div id="holder" style="padding: 10px;">
-        <div class="settings-box" style="width: 650px;">
-            <form action="" method="post">
-                <label>Availability:</label>
-                <table id="availabilityTable" style="width: 100%;">
-                    <thead>
-                        <tr class="header" style="text-align: center;">
-                            <th style="border-bottom: 1px solid #000;">Time</th>
-                            <th style="border-bottom: 1px solid #000;">Mon</th>
-                            <th style="border-bottom: 1px solid #000;">Tue</th>
-                            <th style="border-bottom: 1px solid #000;">Wed</th>
-                            <th style="border-bottom: 1px solid #000;">Thu</th>
-                            <th style="border-bottom: 1px solid #000;">Fri</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% for(const obj of times){ %>
-                            <tr>
-                                <% for(const key in obj) { %>
-                                    <% if (key == 0) { %>
-                                        <td style="width:150px; border-right: 1px solid black;"><%= functions.formatTime(obj[key]) %></td>
-                                    <% } else { %>
-                                        <td style="width: 100px;text-align: center;"><label class="check"><input style="display: none;" type="checkbox" name="<%= (obj[key]) %>" <% if(checked.includes(obj[key])) { %>
-                                        checked
-                                        <%}%>/>
-                                            <span style="display: inline-block; float: none;"></span>
-                                        </label></td>
-                                    <% }
-                                    } %>
+    <div class="flex-box">
+        <div id="holder" style="margin-top: 10px;">
+            <div class="settings-box" style="width: 650px;">
+                <form action="" method="post">
+                    <label>Availability:</label>
+                    <table id="availabilityTable" style="width: 100%;">
+                        <thead>
+                            <tr class="header" style="text-align: center;">
+                                <th style="border-bottom: 1px solid #000;">Time</th>
+                                <th style="border-bottom: 1px solid #000;">Mon</th>
+                                <th style="border-bottom: 1px solid #000;">Tue</th>
+                                <th style="border-bottom: 1px solid #000;">Wed</th>
+                                <th style="border-bottom: 1px solid #000;">Thu</th>
+                                <th style="border-bottom: 1px solid #000;">Fri</th>
                             </tr>
-                        <% } %>
-                    </tbody>
-                </table>
-                <span class="small-error">
-                    <%=error %>
-                </span>
-                <button type="submit">Save</button>
-            </form>
+                        </thead>
+                        <tbody>
+                            <% for(const obj of times){ %>
+                                <tr>
+                                    <% for(const key in obj) { %>
+                                        <% if (key == 0) { %>
+                                            <td style="width:150px; border-right: 1px solid black;"><%= functions.formatTime(obj[key]) %></td>
+                                        <% } else { %>
+                                            <td style="width: 100px;text-align: center;"><label class="check"><input style="display: none;" type="checkbox" name="<%= (obj[key]) %>" <% if(checked.includes(obj[key])) { %>
+                                            checked
+                                            <%}%>/>
+                                                <span style="display: inline-block; float: none;"></span>
+                                            </label></td>
+                                        <% }
+                                        } %>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                    <span class="small-error">
+                        <%=error %>
+                    </span>
+                    <button type="submit">Save</button>
+                </form>
+            </div>
         </div>
     </div>
     <%- include('../../components/footer'); %>
