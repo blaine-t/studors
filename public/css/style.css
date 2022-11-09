@@ -449,6 +449,11 @@ form button {
         display: flex;
     }
 
+    .flex-box {
+        top: 0;
+        transform: none;
+    }
+
 }
 
 @media (max-width: 600px) {
@@ -562,11 +567,6 @@ form button {
 
     #availabilityTable {
         font-size: 12pt;
-    }
-
-    .flex-box {
-        top: 0;
-        transform: none;
     }
 }
 
