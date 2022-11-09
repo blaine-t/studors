@@ -137,6 +137,22 @@
       </tbody>
       </table>
       <hr>
+      <h2> Subjects: </h2>
+      <table id="subjectsTable">
+        <thead>
+        <tr>
+          <th>Subject</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for(const obj of subjects){ %>
+        <tr>
+          <td><%= obj['subject'] %></td>
+        </tr>
+        <% } %>
+      </tbody>
+      </table>
+      <hr>
       <h2> Time Slots: </h2>
       <table id="incrementsTable">
         <thead>
@@ -152,6 +168,7 @@
         <% } %>
       </tbody>
       </table>
+      <hr>
       <h2> Off Days: </h2>
       <table id="offDaysTable">
         <thead>
@@ -167,6 +184,7 @@
         <% } %>
       </tbody>
       </table>
+      <hr>
       <h2> Upcoming Sessions: </h2>
       <table id="upcomingSessionTable">
         <thead>
@@ -237,6 +255,7 @@
     $('#allowedStudentsTable').DataTable();
     $('#allowedTutorsTable').DataTable();
     $('#allowedAdminsTable').DataTable();
+    $('#subjectsTable').DataTable();
     $('#incrementsTable').DataTable();
     $('#offDaysTable').DataTable();
     $('#upcomingSessionTable').DataTable();

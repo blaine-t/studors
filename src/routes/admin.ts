@@ -45,6 +45,7 @@ router.get('/list', async (req, res) => {
   const studentAllowed = await db.listAllowed('students')
   const tutorAllowed = await db.listAllowed('tutors')
   const adminAllowed = await db.listAllowed('admins')
+  const subjects = await db.listSubjects()
   const increments = await db.listIncrements()
   const holidays = await db.listHolidays()
   const pastSessions = await db.listSessions(false, 'admins', 'Any')
@@ -56,6 +57,7 @@ router.get('/list', async (req, res) => {
     studentAllowed: studentAllowed,
     tutorAllowed: tutorAllowed,
     adminAllowed: adminAllowed,
+    subjects: subjects,
     increments: increments,
     holidays: holidays,
     pastSessions: pastSessions,
