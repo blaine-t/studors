@@ -4,9 +4,9 @@ const router = express.Router()
 import { v4 as uuidv4 } from 'uuid'
 
 import db from '../lib/db'
+import sanitize from '../lib/sanitize'
 
 import functions from '../../views/components/functions'
-import sanitize from '../lib/sanitize'
 
 /**
  * Ensures that the user is authenticated and signed up, if not signed up redirect to settings and if not authed then redirect to auth page

@@ -4,6 +4,7 @@ import {
   Strategy as GoogleStrategy,
   VerifyCallback
 } from 'passport-google-oauth20'
+
 import db from '../lib/db'
 
 passport.serializeUser((userObj, done) => {

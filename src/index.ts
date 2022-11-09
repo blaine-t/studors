@@ -1,7 +1,7 @@
 // Web Server Setup
 import express from 'express'
-import bodyParser from 'body-parser'
 const app = express()
+const port = 19090
 
 // Helmet setup for security
 import helmet from 'helmet'
@@ -12,13 +12,17 @@ app.use(
   })
 )
 
-// Allows API requests
+// Enable interpreting POST requests
+import bodyParser from 'body-parser'
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 // Allows server side rendering
 app.set('view engine', 'ejs')
-const port = 19090
+
+// Environment variable support for the project
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 // Auth Support
 import passport from 'passport'
@@ -28,10 +32,6 @@ import session from 'express-session'
 import createMemoryStore from 'memorystore'
 const MemoryStore = createMemoryStore(session)
 import { v4 as uuidv4 } from 'uuid'
-
-// Environment variable support for the project
-import * as dotenv from 'dotenv'
-dotenv.config()
 
 // Setup cookie session store
 app.use(
@@ -51,16 +51,17 @@ app.use(
   })
 )
 
-// Setup passport authentication
+// Initialize passport authentication
 require('./strategies/google')
 app.use(passport.initialize())
 app.use(passport.session())
 
 // Static Web Files
 app.use(express.static('public'))
-app.use(express.static('public/icons')) //Flattens icons to public for support reasons
+// Flatten icons to /public for device support reasons
+app.use(express.static('public/icons'))
 
-// Routing
+// Import routing from other routers in ./routes
 import { router as root } from './routes/root'
 import { router as home } from './routes/home'
 import { router as student } from './routes/student'
@@ -69,7 +70,7 @@ import { router as admin } from './routes/admin'
 import { router as api } from './routes/api'
 import { router as auth } from './routes/auth'
 
-// Require authentication for certain routes on the site
+// Use the imported routers
 app.use('/', root)
 app.use('/home', home)
 app.use('/student', student)

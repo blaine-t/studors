@@ -1,6 +1,7 @@
 import express from 'express'
-import passport from 'passport'
 const router = express.Router()
+
+import passport from 'passport'
 
 router.get('/student', (req, res) => {
   res.redirect('/auth/student/google')
