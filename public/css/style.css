@@ -361,6 +361,7 @@ header hr {
     transform: translatex(-50%);
     position: relative;
     margin-bottom: 55px;
+    margin-top: 10px;
 }
 
 .settings-box form {
@@ -577,9 +578,6 @@ form button {
 @media (max-height: 500px) {
     header {
         display: none;
-    }
-    .settings-box {
-        margin-top: 15px;
     }
 }
 
