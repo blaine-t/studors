@@ -4,42 +4,74 @@
 <head>
     <%- include('../../components/head'); %>
     <title>Studors - Student</title>
-</head>
-
-<body>
-    <%- include('../../components/header'); %>
-    <h1> Select a subject that you would like help in</h1>
-    <p>(Timezone is your school's timezone)</p>
-    <span class="small-error"><%-error%></span>
-    <form onsubmit='return validate(this)' action='' method='post'>
-        <select id='subjectpicker' name='subjectpicker' onchange='subjectUpdated(); dateSetup(); remove(0);'>
-            <option></option>
-            <% for ( const obj of subjects ) { %>
-                <option value='<%= obj['subject'] %>'><%= obj['subject'] %></option>
-            <% } %>
-        </select>
-        <br>
-        <select style='display: none;' id='tutorpicker' name='tutorpicker' onchange='tutorUpdated(); remove(0);'>
-            <option>Any</option>
-        </select>
-        <br>
-        <input style='display: none;' id='datepicker' onchange='dateUpdated(); remove(1);'></input>
-        <br>
-        <input style='display: none;' id='timepicker' onchange='; timeUpdated();'></input>
-        <br>
-        <select style='display: none;' id='durationpicker' name='durationpicker'></select>
-        <br>
-        <button type='submit'>Schedule</button>
-
-        <input type='hidden' id ='time' name='time' />
-    </form>
     <script src='/js/jquery.min.js'></script>
     <script src='/js/pickadate/picker.js'></script>
     <script src='/js/pickadate/picker.date.js'></script>
     <script src='/js/pickadate/picker.time.js'></script>
-    <link rel='stylesheet' href='/css/pickadate/classic.css'>
-    <link rel='stylesheet' href='/css/pickadate/classic.date.css'>
-    <link rel='stylesheet' href='/css/pickadate/classic.time.css'>
+    <link rel='stylesheet' href='/css/pickadate/default.css'>
+    <link rel='stylesheet' href='/css/pickadate/default.date.css'>
+    <link rel='stylesheet' href='/css/pickadate/default.time.css'>
+    <style>
+        select, input {
+            font-size: 16pt;
+            width: 230px;
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+        input {
+            width: 226px;
+        }
+        .maincontent {
+            text-align: center;
+            margin-top: 100px;
+        }
+        @media(max-width: 600px) {
+            .maincontent {
+                margin-top: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('../../components/header'); %>
+    <div class="maincontent">
+        <form onsubmit='return validate(this)' action='' method='post'>
+            <h1 style="display: inline;">Select a subject you would like help in:
+                <select id='subjectpicker' name='subjectpicker' onchange='subjectUpdated(); dateSetup(); remove(0);'>
+                    <option></option>
+                    <% for ( const obj of subjects ) { %>
+                        <option value='<%= obj['subject'] %>'><%= obj['subject'] %></option>
+                    <% } %>
+                </select>
+            </h1>
+            <br>
+            <h1 id="tutorcontainer" style='display: none;'>Select a tutor:
+                <select id='tutorpicker' name='tutorpicker' onchange='tutorUpdated(); remove(0);'>
+                    <option>Any</option>
+                </select>
+            </h1>
+            <br>
+            <h1 id="datecontainer" style='display: none;'>Select a date:
+                <input id='datepicker' onchange='dateUpdated(); remove(1);'></input>
+            </h1>
+            <br>
+            <h1 id="timecontainer" style='display: none;'>Select a time:
+                <input id='timepicker' onchange='timeUpdated();'></input>
+            </h1>
+            <br>
+            <h1 id="durationcontainer" style='display: none;'>Select a duration:
+                <select id='durationpicker' name='durationpicker'></select>
+            </h1>
+            <br>
+            <br>
+            <button type="submit" style="left: 0; transform: none;">Schedule</button>
+            <button type="button" style="left: 0; transform: none;" onclick="window.location.replace('/student/home')" value="Cancel">Cancel</button>
+            <span class="small-error"><%-error%></span>
+
+            <input type='hidden' id ='time' name='time' />
+        </form>
+    </div>
     <%- include('../../components/footer'); %>
 </body>
 
@@ -107,7 +139,7 @@
 
     function tutorSetup() {
         // Make tutorpicker visible
-        document.getElementById('tutorpicker').style.display = "block";
+        document.getElementById('tutorcontainer').style.display = "inline";
 
         // Reset previous list of unique tutors
         uniqueTutors = [];
@@ -141,7 +173,7 @@
 
     function dateSetup() {
         // Make datepicker visible
-        document.getElementById('datepicker').style.display = "block";
+        document.getElementById('datecontainer').style.display = "inline";
 
         // Declare new list of available days
         availableDays = [];
@@ -181,7 +213,7 @@
 
     function timeSetup() {
         // Make timepicker visible
-        document.getElementById('timepicker').style.display = "block";
+        document.getElementById('timecontainer').style.display = "inline";
 
         // Declare new list of available times
         var availableTimes = [];
@@ -231,7 +263,7 @@
 
     function durationSetup() {
         // Make durationpicker visible
-        document.getElementById('durationpicker').style.display = "block";
+        document.getElementById('durationcontainer').style.display = "inline";
 
         // Declare variables required to do duration math
         var oldTutorID;
@@ -313,13 +345,13 @@
                     if ( datepicker.get() != '' ) {
                         datepicker.clear();
                     }
-                    document.getElementById('timepicker').style.display = "none";
+                    document.getElementById('timecontainer').style.display = "none";
                 // Remove old time info
                 case 1:
                     if ( timepicker.get() != '' ) {
                         timepicker.clear();
                     }
-                    document.getElementById('durationpicker').style.display = "none";
+                    document.getElementById('durationcontainer').style.display = "none";
                 // Remove old duration info
                 case 2:
                     while (durationpicker.options.length > 0) {

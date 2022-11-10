@@ -378,6 +378,14 @@ header hr {
     border-color: black;
 }
 
+.settings-box table {
+    border-spacing: 0;
+}
+
+.settings-box td:first-child {
+    padding-top: 5px;
+}
+
 form button {
     color: #434343;
     font-size: 20pt;
@@ -453,6 +461,7 @@ form button {
     .flex-box {
         top: 0;
         transform: none;
+        margin-top: 10px;
     }
 
 }
