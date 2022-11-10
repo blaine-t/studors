@@ -37,7 +37,7 @@ Logo licensed from Louis Quattrocchi under the CC BY-NC 3.0 License
 * <img src="https://cdn.glitch.me/project-avatar/0d184ee3-fd8d-4b94-acf4-b4e686e57375.png" width="20" height="20"> [**Passport.js**](https://github.com/jaredhanson/passport) allowed for quick and easy OAuth with Google. While it was a bit confusing to use at first and led to some *less than ideal* code in the end it made it so Studors could be zero-knowledge when it came to user credentials.
 * <img src="https://avatars.githubusercontent.com/u/70142?s=200&v=4" width="20" height="20"> [**JQuery**](https://github.com/jquery/jquery) while underutilized in Studors because it came in to the stack late still made using other js libraries miles easier.
 * <img src="https://avatars.githubusercontent.com/u/278219?s=200&v=4" width="20" height="20"> [**DataTables**](https://github.com/DataTables/DataTables) made making sortable and tabulated tables *way* easier than native HTML I was trying to wrangle before I brought it in to the stack
-* <img src="https://amsul.ca/pickadate.js/images/logo.png" height="20"> [**Pickadate.js**](https://github.com/amsul/pickadate.js) made intuitive calendars easier to create and more user friendly.
+* <img src="https://user-images.githubusercontent.com/72430668/201145430-079a3d27-4e8c-4112-88ed-832a5aff6df9.png" height="20"> [**Pickadate.js**](https://github.com/amsul/pickadate.js) made intuitive calendars easier to create and more user friendly.
 
 
 ## Installation
