@@ -77,7 +77,7 @@ router.get('/request', (req, res) => {
 router.get('/settings', (req, res) => {
   res.render('pages/student/settings', {
     error: '',
-    darkMode: res.locals.user.dark_theme
+    darkMode: true // Check box handles
   })
 })
 

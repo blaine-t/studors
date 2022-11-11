@@ -68,7 +68,7 @@
                             <br>
                             <br>
                             <label for="dark_theme">Dark Mode</label>
-                            <label class="check"><input style="display: none;" type="checkbox" id="dark_theme" name="dark_theme" <%=user.dark_theme ? "checked"
+                            <label class="check"><input style="display: none;" type="checkbox" id="dark_theme" name="dark_theme" onchange="document.getElementById('dark_style').disabled=!document.getElementById('dark_theme').checked;" <%=user.dark_theme ? "checked"
                                 : "" %>>
                                 <span></span>
                             </label>
@@ -82,6 +82,8 @@
     <%- include('../../components/footer'); %>
 
 <script>
+    document.getElementById('dark_style').disabled=!document.getElementById('dark_theme').checked;
+
 function showMask() {
     var node = document.getElementById('key')
     var button = document.getElementById('toggleButton')

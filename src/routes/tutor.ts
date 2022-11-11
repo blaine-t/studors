@@ -42,7 +42,7 @@ router.get('/find', (req, res) => {
 router.get('/settings', (req, res) => {
   res.render('pages/tutor/settings', {
     error: '',
-    darkMode: res.locals.user.dark_theme
+    darkMode: true // Check box handles
   })
 })
 
