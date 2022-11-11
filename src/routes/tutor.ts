@@ -32,15 +32,18 @@ function checkAuthentication(req: Request, res: Response, next: NextFunction) {
 router.use(checkAuthentication)
 
 router.get('/home', (req, res) => {
-  res.render('pages/tutor/home')
+  res.render('pages/tutor/home', { darkMode: res.locals.user.dark_theme })
 })
 
 router.get('/find', (req, res) => {
-  res.render('pages/tutor/find')
+  res.render('pages/tutor/find', { darkMode: res.locals.user.dark_theme })
 })
 
 router.get('/settings', (req, res) => {
-  res.render('pages/tutor/settings', { error: '' })
+  res.render('pages/tutor/settings', {
+    error: '',
+    darkMode: res.locals.user.dark_theme
+  })
 })
 
 router.get('/availability', async (req, res) => {
@@ -50,7 +53,8 @@ router.get('/availability', async (req, res) => {
     await db.createWeeklyAvailability()
   } else {
     res.render('pages/tutor/settings', {
-      error: 'No time slots have been set by your admin'
+      error: 'No time slots have been set by your admin',
+      darkMode: res.locals.user.dark_theme
     })
     return
   }
@@ -89,7 +93,8 @@ router.get('/availability', async (req, res) => {
     times: times,
     checked: checked,
     functions: functions,
-    error: req.query.error
+    error: req.query.error,
+    darkMode: res.locals.user.dark_theme
   })
 })
 
@@ -134,7 +139,8 @@ router.get('/subjects', async (req, res) => {
   res.render('pages/tutor/subjects', {
     subjects: subjects,
     checked: checked,
-    error: req.query.error
+    error: req.query.error,
+    darkMode: res.locals.user.dark_theme
   })
 })
 
@@ -171,7 +177,8 @@ router.get('/upcoming', async (req, res) => {
   )
   res.render('pages/tutor/upcoming', {
     upcomingSessions: upcomingSessions,
-    functions: functions
+    functions: functions,
+    darkMode: res.locals.user.dark_theme
   })
 })
 
@@ -183,7 +190,8 @@ router.get('/history', async (req, res) => {
   )
   res.render('pages/tutor/history', {
     pastSessions: pastSessions,
-    functions: functions
+    functions: functions,
+    darkMode: res.locals.user.dark_theme
   })
 })
 
@@ -226,7 +234,8 @@ router.post('/settings', (req, res) => {
   }
   // Rerender settings page with error
   res.render('pages/tutor/settings', {
-    error: error
+    error: error,
+    darkMode: res.locals.user.dark_theme
   })
 })
 

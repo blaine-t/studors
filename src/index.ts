@@ -89,7 +89,19 @@ app.use(function (req, res) {
   for (let i = 0; i < Math.random() * 100; i++) {
     randString += Math.random().toString(36).slice(2)
   }
-  res.render('pages/root/404', { url: req.url, string: randString })
+
+  // Dark mode
+  res.locals.user = req.user
+  let darkMode = false
+  try {
+    darkMode = res.locals.user.dark_theme
+  } catch {}
+
+  res.render('pages/root/404', {
+    url: req.url,
+    string: randString,
+    darkMode: darkMode
+  })
   return
 })
 

@@ -32,7 +32,7 @@ function checkAuthentication(req: Request, res: Response, next: NextFunction) {
 router.use(checkAuthentication)
 
 router.get('/home', (req, res) => {
-  res.render('pages/student/home')
+  res.render('pages/student/home', { darkMode: res.locals.user.dark_theme })
 })
 
 router.get('/find', async (req, res) => {
@@ -41,7 +41,8 @@ router.get('/find', async (req, res) => {
   res.render('pages/student/find', {
     subjects: subjects,
     availability: availability,
-    error: ''
+    error: '',
+    darkMode: res.locals.user.dark_theme
   })
 })
 
@@ -64,16 +65,20 @@ router.post('/find', async (req, res) => {
   res.render('pages/student/find', {
     subjects: subjects,
     availability: availability,
-    error: session
+    error: session,
+    darkMode: res.locals.user.dark_theme
   })
 })
 
 router.get('/request', (req, res) => {
-  res.render('pages/student/request')
+  res.render('pages/student/request', { darkMode: res.locals.user.dark_theme })
 })
 
 router.get('/settings', (req, res) => {
-  res.render('pages/student/settings', { error: '' })
+  res.render('pages/student/settings', {
+    error: '',
+    darkMode: res.locals.user.dark_theme
+  })
 })
 
 // Take in data given by user in settings
@@ -115,7 +120,8 @@ router.post('/settings', (req, res) => {
   }
   // Rerender settings page with error
   res.render('pages/student/settings', {
-    error: error
+    error: error,
+    darkMode: res.locals.user.dark_theme
   })
 })
 
@@ -127,7 +133,8 @@ router.get('/upcoming', async (req, res) => {
   )
   res.render('pages/student/upcoming', {
     upcomingSessions: upcomingSessions,
-    functions: functions
+    functions: functions,
+    darkMode: res.locals.user.dark_theme
   })
 })
 
@@ -139,7 +146,8 @@ router.get('/history', async (req, res) => {
   )
   res.render('pages/student/history', {
     pastSessions: pastSessions,
-    functions: functions
+    functions: functions,
+    darkMode: res.locals.user.dark_theme
   })
 })
 

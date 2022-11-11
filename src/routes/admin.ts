@@ -34,7 +34,9 @@ function checkAuthentication(req: Request, res: Response, next: NextFunction) {
 router.use(checkAuthentication)
 
 router.get('/panel', (req, res) => {
-  res.render('pages/admin/panel')
+  res.render('pages/admin/panel', {
+    darkMode: res.locals.user.dark_theme
+  })
 })
 
 router.get('/list', async (req, res) => {
@@ -62,12 +64,16 @@ router.get('/list', async (req, res) => {
     holidays: holidays,
     pastSessions: pastSessions,
     upcomingSessions: upcomingSessions,
-    functions: functions
+    functions: functions,
+    darkMode: res.locals.user.dark_theme
   })
 })
 
 router.get('/settings', (req, res) => {
-  res.render('pages/admin/settings', { error: '' })
+  res.render('pages/admin/settings', {
+    error: '',
+    darkMode: res.locals.user.dark_theme
+  })
 })
 
 // On API key reset distribute a new API key and redirect back to settings
@@ -121,8 +127,19 @@ router.post('/settings', (req, res) => {
   })
 })
 
-router.get('/manage', (req, res) => {
-  res.render('pages/admin/manage', { error: '' })
+router.get('/manage', async (req, res) => {
+  const domains = await db.listAllowed('students')
+  const tutors = await db.listAllowed('tutors')
+  const admins = await db.listAllowed('admins')
+  const subjects = await db.listSubjects()
+  res.render('pages/admin/manage', {
+    domains: domains,
+    tutors: tutors,
+    admins: admins,
+    subjects: subjects,
+    error: '',
+    darkMode: res.locals.user.dark_theme
+  })
 })
 
 // Take in data given by user in manage panel
@@ -222,7 +239,10 @@ router.post('/manage', async (req, res) => {
 
   // If there was error then load the manage page with error
   if (error != '') {
-    res.render('pages/admin/manage', { error: error })
+    res.render('pages/admin/manage', {
+      error: error,
+      darkMode: res.locals.user.dark_theme || false
+    })
     return
   }
   // Else redirect to panel
