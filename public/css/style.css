@@ -147,7 +147,7 @@ footer {
     right: 0;
     bottom: 0;
     width: 100%;
-    background: white;
+    background-color: white;
     position: fixed;
     height: 55px;
 }
@@ -183,6 +183,7 @@ footer hr {
     height: 1px;
     background-color: #BBB;
     border: none;
+    z-index: 50;
 }
 
 @media (max-width: 2560px) {
@@ -450,7 +451,7 @@ form button {
         display: none;
     }
 
-    .navbar {
+    #navbar {
         display: none;
     }
 

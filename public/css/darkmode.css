@@ -1,0 +1,150 @@
+.login-buttons button {
+    background-color: #595959;
+}
+
+.login-buttons button:hover {
+    background-color: #373737;
+}
+
+/* Misc stuff... sort */
+.about-info {
+    border-color: #e8413c;
+}
+
+/* Body setup */
+html {
+    background-color: #2b2b2b;
+    color: white;
+}
+
+button {
+    color: #f2f2f2;
+    border: 2px solid grey;
+}
+
+button:hover {
+    background-color: #666;
+}
+
+li a:hover {
+    background-color: #666;
+}
+
+li a:active {
+    background-color: #666;
+}
+
+.admin-list button {
+    color: #434343;
+}
+
+/* Footer setup */
+footer {
+    background-color: #353535;
+}
+
+footer li {
+    border-right: 1px solid #BBB;
+}
+
+footer li a {
+    color: #ddd;
+}
+
+footer hr {
+    background-color: #BBB;
+}
+
+/* Header setup */
+
+header img {
+    filter: brightness(125%);
+}
+
+header hr {
+    background-color: #8e8e8e;
+}
+
+/* Navbar Setup */
+#navbar ul {
+    border: 1px solid #555;
+}
+
+#navbar ul li {
+    border-bottom: 1px solid #555;
+}
+
+#navbar li a {
+    color: #ddd;
+}
+
+/* Home specific */
+.profile div p.grade {
+    color: #b5b5b5;
+}
+
+.profileimg {
+    border-right: 2px solid #666;
+}
+
+.profile img {
+    border: 3px solid #000;
+}
+
+.home-buttons button {
+    background-color: #595959;
+}
+
+.home-buttons button:hover {
+    background-color: #373737;
+}
+
+#topbar ul {
+    border-bottom: 1px solid #BBB;
+}
+
+#topbar li {
+    border-right: 1px solid #BBB;
+}
+
+#topbar li a {
+    color: #d9d9d9;
+}
+
+/* Settings specific */
+.settings-box {
+    border: 2px solid #434343;
+}
+
+.settings-box input[type="tel"] {
+    border-color: black;
+}
+
+form button {
+    color: #434343;
+}
+
+.check span {
+    border: 2px solid grey;
+    color: #CCC;
+    background-color: #d9d9d9;
+}
+
+.check span:hover {
+    background-color: #BBB;
+}
+
+[type=checkbox]:checked+span {
+    background-color: #444;
+}
+
+.small-error {
+    color: #e8413c;
+}
+
+@media (max-width: 600px) {
+    .profileimg {
+        border: none;
+        border-bottom: 2px solid #666;
+    }
+}
