@@ -387,7 +387,7 @@ header hr {
     padding-top: 5px;
 }
 
-form button {
+.settings-box form button {
     color: #434343;
     font-size: 20pt;
     text-align: center;
