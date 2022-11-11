@@ -45,16 +45,15 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 
 ## TODO:
 
-- [ ] Add unavailability options
+- [ ] Allow tutor to cancel session
 - [ ] Make admin placeholders have current data instead of example
+- [ ] Give user better UI for when they make a new session and give them proper info
 - [ ] Lint whole project
 - [ ] Test suite from start to finish
 
 ### WEB PAGES NOT DONE:
 
 /admin/manage (Light styling required)
-
-/student/find (Styling required)
 
 /student/history (MAJOR restyling/refactoring required)
 
