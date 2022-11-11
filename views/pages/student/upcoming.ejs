@@ -20,8 +20,8 @@
 <body>
   <%- include('../../components/header'); %>
   <div class="admin-list">
-    <div id="user-list">
-      <h2> Upcoming Sessions: </h2>
+    <h2> Upcoming Sessions: </h2>
+    <div id="user-list" style="display:none;">
       <table id="upcomingSessionTable">
         <thead>
         <tr>
@@ -50,14 +50,41 @@
       </tbody>
       </table>
     </div>
+    <br id="upcoming-list">
   </div>
   <%- include('../../components/footer'); %>
 </body>
 
-<script>
+<!--script>
   $(document).ready(function () {
     $('#upcomingSessionTable').DataTable();
   });
+</script-->
+
+<script>
+  console.log($('tbody tr').length)
+  var upcoming = $('#upcoming-list');
+  var time;
+  var name;
+  var subject;
+  var duration;
+
+  for (let i = 0; i < $('tbody tr').length; i++) {
+    console.log($('tbody tr td:nth-child(1)').eq(i).text())
+    console.log($('tbody tr td:nth-child(2)').eq(i).text())
+    console.log($('tbody tr td:nth-child(3)').eq(i).text())
+    console.log($('tbody tr td:nth-child(6)').eq(i).text())
+    console.log($('tbody tr td:nth-child(7)').eq(i).text())
+
+    time = $('tbody tr td:nth-child(1)').eq(i).text();
+    name = $('tbody tr td:nth-child(2)').eq(i).text() + " " + $('tbody tr td:nth-child(3)').eq(i).text();
+    subject = $('tbody tr td:nth-child(6)').eq(i).text();
+    duration = $('tbody tr td:nth-child(7)').eq(i).text();
+
+    upcoming.before("<p>" + time.slice(0, time.lastIndexOf(':')) + ", " + (duration * 60) + " Minutes");
+    upcoming.before("<p>" + name + " | " + subject);
+    upcoming.before($("<br>"));
+  }
 </script>
 
 </html>
