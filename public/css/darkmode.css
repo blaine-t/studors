@@ -91,7 +91,7 @@ header hr {
 }
 
 .profile img {
-    border: 3px solid #000;
+    border-color: #fffbfb;
 }
 
 .home-buttons button {
@@ -116,7 +116,7 @@ header hr {
 
 /* Settings specific */
 .settings-box {
-    border: 2px solid #434343;
+    border-color: #757575;
 }
 
 .settings-box input[type="tel"] {
@@ -134,7 +134,7 @@ form button:hover {
 }
 
 .check span {
-    border: 2px solid grey;
+    border-color: grey;
     color: #CCC;
     background-color: #d9d9d9;
 }

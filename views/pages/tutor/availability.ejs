@@ -16,12 +16,12 @@
                     <table id="availabilityTable" style="width: 100%;">
                         <thead>
                             <tr class="header" style="text-align: center;">
-                                <th style="border-bottom: 1px solid #000;border-right: 1px solid black;text-align: left;">Time</th>
-                                <th style="border-bottom: 1px solid #000;">Mon</th>
-                                <th style="border-bottom: 1px solid #000;">Tue</th>
-                                <th style="border-bottom: 1px solid #000;">Wed</th>
-                                <th style="border-bottom: 1px solid #000;">Thu</th>
-                                <th style="border-bottom: 1px solid #000;">Fri</th>
+                                <th style="border-bottom: 1px solid #e1e1e1;border-right: 1px solid #e1e1e1;text-align: left;">Time</th>
+                                <th style="border-bottom: 1px solid #e1e1e1;">Mon</th>
+                                <th style="border-bottom: 1px solid #e1e1e1;">Tue</th>
+                                <th style="border-bottom: 1px solid #e1e1e1;">Wed</th>
+                                <th style="border-bottom: 1px solid #e1e1e1;">Thu</th>
+                                <th style="border-bottom: 1px solid #e1e1e1;">Fri</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -29,7 +29,7 @@
                                 <tr>
                                     <% for(const key in obj) { %>
                                         <% if (key == 0) { %>
-                                            <td style="width:150px; border-right: 1px solid black;"><%= functions.formatTime(obj[key]) %></td>
+                                            <td style="width:150px; border-right: 1px solid #e1e1e1;"><%= functions.formatTime(obj[key]) %></td>
                                         <% } else { %>
                                             <td style="width: 100px;text-align: center;"><label class="check"><input style="display: none;" type="checkbox" name="<%= (obj[key]) %>" <% if(checked.includes(obj[key])) { %>
                                             checked
