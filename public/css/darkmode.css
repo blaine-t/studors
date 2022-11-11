@@ -1,3 +1,7 @@
+.title h1 {
+    color: #e6e6e6;
+}
+
 .login-buttons button {
     background-color: #595959;
 }
@@ -56,7 +60,6 @@ footer hr {
 }
 
 /* Header setup */
-
 header img {
     filter: brightness(125%);
 }
@@ -118,10 +121,16 @@ header hr {
 
 .settings-box input[type="tel"] {
     border-color: black;
+    background-color: #919191;
 }
 
 form button {
-    color: #434343;
+    color: #f0f0f0;
+    background-color: #3c3c3c;
+}
+
+form button:hover {
+    background-color: #666;
 }
 
 .check span {
