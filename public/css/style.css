@@ -387,7 +387,10 @@ header hr {
     padding-top: 5px;
 }
 
-.settings-box form button {
+.settings-box form button,
+.maincontent form button,
+#manage-form form button,
+#apiKey p button {
     color: #434343;
     font-size: 20pt;
     text-align: center;

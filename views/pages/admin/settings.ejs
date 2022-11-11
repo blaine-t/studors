@@ -44,7 +44,7 @@
                     </p>
                     <p id="key"> <%= user.api_key %></p>
                     <p>
-                    <button class="button" id="toggleButton" onclick="showMask()">Show</button>
+                        <button class="button" id="toggleButton" type="button" onclick="showMask()">Show</button>
                     </p>
                     <form method="post" action="apiReset">
                         <button class="button" onclick="if(confirm('Are you sure?\nResetting will require you to replace any API keys in any applications that you use. For example google sheets.')){}else{return false;};" type="submit">Reset</button>

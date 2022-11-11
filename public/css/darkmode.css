@@ -124,12 +124,18 @@ header hr {
     background-color: #919191;
 }
 
-form button {
+.settings-box form button,
+.maincontent form button,
+#manage-form form button,
+#apiKey p button {
     color: #f0f0f0;
     background-color: #3c3c3c;
 }
 
-form button:hover {
+.settings-box form button:hover,
+.maincontent form button:hover,
+#manage-form form button:hover,
+#apiKey p button:hover {
     background-color: #666;
 }
 
