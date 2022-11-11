@@ -46,9 +46,6 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 
 ## TODO:
 
-- [ ] Change logout to POST request
-- [ ] Fix createSession in db.ts
-- [ ] Have sanitize.id check against DB
 - [ ] Add unavailability options
 - [ ] Make admin placeholders have current data instead of example
 - [ ] Lint whole project

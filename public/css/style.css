@@ -216,11 +216,11 @@ header hr {
 }
 
 /* Navbar Setup */
-.navbar {
+#navbar {
     margin-left: 2.5vw;
 }
 
-.navbar ul {
+#navbar ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -229,16 +229,16 @@ header hr {
     border-radius: 10px;
 }
 
-.navbar ul li {
+#navbar ul li {
     text-align: center;
     border-bottom: 1px solid #555;
 }
 
-.navbar li:last-child {
+#navbar li:last-child {
     border-bottom: none;
 }
 
-.navbar li a {
+#navbar li a {
     font-size: 28pt;
     display: block;
     padding: 8px;

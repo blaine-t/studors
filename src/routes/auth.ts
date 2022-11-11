@@ -44,7 +44,7 @@ router.get('/failure', (req, res) => {
 })
 
 // Change this to a post request
-router.get('/logout', function (req, res, next) {
+router.post('/logout', function (req, res, next) {
   req.session.destroy(function (err) {
     if (err) {
       return next(err)

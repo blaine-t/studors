@@ -1,6 +1,6 @@
-<div class="navbar">
+<form id="navbar" action='/auth/logout' method='post'>
     <ul>
         <li><a draggable="false" class="settings" href="settings">Account Settings</a></li>
-        <li><a draggable="false" class="logout" href="/auth/logout">Logout</a></li>
+        <li><a draggable="false" type="submit" class="logout" onclick="document.getElementById('navbar').submit();" href="#">Logout</a></li>
     </ul>
-</div>
+</form>
