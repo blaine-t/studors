@@ -47,26 +47,17 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 
 - [ ] Add back buttons where required
 - [ ] Style error and success messages on sessions
-- [ ] Datatables styling for dark mode
+- [ ] DataTables styling for dark mode
 - [ ] Calendar buttons are not centered and dark styled
+- [ ] Make scheduling tint standard
 - [ ] Manage text boxes need tinted
+- [ ] Need About, Mission, Contact text offset
+- [ ] Finalize dark mode colors and contrast
 - [ ] Fix the first time sign up auth fail
 - [ ] Allow removing student and tutor errors when truncating through tables
 - [ ] Fix scheduler issues with populating dates and not making sessions available in the past
 - [ ] Lint whole project
 - [ ] Test suite from start to finish
-
-### WEB PAGES NOT DONE:
-
-/admin/manage (Light styling required)
-
-/student/history (MAJOR restyling/refactoring required)
-
-/student/upcoming (MAJOR restyling/refactoring required)
-
-/tutor/history (MAJOR restyling/refactoring required)
-
-/tutor/upcoming (MAJOR restyling/refactoring required)
 
 ## 2.0 Features:
 
