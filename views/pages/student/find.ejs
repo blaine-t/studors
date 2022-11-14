@@ -226,7 +226,6 @@
                 if ( compareDate.getTime() === selectedDate.getTime() ) {
                     var date = new Date(availableDays[i]);
                     date.setHours((availableDays[i].getHours() + (clientOffset/60 - serverOffset/60)));
-                    console.log(date)
                     availableTimes.push(date);
                 }
         }
