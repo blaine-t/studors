@@ -1,4 +1,5 @@
 import db from './db'
+import sanitize from './sanitize'
 
 /**
  * Checks if the user's API Key is supplied, a string, and valid in the DB
@@ -13,6 +14,9 @@ async function acceptHoursRequest(apiKey: string) {
       return { supply: 'API KEY' }
     }
     return { invalid: 'TYPE' }
+  }
+  if (!sanitize.apiKey(apiKey)) {
+    return { invalid: 'FORMAT' }
   }
   // Return the hours of tutors if valid key
   if ((await db.confirmApiKey(apiKey)) != null) {

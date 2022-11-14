@@ -66,7 +66,7 @@ router.get('/availability', async (req, res) => {
     const time = increments[i]['hour']
     const push = [time, '', '', '', '', '']
     const week = await db.listWeeklyAvailabilityAtIncrement(time)
-    if (week === undefined) {
+    if (week === undefined || week.length === 0) {
       return
     }
     // Populate push for each dow
@@ -82,7 +82,7 @@ router.get('/availability', async (req, res) => {
   const id = res.locals.user.id
   const availability = await db.listTutorWeeklyAvailability(id)
   const checked = []
-  if (availability != undefined) {
+  if (availability != undefined && availability.length != 0) {
     for (let k = 0; k < availability.length; k++) {
       checked.push(availability[k]['weeklyavailability_id'])
     }
@@ -131,7 +131,7 @@ router.get('/subjects', async (req, res) => {
   const tutorsSubjects = await db.listTutorsSubjects(id)
   // Persist previously checked subjects
   const checked = ['']
-  if (tutorsSubjects != undefined) {
+  if (tutorsSubjects != undefined && tutorsSubjects.length != 0) {
     for (let i = 0; i < tutorsSubjects.length; i++) {
       checked.push(tutorsSubjects[i]['subject_id'])
     }

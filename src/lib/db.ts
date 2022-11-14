@@ -502,7 +502,7 @@ function deleteHoliday(date: Date) {
 async function createWeeklyAvailability() {
   let string = ''
   const increments = await listIncrements()
-  if (increments != undefined) {
+  if (increments != undefined && increments.length != 0) {
     for (let i = 0; i < increments.length; i++) {
       for (let j = 1; j < 6; j++) {
         string += '(' + j + ',' + increments[i]['hour'] + '),'
