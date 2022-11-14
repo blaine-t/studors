@@ -8,9 +8,9 @@ function formatDate(date: Date, userFriendly: boolean, duration: number) {
   let state = ''
   let hourString = ''
   if (userFriendly) {
-    if (hour > 12) {
+    if (hour >= 12) {
       state = ' PM'
-      if (hour > 13) {
+      if (hour > 12) {
         hour -= 12
       }
     } else {
@@ -36,9 +36,9 @@ function formatDate(date: Date, userFriendly: boolean, duration: number) {
   let durationState = ''
   if (duration != 0) {
     durationDate.setHours(date.getHours(), date.getMinutes() + duration * 60)
-    if (durationDate.getHours() > 12) {
+    if (durationDate.getHours() >= 12) {
       durationState = ' PM'
-      if (durationDate.getHours() > 13) {
+      if (durationDate.getHours() > 12) {
         durationDate.setHours(durationDate.getHours() - 12)
       }
     } else {
@@ -70,9 +70,9 @@ function formatDate(date: Date, userFriendly: boolean, duration: number) {
 function formatTime(input: string) {
   let hour = Number(input)
   let state = 'AM'
-  if (hour > 12) {
+  if (hour >= 12) {
     state = 'PM'
-    if (hour > 13) {
+    if (hour > 12) {
       hour -= 12
     }
   }
