@@ -183,6 +183,13 @@ router.get('/upcoming', async (req, res) => {
   })
 })
 
+router.post('/cancel', (req, res) => {
+  const date = new Date(Number(req.body.cancel))
+  db.removeSession(res.locals.user.id, 'tutor', date)
+  res.redirect('/tutor/upcoming')
+  return
+})
+
 router.get('/history', async (req, res) => {
   const pastSessions = await db.listSessions(
     false,

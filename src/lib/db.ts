@@ -47,7 +47,7 @@ async function authUser(role: string, id: string) {
     const res = await pool.query(`SELECT * FROM ${role} WHERE id = $1`, [id])
     return res.rows[0]
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -70,7 +70,7 @@ async function listUsers(role: string) {
     )
     return res.rows
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -124,7 +124,7 @@ async function checkUser(role: string, email: string) {
     )
     return res.rows[0]
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -140,7 +140,7 @@ async function listAllowed(role: string) {
     )
     return res.rows
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -213,16 +213,62 @@ async function createSession(
             [duration, tid]
           )
         } catch (err) {
-          console.log(err)
+          console.error(err)
         }
         return true
       }
     } catch (err) {
-      console.log(err)
+      console.error(err)
       return 'Database error, try again'
     }
   }
   return 'Invalid subject, try again'
+}
+
+async function findSession(id: string, role: string, time: Date) {
+  try {
+    const res = await pool.query(
+      `SELECT duration, tutor_id FROM sessions WHERE ${role}_id = $1 AND time_id = $2`,
+      [id, time]
+    )
+    return res.rows[0]
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+async function removeSession(id: string, role: string, time: Date) {
+  const session = await findSession(id, role, time)
+  if (session === undefined) {
+    return
+  }
+  pool
+    .query(`DELETE FROM sessions WHERE ${role}_id = $1 AND time_id = $2`, [
+      id,
+      time
+    ])
+    .catch((e) => console.error(e))
+  pool
+    .query('UPDATE tutors SET hours_term = hours_term - $1 WHERE id = $2', [
+      session.duration,
+      session.tutor_id
+    ])
+    .catch((e) => console.error(e))
+  pool
+    .query('UPDATE tutors SET hours_total = hours_total - $1 WHERE id = $2', [
+      session.duration,
+      session.tutor_id
+    ])
+    .catch((e) => console.error(e))
+  for (let i = 0; i < session.duration * 4; i++) {
+    const durationTime = new Date(time.getTime() + i * 15 * 60 * 1000)
+    pool
+      .query('INSERT INTO availabilitymap (time_id, tutor_id) VALUES ($1,$2)', [
+        durationTime,
+        session.tutor_id
+      ])
+      .catch((e) => console.error(e))
+  }
 }
 
 /**
@@ -293,7 +339,7 @@ async function listSessions(
       return res.rows
     }
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -308,7 +354,7 @@ async function getHours() {
     )
     return res.rows
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -326,7 +372,7 @@ async function confirmApiKey(apiKey: string) {
       )
       return res.rows[0]
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
 }
@@ -415,7 +461,7 @@ async function createDates(week: Date) {
         .catch((e) => console.error(e))
     }
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -440,7 +486,7 @@ async function listIncrements() {
     const res = await pool.query('SELECT hour FROM increments ORDER BY hour')
     return res.rows
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -482,7 +528,7 @@ async function listHolidays() {
     )
     return res.rows
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -532,7 +578,7 @@ async function listWeeklyAvailability() {
     )
     return res.rows
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -569,7 +615,7 @@ async function listTutorWeeklyAvailability(id: string) {
     )
     return res.rows
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -586,7 +632,7 @@ async function listWeeklyAvailabilityAtIncrement(increment: number) {
     )
     return res.rows
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -603,7 +649,7 @@ async function listWeeklyAvailabilityMap() {
     )
     return res.rows
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -618,7 +664,7 @@ async function migrationListSessions() {
     )
     return res.rows
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -729,7 +775,7 @@ async function listSubjects() {
     const res = await pool.query('SELECT subject FROM subjects')
     return res.rows
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -776,7 +822,7 @@ async function listTutorsSubjects(id: string) {
     )
     return res.rows
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -815,7 +861,7 @@ async function listAvailability(id: string) {
     )
     return res.rows
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -826,7 +872,7 @@ async function purgeOldAvailability() {
   try {
     pool.query('DELETE FROM availabilitymap WHERE time_id < now()')
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -844,7 +890,7 @@ async function listTimesBetweenDates(afterTime: Date, beforeTime: Date) {
     )
     return res.rows
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
@@ -859,6 +905,7 @@ export default {
   listAllowed,
   revokeUser,
   createSession,
+  removeSession,
   listSessions,
   getHours,
   confirmApiKey,
