@@ -1,3 +1,5 @@
+/* eslint-disable no-empty */
+
 // Web Server Setup
 import express from 'express'
 const app = express()

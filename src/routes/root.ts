@@ -1,3 +1,5 @@
+/* eslint-disable no-empty */
+
 import express from 'express'
 const router = express.Router()
 
