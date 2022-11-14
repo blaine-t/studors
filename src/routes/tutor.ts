@@ -173,7 +173,8 @@ router.get('/upcoming', async (req, res) => {
   const upcomingSessions = await db.listSessions(
     true,
     'tutors',
-    res.locals.user.id
+    res.locals.user.id,
+    true
   )
   res.render('pages/tutor/upcoming', {
     upcomingSessions: upcomingSessions,
@@ -186,7 +187,8 @@ router.get('/history', async (req, res) => {
   const pastSessions = await db.listSessions(
     false,
     'tutors',
-    res.locals.user.id
+    res.locals.user.id,
+    true
   )
   res.render('pages/tutor/history', {
     pastSessions: pastSessions,

@@ -21,70 +21,17 @@
   <%- include('../../components/header'); %>
   <div class="admin-list">
     <h2> Upcoming Sessions: </h2>
-    <div id="user-list" style="display:none;">
-      <table id="upcomingSessionTable">
-        <thead>
-        <tr>
-          <th>Time</th>
-          <th>Tutor name</th>
-          <th>Tutor surname</th>
-          <th>Student name</th>
-          <th>Student surname</th>
-          <th>Subject</th>
-          <th>Hours</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% for(const obj of upcomingSessions){ %>
-        <tr>
-          <% for(const key in obj) { %>
-            <% if( key == "time_id") { %>
-              <td><%= functions.formatDate(obj[key]) %></td><%
-              }
-              else { %>
-          <td><%= obj[key] %></td>
-          <% }
-          } %>
-        </tr>
-        <% } %>
-      </tbody>
-      </table>
+    <div id="user-list">
+      <% for(const obj of upcomingSessions) { %>
+        <p><%= functions.formatDate(obj['time_id'], true, obj['duration']) %>
+        <p><%= obj['first_name'] %> <%= obj['last_name'] %> | <%= obj['subject_id'] %>
+        <p> <% if( obj['phone'] ) { %> <%= obj['phone'] %> | <%}%> <%= obj['email'] %>
+        </p></p></p>
+      <% } %>
     </div>
     <br id="upcoming-list">
   </div>
   <%- include('../../components/footer'); %>
 </body>
-
-<!--script>
-  $(document).ready(function () {
-    $('#upcomingSessionTable').DataTable();
-  });
-</script-->
-
-<script>
-  console.log($('tbody tr').length)
-  var upcoming = $('#upcoming-list');
-  var time;
-  var name;
-  var subject;
-  var duration;
-
-  for (let i = 0; i < $('tbody tr').length; i++) {
-    console.log($('tbody tr td:nth-child(1)').eq(i).text())
-    console.log($('tbody tr td:nth-child(2)').eq(i).text())
-    console.log($('tbody tr td:nth-child(3)').eq(i).text())
-    console.log($('tbody tr td:nth-child(6)').eq(i).text())
-    console.log($('tbody tr td:nth-child(7)').eq(i).text())
-
-    time = $('tbody tr td:nth-child(1)').eq(i).text();
-    name = $('tbody tr td:nth-child(2)').eq(i).text() + " " + $('tbody tr td:nth-child(3)').eq(i).text();
-    subject = $('tbody tr td:nth-child(6)').eq(i).text();
-    duration = $('tbody tr td:nth-child(7)').eq(i).text();
-
-    upcoming.before("<p>" + time.slice(0, time.lastIndexOf(':')) + ", " + (duration * 60) + " Minutes");
-    upcoming.before("<p>" + name + " | " + subject);
-    upcoming.before($("<br>"));
-  }
-</script>
 
 </html>

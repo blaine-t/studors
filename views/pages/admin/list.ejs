@@ -179,7 +179,7 @@
         <tbody>
         <% for(const obj of holidays){ %>
         <tr>
-          <td><%= functions.formatDate(obj['holiday']).replace('00:00:00','') %></td>
+          <td><%= functions.formatDate(obj['holiday'], false, 0).replace('00:00','') %></td>
         </tr>
         <% } %>
       </tbody>
@@ -203,7 +203,7 @@
         <tr>
           <% for(const key in obj) { %>
             <% if( key == "time_id") { %>
-              <td><%= functions.formatDate(obj[key]) %></td><%
+              <td><%= functions.formatDate(obj[key], false, 0) %></td><%
               }
               else { %>
           <td><%= obj[key] %></td>
@@ -232,7 +232,7 @@
         <tr>
           <% for(const key in obj) { %>
             <% if( key == "time_id") { %>
-              <td><%= functions.formatDate(obj[key]) %></td><%
+              <td><%= functions.formatDate(obj[key], false, 0) %></td><%
               }
               else { %>
           <td><%= obj[key] %></td>

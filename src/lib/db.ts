@@ -226,9 +226,15 @@ async function createSession(
  * @param upcoming True is upcoming. False is past
  * @param pos students, tutors, or admins
  * @param id OAuth ID (string)
+ * @param userFriendly Returns a user friendly array of strings instead of rows
  * @returns Array of sessions
  */
-async function listSessions(upcoming: boolean, pos: string, id: string) {
+async function listSessions(
+  upcoming: boolean,
+  pos: string,
+  id: string,
+  userFriendly: boolean
+) {
   // If user has a non valid id return an empty list
   if (id != 'Any' && !sanitize.id(id)) {
     return []
@@ -242,20 +248,46 @@ async function listSessions(upcoming: boolean, pos: string, id: string) {
     operator = '<'
   }
   // If looking for a specific users's id add extra query to check
-  if (id != 'Any') {
+  if (!userFriendly && id != 'Any') {
     userQuery = ` AND ${pos}.id = '${id}'`
   }
+  // Check for the other position if doing a query
+  let posQuery = ''
+  if (pos === 'students') {
+    posQuery = 'tutor'
+    if (userFriendly) {
+      userQuery = ` AND sessions.student_id = '${id}'`
+    }
+  } else if (pos === 'tutors') {
+    posQuery = 'student'
+    if (userFriendly) {
+      userQuery = ` AND sessions.tutor_id = '${id}'`
+    }
+  }
   try {
-    const res = await pool.query(
-      `SELECT sessions.time_id, tutors.first_name as tutor_name, tutors.last_name as tutor_surname, 
-      students.first_name as student_name, students.last_name as student_surname, sessions.subject_id, sessions.duration
-      FROM sessions
-      INNER JOIN tutors on sessions.tutor_id = tutors.id
-      INNER JOIN students on sessions.student_id = students.id
-      WHERE time_id ${operator} now() ${userQuery}
-      ORDER BY time_id`
-    )
-    return res.rows
+    // If user friendly do all the preprocessing otherwise just do normal search
+    if (userFriendly) {
+      const res = await pool.query(
+        `SELECT sessions.time_id, ${posQuery}s.first_name, ${posQuery}s.last_name, 
+        ${posQuery}s.email, ${posQuery}s.phone, sessions.subject_id, sessions.duration
+        FROM sessions
+        INNER JOIN ${posQuery}s on sessions.${posQuery}_id = ${posQuery}s.id
+        WHERE time_id ${operator} now() ${userQuery}
+        ORDER BY time_id`
+      )
+      return res.rows
+    } else {
+      const res = await pool.query(
+        `SELECT sessions.time_id, tutors.first_name as tutor_name, tutors.last_name as tutor_surname, 
+        students.first_name as student_name, students.last_name as student_surname, sessions.subject_id, sessions.duration
+        FROM sessions
+        INNER JOIN tutors on sessions.tutor_id = tutors.id
+        INNER JOIN students on sessions.student_id = students.id
+        WHERE time_id ${operator} now() ${userQuery}
+        ORDER BY time_id`
+      )
+      return res.rows
+    }
   } catch (err) {
     console.log(err)
   }
@@ -347,24 +379,25 @@ function removeOldUsers(role: string) {
 async function createDates(week: Date) {
   try {
     let times = ''
-    const inc = await pool.query(`SELECT hour from increments`)
-    const holidays = await pool.query('SELECT holiday from holidays')
+    const inc = await listIncrements()
+    // If undefined do empty list to not check holidays
+    const holidays = (await listHolidays()) || []
     // If there are increments loop through the days of the week and add the increments every day
-    if (inc.rows.length != 0) {
+    if (inc != undefined && inc.length != 0) {
       for (let i = 1; i < 6; i++) {
-        for (let j = 0; j < inc.rows.length; j++) {
+        for (let j = 0; j < inc.length; j++) {
           const time = new Date(week)
           let holiday = false
           time.setDate(time.getDate() + i)
-          for (let k = 0; k < holidays.rows.length; k++) {
+          for (let k = 0; k < holidays.length; k++) {
             // If time is in holiday then set boolean true
-            if (time.getDate() === holidays.rows[k].holiday.getDate()) {
+            if (time.getDate() === holidays[k].holiday.getDate()) {
               holiday = true
             }
           }
           // If not holiday add the time slot to the query
           if (!holiday) {
-            time.setHours(inc.rows[j].hour, (inc.rows[j].hour % 1) * 60, 0, 0)
+            time.setHours(inc[j].hour, (inc[j].hour % 1) * 60, 0, 0)
             times += "('" + new Date(time).toISOString() + "'),"
           }
         }
@@ -577,6 +610,8 @@ async function listWeeklyAvailabilityMap() {
  */
 async function migrateWeeklyToDates(week: Date) {
   const weeklyAvailability = await listWeeklyAvailabilityMap()
+  // If undefined do empty list to not check holidays
+  const holidays = (await listHolidays()) || []
 
   if (weeklyAvailability == undefined || weeklyAvailability.length == 0) {
     return
@@ -586,21 +621,32 @@ async function migrateWeeklyToDates(week: Date) {
 
   for (let i = 0; i < weeklyAvailability.length; i++) {
     const time = new Date(week)
+    let holiday = false
     const increment = weeklyAvailability[i]['increment_id']
+
     // Some fun translation stuff
     time.setDate(time.getDate() + weeklyAvailability[i]['dow'])
     time.setHours(increment, (increment % 1) * 60, 0, 0)
+
+    // Check to make sure time isn't during a holiday
+    for (let k = 0; k < holidays.length; k++) {
+      // If time is in holiday then set boolean true
+      if (time.getDate() === holidays[k].holiday.getDate()) {
+        holiday = true
+      }
+    }
     // Create the string to insert in to the database
-    string +=
-      "('" +
-      new Date(time).toISOString() +
-      "','" +
-      weeklyAvailability[i]['tutor_id'] +
-      "'),"
+    if (!holiday) {
+      string +=
+        "('" +
+        new Date(time).toISOString() +
+        "','" +
+        weeklyAvailability[i]['tutor_id'] +
+        "'),"
+    }
   }
   // Remove trailing comma
   string = string.replace(/,$/, '')
-
   pool
     .query(
       `INSERT INTO availabilitymap (time_id, tutor_id) VALUES ${string} ON CONFLICT DO NOTHING`

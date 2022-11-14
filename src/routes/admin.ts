@@ -50,8 +50,8 @@ router.get('/list', async (req, res) => {
   const subjects = await db.listSubjects()
   const increments = await db.listIncrements()
   const holidays = await db.listHolidays()
-  const pastSessions = await db.listSessions(false, 'admins', 'Any')
-  const upcomingSessions = await db.listSessions(true, 'admins', 'Any')
+  const pastSessions = await db.listSessions(false, 'admins', 'Any', false)
+  const upcomingSessions = await db.listSessions(true, 'admins', 'Any', false)
   res.render('pages/admin/list', {
     students: students,
     tutors: tutors,
