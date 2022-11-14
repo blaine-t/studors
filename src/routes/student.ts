@@ -37,7 +37,7 @@ router.get('/home', (req, res) => {
 
 router.get('/find', async (req, res) => {
   const subjects = await db.listSubjects()
-  const availability = await db.listAvailability()
+  const availability = await db.listAvailability(res.locals.user.id)
   res.render('pages/student/find', {
     subjects: subjects,
     availability: availability,
@@ -61,7 +61,7 @@ router.post('/find', async (req, res) => {
   }
   // If didn't save properly
   const subjects = await db.listSubjects()
-  const availability = await db.listAvailability()
+  const availability = await db.listAvailability(res.locals.user.id)
   res.render('pages/student/find', {
     subjects: subjects,
     availability: availability,

@@ -667,7 +667,6 @@ async function migrateWeeklyToDates(week: Date) {
             time.getTime() === durationTime.getTime() &&
             weeklyAvailability[i]['tutor_id'] === sessions[j]['tutor_id']
           ) {
-            console.log('conflict')
             conflict = true
           }
         }
@@ -800,16 +799,19 @@ function removeTutorsSubject(sid: string, tid: string) {
 
 /**
  * List all available time slots in db
+ * @param student's OAuth ID so that they don't get their own time slots
  * @returns Array of time slots with extra data
  */
-async function listAvailability() {
+async function listAvailability(id: string) {
   try {
     const res = await pool.query(
       `SELECT availabilitymap.time_id, availabilitymap.tutor_id, tutors.first_name, tutors.last_name, subjectmap.subject_id
       FROM availabilitymap
       INNER JOIN subjectmap on availabilitymap.tutor_id = subjectmap.tutor_id
       INNER JOIN tutors on availabilitymap.tutor_id = tutors.id
-      ORDER BY availabilitymap.tutor_id, availabilitymap.time_id`
+      WHERE NOT tutors.id = $1
+      ORDER BY availabilitymap.tutor_id, availabilitymap.time_id`,
+      [id]
     )
     return res.rows
   } catch (err) {
