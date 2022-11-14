@@ -15,9 +15,9 @@ function scheduleDates() {
     const nextSunday = new Date(functions.getSunday(nextWeekDate))
     const lastSunday = new Date(nextSunday)
     lastSunday.setDate(nextSunday.getDate() + 7)
-    db.createDates(currentSunday)
+    await db.createDates(currentSunday)
     db.migrateWeeklyToDates(currentSunday)
-    db.createDates(nextSunday)
+    await db.createDates(nextSunday)
     db.migrateWeeklyToDates(nextSunday)
   })
 }
