@@ -45,9 +45,14 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 
 ## TODO:
 
-- [x] Allow tutor to cancel session
-- [x] Make admin placeholders have current data instead of example
-- [x] Give user better UI for when they make a new session and give them proper info
+- [ ] Add back buttons where required
+- [ ] Style error and success messages on sessions
+- [ ] Datatables styling for dark mode
+- [ ] Calendar buttons are not centered and dark styled
+- [ ] Manage text boxes need tinted
+- [ ] Fix the first time sign up auth fail
+- [ ] Allow removing student and tutor errors when truncating through tables
+- [ ] Fix scheduler issues with populating dates and not making sessions available in the past
 - [ ] Lint whole project
 - [ ] Test suite from start to finish
 
