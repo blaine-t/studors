@@ -20,11 +20,11 @@ function scheduleDates() {
       nextSunday
     )
     const nextDates = await db.listTimesBetweenDates(nextSunday, lastSunday)
-    if (currentDates != undefined && currentDates.length === 0) {
+    if (currentDates != undefined && currentDates.length != 0) {
       db.createDates(currentSunday)
       db.migrateWeeklyToDates(currentSunday)
     }
-    if (nextDates != undefined && nextDates.length === 0) {
+    if (nextDates != undefined && nextDates.length != 0) {
       db.createDates(nextSunday)
       db.migrateWeeklyToDates(nextSunday)
     }
