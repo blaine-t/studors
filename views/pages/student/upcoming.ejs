@@ -21,14 +21,16 @@
   <%- include('../../components/header'); %>
   <div class="admin-list">
     <h2> Upcoming Sessions: </h2>
-    <div id="user-list">
+    <form id="user-list" action='/student/cancel' method='post'>
+      <span><%=message%></span>
       <% for(const obj of upcomingSessions) { %>
         <p><%= functions.formatDate(obj['time_id'], true, obj['duration']) %>
         <p><%= obj['first_name'] %> <%= obj['last_name'] %> | <%= obj['subject_id'] %>
         <p> <% if( obj['phone'] ) { %> <%= obj['phone'] %> | <%}%> <%= obj['email'] %>
+        <button name="cancel" type="submit" value="<%=obj['time_id'].getTime()%>">❌</button>
         </p></p></p>
       <% } %>
-    </div>
+      </form>
     <br id="upcoming-list">
   </div>
   <%- include('../../components/footer'); %>

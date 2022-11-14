@@ -225,6 +225,13 @@ async function createSession(
   return 'Invalid subject, try again'
 }
 
+/**
+ * Finds a specific session given ID for a set role and the time
+ * @param id OAuth ID for student or tutor
+ * @param role student or tutor
+ * @param time Date of session
+ * @returns The singular session
+ */
 async function findSession(id: string, role: string, time: Date) {
   try {
     const res = await pool.query(
@@ -237,29 +244,45 @@ async function findSession(id: string, role: string, time: Date) {
   }
 }
 
+/**
+ * Removes a session when a student or tutor cancels
+ * @param id OAuth ID for student or tutor
+ * @param role student or tutor
+ * @param time Date of session
+ * @returns Nothing
+ */
 async function removeSession(id: string, role: string, time: Date) {
   const session = await findSession(id, role, time)
   if (session === undefined) {
-    return
+    return 'Session not found'
   }
   pool
     .query(`DELETE FROM sessions WHERE ${role}_id = $1 AND time_id = $2`, [
       id,
       time
     ])
-    .catch((e) => console.error(e))
+    .catch((e) => {
+      console.error(e)
+      return 'Error deleting session'
+    })
   pool
     .query('UPDATE tutors SET hours_term = hours_term - $1 WHERE id = $2', [
       session.duration,
       session.tutor_id
     ])
-    .catch((e) => console.error(e))
+    .catch((e) => {
+      console.error(e)
+      return 'Error saving hours'
+    })
   pool
     .query('UPDATE tutors SET hours_total = hours_total - $1 WHERE id = $2', [
       session.duration,
       session.tutor_id
     ])
-    .catch((e) => console.error(e))
+    .catch((e) => {
+      console.error(e)
+      return 'Error saving hours'
+    })
   for (let i = 0; i < session.duration * 4; i++) {
     const durationTime = new Date(time.getTime() + i * 15 * 60 * 1000)
     pool
@@ -267,8 +290,12 @@ async function removeSession(id: string, role: string, time: Date) {
         durationTime,
         session.tutor_id
       ])
-      .catch((e) => console.error(e))
+      .catch((e) => {
+        console.error(e)
+        return 'Error saving hours'
+      })
   }
+  return 'Session successfully deleted'
 }
 
 /**

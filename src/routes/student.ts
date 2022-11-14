@@ -135,8 +135,16 @@ router.get('/upcoming', async (req, res) => {
   res.render('pages/student/upcoming', {
     upcomingSessions: upcomingSessions,
     functions: functions,
-    darkMode: res.locals.user.dark_theme
+    darkMode: res.locals.user.dark_theme,
+    message: req.query.message
   })
+})
+
+router.post('/cancel', async (req, res) => {
+  const date = new Date(Number(req.body.cancel))
+  const message = await db.removeSession(res.locals.user.id, 'student', date)
+  res.redirect('/student/upcoming?message=' + message)
+  return
 })
 
 router.get('/history', async (req, res) => {
