@@ -46,7 +46,7 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 ## TODO:
 
 - [x] Allow tutor to cancel session
-- [ ] Make admin placeholders have current data instead of example
+- [x] Make admin placeholders have current data instead of example
 - [x] Give user better UI for when they make a new session and give them proper info
 - [ ] Lint whole project
 - [ ] Test suite from start to finish

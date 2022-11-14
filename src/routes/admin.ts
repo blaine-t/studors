@@ -128,15 +128,40 @@ router.post('/settings', (req, res) => {
 })
 
 router.get('/manage', async (req, res) => {
-  const domains = await db.listAllowed('students')
-  const tutors = await db.listAllowed('tutors')
-  const admins = await db.listAllowed('admins')
-  const subjects = await db.listSubjects()
+  // Create the placeholders for the removal options on the panel
+  const domains = (await db.listAllowed('students')) || []
+  const tutors = (await db.listAllowed('tutors')) || []
+  const admins = (await db.listAllowed('admins')) || []
+  const subjects = (await db.listSubjects()) || []
+  let domainString = ''
+  let tutorString = ''
+  let adminString = ''
+  let subjectString = ''
+  for (let i = 0; i < domains.length; i++) {
+    domainString += domains[i]['email'] + ', '
+  }
+  domainString = domainString.replace(/, $/, '')
+
+  for (let i = 0; i < tutors.length; i++) {
+    tutorString += tutors[i]['email'] + ', '
+  }
+  tutorString = tutorString.replace(/, $/, '')
+
+  for (let i = 0; i < admins.length; i++) {
+    adminString += admins[i]['email'] + ', '
+  }
+  adminString = adminString.replace(/, $/, '')
+
+  for (let i = 0; i < subjects.length; i++) {
+    subjectString += subjects[i]['subject'] + ', '
+  }
+  subjectString = subjectString.replace(/, $/, '')
+
   res.render('pages/admin/manage', {
-    domains: domains,
-    tutors: tutors,
-    admins: admins,
-    subjects: subjects,
+    domains: domainString,
+    tutors: tutorString,
+    admins: adminString,
+    subjects: subjectString,
     error: '',
     darkMode: res.locals.user.dark_theme
   })
