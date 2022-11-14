@@ -40,10 +40,11 @@
     background-color: #d9d9d9;
     font-size: 2em;
     min-width: 25%;
+    transition-duration: 0.3s;
 }
 
 .login-buttons button:hover {
-    background-color: #CCC;
+    background-color: #BBB;
 }
 
 /* Misc stuff... sort */
@@ -91,6 +92,7 @@ button {
     margin-bottom: 10px;
     margin: 20px;
     font-weight: normal;
+    transition-duration: 0.3s;
 }
 
 button:hover {
@@ -102,7 +104,7 @@ li a:hover {
 }
 
 li a:active {
-    background-color: #BBB;
+    background-color: #DDD;
 }
 
 .flex-box {
@@ -173,6 +175,7 @@ footer li a {
     color: #434343;
     padding: 9px 16px;
     text-decoration: none;
+    transition-duration: 0.2s;
 }
 
 footer hr {
@@ -245,6 +248,8 @@ header hr {
     padding: 8px;
     text-decoration: none;
     color: #000;
+    margin: 1px;
+    transition-duration: 0.2s;
 }
 
 /* Home specific */
@@ -288,6 +293,7 @@ header hr {
 .profile img {
     border-radius: 50%;
     height: 12vh;
+    width: 12vh;
     max-height: 150px;
     border: 3px solid #000;
 }
@@ -308,7 +314,7 @@ header hr {
 }
 
 .home-buttons button:hover {
-    background-color: #CCC;
+    background-color: #BBB;
 }
 
 #right-hidden-navbar {
@@ -402,6 +408,7 @@ header hr {
     position: relative;
     left: 50%;
     transform: translatex(-50%);
+    transition-duration: 0.2s;
 }
 
 .settings-box .check span {
