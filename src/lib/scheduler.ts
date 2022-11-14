@@ -15,19 +15,10 @@ function scheduleDates() {
     const nextSunday = new Date(functions.getSunday(nextWeekDate))
     const lastSunday = new Date(nextSunday)
     lastSunday.setDate(nextSunday.getDate() + 7)
-    const currentDates = await db.listTimesBetweenDates(
-      currentSunday,
-      nextSunday
-    )
-    const nextDates = await db.listTimesBetweenDates(nextSunday, lastSunday)
-    if (currentDates != undefined && currentDates.length != 0) {
-      db.createDates(currentSunday)
-      db.migrateWeeklyToDates(currentSunday)
-    }
-    if (nextDates != undefined && nextDates.length != 0) {
-      db.createDates(nextSunday)
-      db.migrateWeeklyToDates(nextSunday)
-    }
+    db.createDates(currentSunday)
+    db.migrateWeeklyToDates(currentSunday)
+    db.createDates(nextSunday)
+    db.migrateWeeklyToDates(nextSunday)
   })
 }
 

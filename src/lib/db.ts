@@ -190,10 +190,14 @@ async function createSession(
     subjects.some((item) => item.subject === subject)
   ) {
     try {
-      pool.query(
-        'DELETE FROM availabilitymap WHERE time_id = $1 AND tutor_id = $2',
-        [time, tid]
-      )
+      // If the session is longer than 15 minutes delete those values as well
+      for (let i = 0; i < duration * 4; i++) {
+        const durationTime = new Date(time.getTime() + i * 15 * 60 * 1000)
+        pool.query(
+          'DELETE FROM availabilitymap WHERE time_id = $1 AND tutor_id = $2',
+          [durationTime, tid]
+        )
+      }
       const res = await pool.query(
         'INSERT INTO sessions (student_id,tutor_id,time_id,subject_id,duration) VALUES ($1,$2,$3,$4,$5)',
         [sid, tid, time, subject, duration]
@@ -604,13 +608,30 @@ async function listWeeklyAvailabilityMap() {
 }
 
 /**
+ * Gets required session data to do migration of weekly schedules to dates
+ * @returns Session time ID, tutor ID, and duration
+ */
+async function migrationListSessions() {
+  try {
+    const res = await pool.query(
+      'SELECT sessions.time_id, sessions.tutor_id, sessions.duration FROM sessions'
+    )
+    return res.rows
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+/**
  * Migrate relative weekly times to exact times
  * @param week The sunday of the week that you would like to populate dates for
  * @returns Returns if weeklyAvailability doesn't exist
  */
 async function migrateWeeklyToDates(week: Date) {
   const weeklyAvailability = await listWeeklyAvailabilityMap()
-  // If undefined do empty list to not check holidays
+
+  // If undefined do empty list to not check holidays or sessions
+  const sessions = (await migrationListSessions()) || []
   const holidays = (await listHolidays()) || []
 
   if (weeklyAvailability == undefined || weeklyAvailability.length == 0) {
@@ -621,7 +642,7 @@ async function migrateWeeklyToDates(week: Date) {
 
   for (let i = 0; i < weeklyAvailability.length; i++) {
     const time = new Date(week)
-    let holiday = false
+    let conflict = false
     const increment = weeklyAvailability[i]['increment_id']
 
     // Some fun translation stuff
@@ -632,11 +653,28 @@ async function migrateWeeklyToDates(week: Date) {
     for (let k = 0; k < holidays.length; k++) {
       // If time is in holiday then set boolean true
       if (time.getDate() === holidays[k].holiday.getDate()) {
-        holiday = true
+        conflict = true
+      }
+    }
+    // Run through and make sure that a tutor isn't already busy with a session
+    if (!conflict) {
+      for (let j = 0; j < sessions.length; j++) {
+        for (let h = 0; h < sessions[j]['duration'] * 4; h++) {
+          const durationTime = new Date(
+            sessions[j].time_id.getTime() + h * 15 * 60 * 1000
+          )
+          if (
+            time.getTime() === durationTime.getTime() &&
+            weeklyAvailability[i]['tutor_id'] === sessions[j]['tutor_id']
+          ) {
+            console.log('conflict')
+            conflict = true
+          }
+        }
       }
     }
     // Create the string to insert in to the database
-    if (!holiday) {
+    if (!conflict) {
       string +=
         "('" +
         new Date(time).toISOString() +
