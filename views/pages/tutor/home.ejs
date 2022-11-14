@@ -28,7 +28,17 @@
             <%- include('../../components/navbar'); %>
                 <div id="home-center-box">
                     <%- include('../../components/profile'); %>
-                        <%- include('../../components/buttons', {label: 'Fill a request' }); %>
+                    <div class="home-buttons">
+                        <button onclick="location.href='upcoming'" type="button">
+                            Upcoming Sessions
+                        </button>
+                        <!--button onclick="location.href='find'" type="button">
+                            Schedule a new session
+                        </button-->
+                        <button onclick="location.href='history'" type="button">
+                            Session History
+                        </button>
+                    </div>
                 </div>
                 <div id="right-hidden-navbar">
                     <span></span>
