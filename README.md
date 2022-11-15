@@ -53,8 +53,8 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 - [ ] Manage text boxes need tinted
 - [ ] Need About, Mission, Contact text offset
 - [ ] Finalize dark mode colors and contrast
-- [ ] Fix the first time sign up auth fail
-- [ ] Allow removing student and tutor errors when truncating through tables
+- [ ] Fix the first time sign up auth fail (Can't replicate please open issue if you can)
+- [x] Allow removing student and tutor errors when truncating through tables
 - [ ] Fix scheduler issues with populating dates and not making sessions available in the past
 - [ ] Lint whole project
 - [ ] Test suite from start to finish

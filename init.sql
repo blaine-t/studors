@@ -60,8 +60,8 @@ create table
         with
             time zone references times(time) not null,
             subject_id text references subjects(subject) ON delete cascade not null,
-            student_id text references students(id) not null,
-            tutor_id text references tutors(id) not null,
+            student_id text references students(id) ON delete cascade not null,
+            tutor_id text references tutors(id) ON delete cascade not null,
             school text default 'SCHOOL',
             duration decimal,
             primary key (time_id, tutor_id)
@@ -76,7 +76,7 @@ create table
         time_id timestamp
         with
             time zone references times(time) not null,
-            tutor_id text references tutors(id) not null,
+            tutor_id text references tutors(id) ON delete cascade not null,
             primary key (time_id, tutor_id)
     );
 
@@ -91,7 +91,7 @@ create table
 create table
     weeklyavailabilitymap(
         weeklyavailability_id uuid references weeklyavailability(id) ON delete cascade not null,
-        tutor_id text references tutors(id) not null,
+        tutor_id text references tutors(id) ON delete cascade not null,
         primary key (
             weeklyavailability_id,
             tutor_id
