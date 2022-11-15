@@ -47,7 +47,7 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 
 - [ ] Add back buttons where required
 - [ ] Style error and success messages on sessions
-- [ ] DataTables styling for dark mode
+- [x] DataTables styling for dark mode
 - [x] Calendar buttons are not centered and dark styled
 - [x] Make scheduling tint standard
 - [x] Manage text boxes need tinted
