@@ -32,7 +32,10 @@ function checkAuthentication(req: Request, res: Response, next: NextFunction) {
 router.use(checkAuthentication)
 
 router.get('/home', (req, res) => {
-  res.render('pages/student/home', { darkMode: res.locals.user.dark_theme })
+  res.render('pages/student/home', {
+    darkMode: res.locals.user.dark_theme,
+    pos: 'Student'
+  })
 })
 
 router.get('/find', async (req, res) => {
@@ -42,7 +45,8 @@ router.get('/find', async (req, res) => {
     subjects: subjects,
     availability: availability,
     error: '',
-    darkMode: res.locals.user.dark_theme
+    darkMode: res.locals.user.dark_theme,
+    pos: 'Student'
   })
 })
 
@@ -66,18 +70,23 @@ router.post('/find', async (req, res) => {
     subjects: subjects,
     availability: availability,
     error: session,
-    darkMode: res.locals.user.dark_theme
+    darkMode: res.locals.user.dark_theme,
+    pos: 'Student'
   })
 })
 
 router.get('/request', (req, res) => {
-  res.render('pages/student/request', { darkMode: res.locals.user.dark_theme })
+  res.render('pages/student/request', {
+    darkMode: res.locals.user.dark_theme,
+    pos: 'Student'
+  })
 })
 
 router.get('/settings', (req, res) => {
   res.render('pages/student/settings', {
     error: '',
-    darkMode: true // Check box handles
+    darkMode: true, // Check box handles
+    pos: 'Student'
   })
 })
 
@@ -121,7 +130,8 @@ router.post('/settings', (req, res) => {
   // Rerender settings page with error
   res.render('pages/student/settings', {
     error: error,
-    darkMode: res.locals.user.dark_theme
+    darkMode: res.locals.user.dark_theme,
+    pos: 'Student'
   })
 })
 
@@ -136,6 +146,7 @@ router.get('/upcoming', async (req, res) => {
     upcomingSessions: upcomingSessions,
     functions: functions,
     darkMode: res.locals.user.dark_theme,
+    pos: 'Student',
     message: req.query.message
   })
 })
@@ -157,7 +168,8 @@ router.get('/history', async (req, res) => {
   res.render('pages/student/history', {
     pastSessions: pastSessions,
     functions: functions,
-    darkMode: res.locals.user.dark_theme
+    darkMode: res.locals.user.dark_theme,
+    pos: 'Student'
   })
 })
 

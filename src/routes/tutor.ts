@@ -32,17 +32,24 @@ function checkAuthentication(req: Request, res: Response, next: NextFunction) {
 router.use(checkAuthentication)
 
 router.get('/home', (req, res) => {
-  res.render('pages/tutor/home', { darkMode: res.locals.user.dark_theme })
+  res.render('pages/tutor/home', {
+    darkMode: res.locals.user.dark_theme,
+    pos: 'Tutor'
+  })
 })
 
 router.get('/find', (req, res) => {
-  res.render('pages/tutor/find', { darkMode: res.locals.user.dark_theme })
+  res.render('pages/tutor/find', {
+    darkMode: res.locals.user.dark_theme,
+    pos: 'Tutor'
+  })
 })
 
 router.get('/settings', (req, res) => {
   res.render('pages/tutor/settings', {
     error: '',
-    darkMode: true // Check box handles
+    darkMode: true, // Check box handles
+    pos: 'Tutor'
   })
 })
 
@@ -54,7 +61,8 @@ router.get('/availability', async (req, res) => {
   } else {
     res.render('pages/tutor/settings', {
       error: 'No time slots have been set by your admin',
-      darkMode: res.locals.user.dark_theme
+      darkMode: res.locals.user.dark_theme,
+      pos: 'Tutor'
     })
     return
   }
@@ -94,7 +102,8 @@ router.get('/availability', async (req, res) => {
     checked: checked,
     functions: functions,
     error: req.query.error,
-    darkMode: res.locals.user.dark_theme
+    darkMode: res.locals.user.dark_theme,
+    pos: 'Tutor'
   })
 })
 
@@ -140,7 +149,8 @@ router.get('/subjects', async (req, res) => {
     subjects: subjects,
     checked: checked,
     error: req.query.error,
-    darkMode: res.locals.user.dark_theme
+    darkMode: res.locals.user.dark_theme,
+    pos: 'Tutor'
   })
 })
 
@@ -180,6 +190,7 @@ router.get('/upcoming', async (req, res) => {
     upcomingSessions: upcomingSessions,
     functions: functions,
     darkMode: res.locals.user.dark_theme,
+    pos: 'Tutor',
     message: req.query.message
   })
 })
@@ -201,7 +212,8 @@ router.get('/history', async (req, res) => {
   res.render('pages/tutor/history', {
     pastSessions: pastSessions,
     functions: functions,
-    darkMode: res.locals.user.dark_theme
+    darkMode: res.locals.user.dark_theme,
+    pos: 'Tutor'
   })
 })
 

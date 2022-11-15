@@ -35,7 +35,8 @@ router.use(checkAuthentication)
 
 router.get('/panel', (req, res) => {
   res.render('pages/admin/panel', {
-    darkMode: res.locals.user.dark_theme
+    darkMode: res.locals.user.dark_theme,
+    pos: 'Admin'
   })
 })
 
@@ -65,14 +66,16 @@ router.get('/list', async (req, res) => {
     pastSessions: pastSessions,
     upcomingSessions: upcomingSessions,
     functions: functions,
-    darkMode: res.locals.user.dark_theme
+    darkMode: res.locals.user.dark_theme,
+    pos: 'Admin'
   })
 })
 
 router.get('/settings', (req, res) => {
   res.render('pages/admin/settings', {
     error: '',
-    darkMode: true // Check box handles
+    darkMode: true, // Check box handles
+    pos: 'Admin'
   })
 })
 
@@ -164,7 +167,8 @@ router.get('/manage', async (req, res) => {
     admins: adminString,
     subjects: subjectString,
     error: '',
-    darkMode: res.locals.user.dark_theme
+    darkMode: res.locals.user.dark_theme,
+    pos: 'Admin'
   })
 })
 
@@ -267,7 +271,8 @@ router.post('/manage', async (req, res) => {
   if (error != '') {
     res.render('pages/admin/manage', {
       error: error,
-      darkMode: res.locals.user.dark_theme || false
+      darkMode: res.locals.user.dark_theme,
+      pos: 'Admin' || false
     })
     return
   }
