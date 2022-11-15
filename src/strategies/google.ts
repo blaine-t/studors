@@ -46,7 +46,7 @@ passport.use(
           )) != undefined
         ) {
           const profilePic = profile._json.picture?.replace('=s96-c', '=s256-c')
-          db.createUser(
+          await db.createUser(
             'students',
             profile.id,
             profile._json.given_name || 'Example',
@@ -90,7 +90,7 @@ passport.use(
       else if (profile._json.email != undefined) {
         if ((await db.checkUser('tutors', profile._json.email)) != undefined) {
           const profilePic = profile._json.picture?.replace('=s96-c', '=s256-c')
-          db.createUser(
+          await db.createUser(
             'tutors',
             profile.id,
             profile._json.given_name || 'Example',
@@ -134,7 +134,7 @@ passport.use(
       else if (profile._json.email != undefined) {
         if ((await db.checkUser('admins', profile._json.email)) != undefined) {
           const profilePic = profile._json.picture?.replace('=s96-c', '=s256-c')
-          db.createUser(
+          await db.createUser(
             'admins',
             profile.id,
             profile._json.given_name || 'Example',
