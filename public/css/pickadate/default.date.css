@@ -192,10 +192,10 @@
 .picker__day--outfocus:hover {
   cursor: pointer;
   color: #000;
-  background: #b1dcfb;
+  background: #ff7671;
 }
 .picker__day--highlighted {
-  border-color: #0089ec;
+  border-color: none;
 }
 .picker__day--highlighted:hover,
 .picker--focused .picker__day--highlighted {
@@ -206,7 +206,7 @@
 .picker__day--selected,
 .picker__day--selected:hover,
 .picker--focused .picker__day--selected {
-  background: #0089ec;
+  background: #e8413c;
   color: #fff;
 }
 .picker__day--disabled,

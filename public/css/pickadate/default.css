@@ -90,7 +90,7 @@
 }
 @media (min-height: 40.125em) {
   .picker__frame {
-    margin-bottom: 7.5%;
+    margin-bottom: 0;
   }
 }
 /**
@@ -159,7 +159,7 @@
 }
 @media (min-height: 33.875em) {
   .picker--opened .picker__frame {
-    top: auto;
-    bottom: 0;
+    top: 40%;
+    bottom: auto;
   }
 }

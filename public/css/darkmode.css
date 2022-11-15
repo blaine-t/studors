@@ -163,3 +163,52 @@ header hr {
         border-bottom: 2px solid #666;
     }
 }
+
+/* DateTimeJS stuff */
+.picker {
+    color: white;
+}
+
+.picker__box {
+  background-color: #2d2a2a!important;
+}
+
+.picker__month {
+    color: white;
+}
+
+.picker__day {
+    border-color: #fff0;
+    background-color: #676867;
+    color: white;
+}
+
+.picker__day--disabled {
+    background-color: #393939!important;
+    border-color: #f5f5f530!important;
+    color: #dddddd80!important;
+}
+
+.picker__button--today, .picker__button--clear, .picker__button--close {
+    border-color: #fff6!important;
+}
+
+.picker__button--today:hover, .picker__button--clear:hover, .picker__button--close:hover {
+    color: white!important;
+}
+
+.picker__list-item {
+    background-color: #676867!important;
+    color: white;
+}
+
+.picker__list-item--selected,
+.picker__list-item--selected:hover,
+.picker--focused .picker__list-item--selected {
+  background: #e8413c!important;
+}
+
+.picker__list-item:hover {
+    background: #ff7671 !important;
+    color: white;
+}

@@ -29,26 +29,25 @@
 .picker__list-item:hover {
   cursor: pointer;
   color: #000;
-  background: #b1dcfb;
-  border-color: #0089ec;
+  background: #ff7671;
   z-index: 10;
 }
 /* Highlighted and hovered/focused time */
 .picker__list-item--highlighted {
-  border-color: #0089ec;
+  border-color: none;
   z-index: 10;
 }
 .picker__list-item--highlighted:hover,
 .picker--focused .picker__list-item--highlighted {
   cursor: pointer;
-  color: #000;
-  background: #b1dcfb;
+  color: #fff;
+  background: #ff7671;
 }
 /* Selected and hovered/focused time */
 .picker__list-item--selected,
 .picker__list-item--selected:hover,
 .picker--focused .picker__list-item--selected {
-  background: #0089ec;
+  background: #e8413c;
   color: #fff;
   z-index: 10;
 }
@@ -122,6 +121,8 @@
 }
 @media (min-height: 40.125em) {
   .picker--time .picker__box {
-    margin-bottom: 5em;
+    margin-bottom: 0;
+    position: relative;
+    bottom: 20px;
   }
 }
