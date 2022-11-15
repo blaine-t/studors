@@ -7,8 +7,11 @@ const pool = new Pool()
  * Remove rosters from the database
  * @param table Which table to truncate
  */
-function truncateTable(table: string) {
-  pool.query(`TRUNCATE TABLE ${table} CASCADE`).catch((e) => console.error(e))
+async function truncateTable(table: string) {
+  await pool
+    .query(`TRUNCATE TABLE ${table} CASCADE`)
+    .catch((e) => console.error(e))
+  return
 }
 
 /**

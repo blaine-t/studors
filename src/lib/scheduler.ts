@@ -7,7 +7,8 @@ import functions from './functions'
  * At 1700 on Monday of every week generate this weeks and next weeks schedule
  */
 function scheduleDates() {
-  schedule.scheduleJob('0 17 * * 1', async function () {
+  schedule.scheduleJob('* * * * *', async function () {
+    await db.truncateTable('availabilitymap')
     const currentDate = new Date()
     const nextWeekDate = new Date()
     nextWeekDate.setDate(currentDate.getDate() + 7)

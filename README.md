@@ -55,12 +55,13 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 - [ ] Finalize dark mode colors and contrast
 - [ ] Fix the first time sign up auth fail (Can't replicate please open issue if you can)
 - [x] Allow removing student and tutor errors when truncating through tables
-- [ ] Fix scheduler issues with populating dates and not making sessions available in the past
+- [x] Fix scheduler issues with populating dates and not making sessions available in the past
 - [ ] Lint whole project
 - [ ] Test suite from start to finish
 
 ## 2.0 Features:
 
+- [ ] Rework scheduler and population of dates for less disk IO and CPU
 - [ ] Allow tutors to blacklist problematic students (/tutor/blacklist?)
 - [ ] Make removal of certain things easier for admin (/admin/manage)
 - [ ] Student request for tutoring at a set time slot (/student/request)
