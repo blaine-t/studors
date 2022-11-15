@@ -238,6 +238,8 @@
   width: 33%;
   display: inline-block;
   vertical-align: bottom;
+  left: 0!important;
+  transform: none!important;
 }
 .picker__button--today:hover,
 .picker__button--clear:hover,

@@ -83,6 +83,10 @@ body {
 
 button {
     cursor: pointer;
+}
+
+.mainbutton {
+    cursor: pointer;
     color: #434343;
     border-radius: 20px;
     border: 2px solid grey;
@@ -94,7 +98,7 @@ button {
     transition-duration: 0.3s;
 }
 
-button:hover {
+.mainbutton:hover {
     background-color: #DDD;
 }
 
@@ -678,6 +682,7 @@ header hr {
 
     .profile img {
         height: 100px;
+        width: 100px;
     }
 
     .login-buttons {
