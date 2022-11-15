@@ -20,9 +20,9 @@
 <body>
   <%- include('../../components/header'); %>
   <div class="admin-list">
-    <h2> Upcoming Sessions: </h2>
+    <h2>Upcoming Sessions: </h2>
     <form id="user-list" action='/student/cancel' method='post' style="white-space:normal;">
-      <span class="small-error"><%=message%></span>
+      <span class="small-success"><%=message%></span>
       <% for(const obj of upcomingSessions) { %>
         <div class="session">
           <p>

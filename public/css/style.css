@@ -471,6 +471,13 @@ header hr {
     font-size: 15pt;
 }
 
+.small-success {
+    color: #326f00;
+    white-space: pre-line;
+    height: 20px;
+    font-size: 15pt;
+}
+
 .cancelbutton {
     color: black;
     border: none;
