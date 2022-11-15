@@ -40,7 +40,7 @@ router.get(
 )
 
 router.get('/failure', (req, res) => {
-  res.render('pages/auth/failure', { darkMode: false })
+  res.render('pages/auth/failure', { darkMode: false, pos: '' })
 })
 
 // Change this to a post request
