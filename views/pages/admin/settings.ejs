@@ -44,10 +44,10 @@
                     </p>
                     <p id="key"> <%= user.api_key %></p>
                     <p>
-                        <button class="button" id="toggleButton" type="button" onclick="showMask()">Show</button>
+                        <button class="mainbutton" id="toggleButton" type="button" onclick="showMask()">Show</button>
                     </p>
                     <form method="post" action="apiReset">
-                        <button class="button" onclick="if(confirm('Are you sure?\nResetting will require you to replace any API keys in any applications that you use. For example google sheets.')){}else{return false;};" type="submit">Reset</button>
+                        <button class="mainbutton" onclick="if(confirm('Are you sure?\nResetting will require you to replace any API keys in any applications that you use. For example google sheets.')){}else{return false;};" type="submit">Reset</button>
                     </form>
                 </div>
                 <hr style="width: 100%">
@@ -74,7 +74,7 @@
                             </label>
                     <br>
                     <p id="small-error"><%=error %></p>
-                    <button type="submit">Save</button>
+                    <button class="mainbutton" type="submit">Save</button>
                 </form>
             </div>
         </div>

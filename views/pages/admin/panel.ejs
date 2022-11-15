@@ -27,21 +27,21 @@
           <div>
             <p class="name">
               <%= user.first_name %>
-                <%= user.last_name %>
+              <%= user.last_name %>
             </p>
           </div>
         </div>
         <form class="home-buttons" action='/auth/logout' method='post'>
-          <button onclick="location.href='manage'" type="button">
+          <button class="mainbutton" onclick="location.href='manage'" type="button">
             Manage
           </button>
-          <button onclick="location.href='list'" type="button">
+          <button class="mainbutton" onclick="location.href='list'" type="button">
             List Data
           </button>
-          <button onclick="location.href='settings'" type="button">
+          <button class="mainbutton" onclick="location.href='settings'" type="button">
             Account Settings
           </button>
-          <button type="submit">
+          <button class="mainbutton" type="submit">
             Logout
           </button>
         </form>
