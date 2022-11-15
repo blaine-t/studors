@@ -38,7 +38,7 @@
     <div class="maincontent">
         <form onsubmit='return validate(this)' action='' method='post'>
             <h1 style="display: inline;">Select a subject you would like help in:
-                <select id='subjectpicker' name='subjectpicker' onchange='subjectUpdated(); dateSetup(); remove(0);'>
+                <select id='subjectpicker' name='subjectpicker' onchange='subjectUpdated(); dateSetup(); remove(0);' style="background-color:white;">
                     <option></option>
                     <% for ( const obj of subjects ) { %>
                         <option value='<%= obj['subject'] %>'><%= obj['subject'] %></option>
@@ -47,21 +47,21 @@
             </h1>
             <br>
             <h1 id="tutorcontainer" style='display: none;'>Select a tutor:
-                <select id='tutorpicker' name='tutorpicker' onchange='tutorUpdated(); remove(0);'>
+                <select id='tutorpicker' name='tutorpicker' onchange='tutorUpdated(); remove(0);' style="background-color:white;">
                     <option>Any</option>
                 </select>
                 <br>
             </h1>
             <h1 id="datecontainer" style='display: none;'>Select a date:
-                <input id='datepicker' onchange='dateUpdated(); remove(1);'></input>
+                <input id='datepicker' onchange='dateUpdated(); remove(1);' style="background-color:white;"></input>
                 <br>
             </h1>
             <h1 id="timecontainer" style='display: none;'>Select a time:
-                <input id='timepicker' onchange='timeUpdated();'></input>
+                <input id='timepicker' onchange='timeUpdated();' style="background-color:white;"></input>
                 <br>
             </h1>
             <h1 id="durationcontainer" style='display: none;'>Select a duration:
-                <select id='durationpicker' name='durationpicker'></select>
+                <select id='durationpicker' name='durationpicker' style="background-color:white;"></select>
                 <br>
             </h1>
             <br>

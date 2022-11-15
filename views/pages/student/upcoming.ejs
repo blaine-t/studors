@@ -29,7 +29,7 @@
             <%= functions.formatDate(obj['time_id'], true, obj['duration']) %><br>
             <%= obj['first_name'] %> <%= obj['last_name'] %> | <%= obj['subject_id'] %><br>
             <% if( obj['phone'] ) { %> <%= obj['phone'] %> | <%}%> <%= obj['email'] %>
-            <button name="cancel" type="submit" value="<%=obj['time_id'].getTime()%>" class="cancelbutton mainbutton" title="Cancel session">❌</button>
+            <button name="cancel" type="submit" value="<%=obj['time_id'].getTime()%>" class="cancelbutton mainbutton" title="Cancel session" style="border: 0px">❌</button>
           </p>
         </div>
         <hr>
