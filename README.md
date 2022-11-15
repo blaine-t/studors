@@ -49,7 +49,7 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 - [ ] Style error and success messages on sessions
 - [ ] DataTables styling for dark mode
 - [x] Calendar buttons are not centered and dark styled
-- [ ] Make scheduling tint standard
+- [x] Make scheduling tint standard
 - [ ] Manage text boxes need tinted
 - [ ] Need About, Mission, Contact text offset
 - [ ] Finalize dark mode colors and contrast
