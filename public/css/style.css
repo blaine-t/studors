@@ -50,7 +50,7 @@
 .about-info {
     font-size: 1.5em;
     position: relative;
-    top: 0;
+    top: 20%;
     left: 5%;
     border-left: 4px solid;
     padding: 0;
@@ -63,6 +63,22 @@
     margin: 0;
     margin-bottom: 10px;
 
+}
+
+.about-info a {
+    color: #e8413c;
+}
+
+.about-info a:hover {
+    color: #fd7c78;
+}
+
+.about-info a:visited {
+    color: #ce771b;
+}
+
+.about-info a:visited:hover {
+    color: #f09c42;
 }
 
 /* Body setup */
@@ -640,6 +656,9 @@ header hr {
 @media (max-height: 500px) {
     header {
         display: none;
+    }
+    .about-info {
+        top: 0;
     }
 }
 

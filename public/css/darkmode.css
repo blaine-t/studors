@@ -17,7 +17,7 @@
 
 /* Body setup */
 html {
-    background-color: #2b2b2b;
+    background-color: #1a1a1a;
     color: white;
 }
 
@@ -95,11 +95,11 @@ header hr {
 }
 
 .home-buttons button {
-    background-color: #595959;
+    background-color: #373737;
 }
 
 .home-buttons button:hover {
-    background-color: #373737;
+    background-color: #595959;
 }
 
 #topbar ul {
