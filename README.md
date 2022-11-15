@@ -50,8 +50,8 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 - [ ] DataTables styling for dark mode
 - [x] Calendar buttons are not centered and dark styled
 - [x] Make scheduling tint standard
-- [ ] Manage text boxes need tinted
-- [ ] Need About, Mission, Contact text offset
+- [x] Manage text boxes need tinted
+- [x] Need About, Mission, Contact text offset
 - [x] Finalize dark mode colors and contrast
 - [x] Fix the first time sign up auth fail (Race condition in strategy)
 - [x] Allow removing student and tutor errors when truncating through tables
