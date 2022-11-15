@@ -139,6 +139,14 @@ header hr {
     background-color: #666;
 }
 
+#manage-form input[type="text"] {
+    font-size: 20pt;
+    padding: 5px;
+    width: 99%;
+    background-color: #111;
+    color: white;
+}
+
 .check span {
     border-color: grey;
     color: #CCC;
