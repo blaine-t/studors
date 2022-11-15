@@ -8,6 +8,7 @@
     #user-list {
       white-space: pre-line;
     }
+
     body {
       height: 100%;
     }
@@ -22,18 +23,18 @@
   <div class="admin-list">
     <h2>Upcoming Sessions: </h2>
     <form id="user-list" action='/student/cancel' method='post' style="white-space:normal;">
-      <span class="small-success"><%=message%></span>
-      <% for(const obj of upcomingSessions) { %>
+      <span <%if(message === 'Session successfully deleted') { %> class="small-success" <%} else {%> class="small-error" <%}%>><%=message%></span>
+        <% for(const obj of upcomingSessions) { %>
         <div class="session">
           <p>
             <%= functions.formatDate(obj['time_id'], true, obj['duration']) %><br>
             <%= obj['first_name'] %> <%= obj['last_name'] %> | <%= obj['subject_id'] %><br>
             <% if( obj['phone'] ) { %> <%= obj['phone'] %> | <%}%> <%= obj['email'] %>
-            <button name="cancel" type="submit" value="<%=obj['time_id'].getTime()%>" class="cancelbutton mainbutton" title="Cancel session" style="border: 0px">❌</button>
+            <button name="cancel" type="submit" value="<%=obj['time_id'].getTime()%>" onclick="if(confirm('Are you sure you want to cancel your session on <%= functions.formatDate(obj['time_id'], true, obj['duration']) %>?')){}else{return false;};" class="cancelbutton mainbutton" title="Cancel session" style="border: 0px">❌</button>
           </p>
         </div>
         <hr>
-      <% } %>
+        <% } %>
     </form>
     <br id="upcoming-list">
   </div>
@@ -41,6 +42,7 @@
 </body>
 <!-- Removes the last div in the form -->
 <script>
-  $( "form hr" ).last().css("display", "none");
+  $("form hr").last().css("display", "none");
 </script>
+
 </html>

@@ -102,7 +102,8 @@ app.use(function (req, res) {
   res.render('pages/root/404', {
     url: req.url,
     string: randString,
-    darkMode: darkMode
+    darkMode: darkMode,
+    pos: ''
   })
   return
 })
