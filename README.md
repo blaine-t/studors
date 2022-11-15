@@ -52,7 +52,7 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 - [x] Make scheduling tint standard
 - [ ] Manage text boxes need tinted
 - [ ] Need About, Mission, Contact text offset
-- [ ] Finalize dark mode colors and contrast
+- [x] Finalize dark mode colors and contrast
 - [x] Fix the first time sign up auth fail (Race condition in strategy)
 - [x] Allow removing student and tutor errors when truncating through tables
 - [x] Fix scheduler issues with populating dates and not making sessions available in the past
