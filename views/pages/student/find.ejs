@@ -50,22 +50,22 @@
                 <select id='tutorpicker' name='tutorpicker' onchange='tutorUpdated(); remove(0);'>
                     <option>Any</option>
                 </select>
+                <br>
             </h1>
-            <br>
             <h1 id="datecontainer" style='display: none;'>Select a date:
                 <input id='datepicker' onchange='dateUpdated(); remove(1);'></input>
+                <br>
             </h1>
-            <br>
             <h1 id="timecontainer" style='display: none;'>Select a time:
                 <input id='timepicker' onchange='timeUpdated();'></input>
+                <br>
             </h1>
-            <br>
             <h1 id="durationcontainer" style='display: none;'>Select a duration:
                 <select id='durationpicker' name='durationpicker'></select>
+                <br>
             </h1>
             <br>
-            <br>
-            <button class="mainbutton" type="submit" style="left: 0; transform: none;">Schedule</button>
+            <button class="mainbutton" type="submit" style="left: 0; transform: none; display: none;" id="sched">Schedule</button>
             <button class="mainbutton" type="button" style="left: 0; transform: none;" onclick="window.location.replace('/student/home')" value="Cancel">Cancel</button>
             <br>
             <span class="small-error"><%-error%></span>
@@ -264,6 +264,9 @@
     function durationSetup() {
         // Make durationpicker visible
         document.getElementById('durationcontainer').style.display = "inline";
+
+        // Make schedule button visible
+        document.getElementById('sched').style.display = "inline";
 
         // Declare variables required to do duration math
         var oldTutorID;
