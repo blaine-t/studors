@@ -654,6 +654,10 @@ header hr {
         left: unset!important;
         transform: none;
     }
+
+    #usertype, #schoolname {
+        display: none;
+    }
 }
 
 
