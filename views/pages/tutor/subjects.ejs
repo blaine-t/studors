@@ -8,9 +8,9 @@
 
 <body>
   <%- include('../../components/header'); %>
-  <div class="flex-box">
+  <div class="flex-box" style="top: 0; transform: none;">
     <div id="holder">
-      <div class="flex-box" style="top: 0; transform: none;">
+      <div class="settings-box">
         <form action="" method="post">
           <% for (const obj of subjects) { %>
           <label for="<%= obj['subject'] %>"><%= obj['subject'] %> </label>
