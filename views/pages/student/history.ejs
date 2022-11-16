@@ -8,8 +8,13 @@
     #user-list {
       white-space: pre-line;
     }
+
     body {
       height: 100%;
+    }
+
+    form hr:last-child {
+      display: none;
     }
   </style>
   <script src="/js/jquery.min.js"></script>
@@ -23,10 +28,13 @@
     <h2> Past Sessions: </h2>
     <div id="user-list">
       <% for(const obj of pastSessions) { %>
-        <p><%= functions.formatDate(obj['time_id'], true, obj['duration']) %>
-        <p><%= obj['first_name'] %> <%= obj['last_name'] %> | <%= obj['subject_id'] %>
-        <p> <% if( obj['phone'] ) { %> <%= obj['phone'] %> | <%}%> <%= obj['email'] %>
-        </p></p></p>
+      <p><%= functions.formatDate(obj['time_id'], true, obj['duration']) %>
+      <p><%= obj['first_name'] %> <%= obj['last_name'] %> | <%= obj['subject_id'] %>
+      <p> <% if( obj['phone'] ) { %> <%= obj['phone'] %> | <%}%> <%= obj['email'] %>
+      </p>
+      </p>
+      </p>
+      <hr>
       <% } %>
     </div>
     <button class="mainbutton returnbutton" onclick="window.location.replace('/student/home')">Home</button>

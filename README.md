@@ -57,6 +57,8 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 - [x] Fix the first time sign up auth fail (Race condition in strategy)
 - [x] Allow removing student and tutor errors when truncating through tables
 - [x] Fix scheduler issues with populating dates and not making sessions available in the past
+- [ ] Update Google cloud setup for their new UI
+- [x] Reformat all file types with style
 - [ ] Lint whole project
 - [ ] Test suite from start to finish
 

@@ -2,365 +2,327 @@
 <html lang='en'>
 
 <head>
-    <%- include('../../components/head'); %>
-    <title>Studors - Student</title>
-    <script src='/js/jquery.min.js'></script>
-    <script src='/js/pickadate/picker.js'></script>
-    <script src='/js/pickadate/picker.date.js'></script>
-    <script src='/js/pickadate/picker.time.js'></script>
-    <link rel='stylesheet' href='/css/pickadate/default.css'>
-    <link rel='stylesheet' href='/css/pickadate/default.date.css'>
-    <link rel='stylesheet' href='/css/pickadate/default.time.css'>
-    <style>
-        select, input {
-            font-size: 16pt;
-            width: 230px;
-            padding-left: 0px;
-            padding-right: 0px;
-        }
-        input {
-            width: 226px;
-        }
-        .maincontent {
-            text-align: center;
-            margin-top: 100px;
-        }
-        @media(max-width: 600px) {
-            .maincontent {
-                margin-top: 0;
-            }
-        }
-    </style>
+  <%- include('../../components/head'); %>
+  <title>Studors - Student</title>
+  <script src='/js/jquery.min.js'></script>
+  <script src='/js/pickadate/picker.js'></script>
+  <script src='/js/pickadate/picker.date.js'></script>
+  <script src='/js/pickadate/picker.time.js'></script>
+  <link rel='stylesheet' href='/css/pickadate/default.css'>
+  <link rel='stylesheet' href='/css/pickadate/default.date.css'>
+  <link rel='stylesheet' href='/css/pickadate/default.time.css'>
+  <style>
+    select,
+    input {
+      font-size: 16pt;
+      width: 230px;
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+
+    input {
+      width: 226px;
+    }
+
+    .maincontent {
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    @media(max-width: 600px) {
+      .maincontent {
+        margin-top: 0;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <%- include('../../components/header'); %>
-    <div class="maincontent">
-        <form onsubmit='return validate(this)' action='' method='post'>
-            <h1 style="display: inline;">Select a subject you would like help in:
-                <select id='subjectpicker' name='subjectpicker' onchange='subjectUpdated(); dateSetup(); remove(0);' style="background-color:white;2px solid #777;">
-                    <option></option>
-                    <% for ( const obj of subjects ) { %>
-                        <option value='<%= obj['subject'] %>'><%= obj['subject'] %></option>
-                    <% } %>
-                </select>
-            </h1>
-            <br>
-            <h1 id="tutorcontainer" style='display: none;'>Select a tutor:
-                <select id='tutorpicker' name='tutorpicker' onchange='tutorUpdated(); remove(0);' style="background-color:white;2px solid #777;">
-                    <option>Any</option>
-                </select>
-                <br>
-            </h1>
-            <h1 id="datecontainer" style='display: none;'>Select a date:
-                <input id='datepicker' onchange='dateUpdated(); remove(1);' style="background-color:white;2px solid #777;"></input>
-                <br>
-            </h1>
-            <h1 id="timecontainer" style='display: none;'>Select a time:
-                <input id='timepicker' onchange='timeUpdated();' style="background-color:white;2px solid #777;"></input>
-                <br>
-            </h1>
-            <h1 id="durationcontainer" style='display: none;'>Select a duration:
-                <select id='durationpicker' name='durationpicker' style="background-color:white;2px solid #777;"></select>
-                <br>
-            </h1>
-            <br>
-            <button class="mainbutton" type="submit" style="left: 0; transform: none; display: none;" id="sched">Schedule</button>
-            <button class="mainbutton" type="button" style="left: 0; transform: none;" onclick="window.location.replace('/student/home')" value="Cancel">Cancel</button>
-            <br>
-            <span class="small-error"><%-error%></span>
+  <%- include('../../components/header'); %>
+  <div class="maincontent">
+    <form onsubmit='return validate(this)' action='' method='post'>
+      <h1 style="display: inline;">Select a subject you would like help in:
+        <select id='subjectpicker' name='subjectpicker' onchange='subjectUpdated(); dateSetup(); remove(0);' style="background-color:white 2px solid #777;">
+          <option></option>
+          <% for (const obj of subjects) { %>
+          <option value='<%= obj['subject'] %>'><%= obj['subject'] %></option>
+          <% } %>
+        </select>
+      </h1>
+      <br>
+      <h1 id="tutorcontainer" style='display: none;'>Select a tutor:
+        <select id='tutorpicker' name='tutorpicker' onchange='tutorUpdated(); remove(0);' style="background-color:white 2px solid #777;">
+          <option>Any</option>
+        </select>
+        <br>
+      </h1>
+      <h1 id="datecontainer" style='display: none;'>Select a date:
+        <input id='datepicker' onchange='dateUpdated(); remove(1);' style="background-color:white 2px solid #777;"></input>
+        <br>
+      </h1>
+      <h1 id="timecontainer" style='display: none;'>Select a time:
+        <input id='timepicker' onchange='timeUpdated();' style="background-color:white 2px solid #777;"></input>
+        <br>
+      </h1>
+      <h1 id="durationcontainer" style='display: none;'>Select a duration:
+        <select id='durationpicker' name='durationpicker' style="background-color:white 2px solid #777;"></select>
+        <br>
+      </h1>
+      <br>
+      <button class="mainbutton" type="submit" style="left: 0; transform: none; display: none;" id="sched">Schedule</button>
+      <button class="mainbutton" type="button" style="left: 0; transform: none;" onclick="window.location.replace('/student/home')" value="Cancel">Cancel</button>
+      <br>
+      
+      <span class="small-error"><%= error %></span>
 
-            <input type='hidden' id ='time' name='time' />
-        </form>
-    </div>
-    <%- include('../../components/footer'); %>
+      <input type='hidden' id='time' name='time' />
+    </form>
+  </div>
+  <%- include('../../components/footer'); %>
 </body>
 
 </html>
 
 <script>
+  var serverOffset = <%- new Date(Date.now()).getTimezoneOffset() %>;
+  var clientOffset = new Date(Date.now()).getTimezoneOffset();
+  var $time = $('#timepicker').pickatime({
+    interval: 15
+  });
+  var timepicker = $time.pickatime('picker');
+  var $date = $('#datepicker').pickadate();
+  var datepicker = $date.pickadate('picker');
+  var duration = document.querySelector('#duration');
+  var sessions = <%- JSON.stringify(availability) %>;
+  var validSessions = [];
+  var availableDays = [];
+  var uniqueTutors = [];
+  var generatedTutor = '';
+  var selectedSubject = '';
+  var selectedTutor = 'Any';
+  var selectedDate;
+  var selectedTime;
+  var selectedDateTime;
 
-    var serverOffset = <%- new Date(Date.now()).getTimezoneOffset() %>;
-    var clientOffset = new Date(Date.now()).getTimezoneOffset();
-
-    var $time = $('#timepicker').pickatime({
-        interval: 15
-    });
-    var timepicker = $time.pickatime('picker');
-
-    var $date = $('#datepicker').pickadate();
-    var datepicker = $date.pickadate('picker');
-
-    var duration = document.querySelector('#duration');
-
-    var sessions = <%- JSON.stringify(availability) %>;
-    var validSessions = [];
-    var availableDays = [];
-    var uniqueTutors = [];
-    var generatedTutor = '';
-    var selectedSubject = '';
-    var selectedTutor = 'Any';
-    var selectedDate;
-    var selectedTime;
-    var selectedDateTime;
-
-    function validate() {
-        if ( document.getElementById('subjectpicker').value != '' && 
-        document.getElementById('durationpicker').value >= 15 &&
-        document.getElementById('time').value != '' ) {
-            if (document.getElementById('tutorpicker').value === 'Any') {
-                document.getElementById('tutorpicker').value = generatedTutor;
-            }
-            return true;
-        }
-        return false;
+  function validate() {
+    if (document.getElementById('subjectpicker').value != '' &&
+      document.getElementById('durationpicker').value >= 15 &&
+      document.getElementById('time').value != '') {
+      if (document.getElementById('tutorpicker').value === 'Any') {
+        document.getElementById('tutorpicker').value = generatedTutor;
+      }
+      return true;
     }
+    return false;
+  }
 
-    function subjectUpdated() {
-        // Remove the blank if a subject is picked
-        if ( subjectpicker.options[0].value === '' ) {
-            subjectpicker.remove(0);
-        }
-        // Reset previous list of valid sessions
-        validSessions = [];
-
-        // Grab the selected subject
-        selectedSubject = document.getElementById('subjectpicker').value;
-
-        // Iterate through list of sessions and find sessions that can have that subject
-        for( var i = 0; i < sessions.length; i++ ) {
-            if( sessions[i]['subject_id'] === selectedSubject ) {
-                validSessions.push(sessions[i]);
-            }
-        }
-
-        // Call function that prepares list of available tutors
-        tutorSetup();
+  function subjectUpdated() {
+    // Remove the blank if a subject is picked
+    if (subjectpicker.options[0].value === '') {
+      subjectpicker.remove(0);
     }
-
-    function tutorSetup() {
-        // Make tutorpicker visible
-        document.getElementById('tutorcontainer').style.display = "inline";
-
-        // Reset previous list of unique tutors
-        uniqueTutors = [];
-
-        // Run through all valid sessions and if a tutorID is not already in the list add it
-        for ( var i = 0; i < validSessions.length; i++ ) {
-            if ( !uniqueTutors.some(item => item.tutor_id === validSessions[i]['tutor_id']) ) {
-                uniqueTutors.push(validSessions[i])
-            }
-        }
-
-        // Remove all entries from the tutors dropdown besides "Any"
-        while (tutorpicker.options.length > 1) {
-            tutorpicker.remove(1);
-        }
-
-        // Populate the drop down with tutor names
-        for (i = 0; i < uniqueTutors.length; i++ ) {
-            var option = new Option(uniqueTutors[i]['first_name'] + ' ' + uniqueTutors[i]['last_name'], uniqueTutors[i]['tutor_id']);
-            tutorpicker.add(option, undefined);
-        }
+    // Reset previous list of valid sessions
+    validSessions = [];
+    // Grab the selected subject
+    selectedSubject = document.getElementById('subjectpicker').value;
+    // Iterate through list of sessions and find sessions that can have that subject
+    for (var i = 0; i < sessions.length; i++) {
+      if (sessions[i]['subject_id'] === selectedSubject) {
+        validSessions.push(sessions[i]);
+      }
     }
+    // Call function that prepares list of available tutors
+    tutorSetup();
+  }
 
-    function tutorUpdated() {
-        // Update the selected tutor
-        selectedTutor = document.getElementById('tutorpicker').value;
-
-        // Call function that updates the date picker
-        dateSetup();
+  function tutorSetup() {
+    // Make tutorpicker visible
+    document.getElementById('tutorcontainer').style.display = "inline";
+    // Reset previous list of unique tutors
+    uniqueTutors = [];
+    // Run through all valid sessions and if a tutorID is not already in the list add it
+    for (var i = 0; i < validSessions.length; i++) {
+      if (!uniqueTutors.some(item => item.tutor_id === validSessions[i]['tutor_id'])) {
+        uniqueTutors.push(validSessions[i])
+      }
     }
-
-    function dateSetup() {
-        // Make datepicker visible
-        document.getElementById('datecontainer').style.display = "inline";
-
-        // Declare new list of available days
-        availableDays = [];
-
-        // For each valid session, if the user has any tutor selected, or the session has the selected tutor
-        for( var i = 0; i < validSessions.length; i++ ) {
-            if( selectedTutor === 'Any' || validSessions[i]['tutor_id'] === selectedTutor ) {
-                availableDays.push(new Date(validSessions[i]['time_id']));
-            }
-        }
-        
-        // WORKAROUND FOR PICKADATE.JS https://github.com/amsul/pickadate.js/issues/364#issuecomment-116980300
-        // Disable all the dates.
-        datepicker.set('disable', true);
-        datepicker.set('enable', false);
-
-        // Disable the dates you want to enable.
-        datepicker.set('disable', availableDays);
-
-        // Flip the dates.
-        datepicker.set('disable', 'flip');
-        datepicker.set('enable', 'flip');
+    // Remove all entries from the tutors dropdown besides "Any"
+    while (tutorpicker.options.length > 1) {
+      tutorpicker.remove(1);
     }
-
-
-    function dateUpdated() {
-        // Update the selected date after check
-        if (datepicker.get() === '') {
-            selectedDate = null;
-            return;
-        }
-        selectedDate = datepicker.get('select')['obj'];
-
-        // Call function that updates the time selector
-        timeSetup();
+    // Populate the drop down with tutor names
+    for (i = 0; i < uniqueTutors.length; i++) {
+      var option = new Option(uniqueTutors[i]['first_name'] + ' ' + uniqueTutors[i]['last_name'], uniqueTutors[i]['tutor_id']);
+      tutorpicker.add(option, undefined);
     }
+  }
 
-    function timeSetup() {
-        // Make timepicker visible
-        document.getElementById('timecontainer').style.display = "inline";
+  function tutorUpdated() {
+    // Update the selected tutor
+    selectedTutor = document.getElementById('tutorpicker').value;
+    // Call function that updates the date picker
+    dateSetup();
+  }
 
-        // Declare new list of available times
-        var availableTimes = [];
-
-        // For every available date of the selected tutor see if that time is on the selected date and then push it to the array
-        for( var i = 0; i < availableDays.length; i++) {
-                var compareDate = new Date(availableDays[i]);
-                compareDate.setHours(0,0,0,0);
-                if ( compareDate.getTime() === selectedDate.getTime() ) {
-                    var date = new Date(availableDays[i]);
-                    date.setHours((availableDays[i].getHours() + (clientOffset/60 - serverOffset/60)));
-                    availableTimes.push(date);
-                }
-        }
-
-        // WORKAROUND FOR PICKADATE.JS https://github.com/amsul/pickadate.js/issues/364#issuecomment-116980300
-        // Disable all the times.
-        timepicker.set('disable', true);
-        timepicker.set('enable', false);
-
-        // Disable the times you want to enable.
-        timepicker.set('disable', availableTimes);
-
-        // Flip the times.
-        timepicker.set('disable', 'flip');
-        timepicker.set('enable', 'flip');
+  function dateSetup() {
+    // Make datepicker visible
+    document.getElementById('datecontainer').style.display = "inline";
+    // Declare new list of available days
+    availableDays = [];
+    // For each valid session, if the user has any tutor selected, or the session has the selected tutor
+    for (var i = 0; i < validSessions.length; i++) {
+      if (selectedTutor === 'Any' || validSessions[i]['tutor_id'] === selectedTutor) {
+        availableDays.push(new Date(validSessions[i]['time_id']));
+      }
     }
+    // WORKAROUND FOR PICKADATE.JS https://github.com/amsul/pickadate.js/issues/364#issuecomment-116980300
+    // Disable all the dates.
+    datepicker.set('disable', true);
+    datepicker.set('enable', false);
+    // Disable the dates you want to enable.
+    datepicker.set('disable', availableDays);
+    // Flip the dates.
+    datepicker.set('disable', 'flip');
+    datepicker.set('enable', 'flip');
+  }
 
-    function timeUpdated() {
-        // Update the selected date and dateAndTime after check
-        if (timepicker.get() === '') {
-            selectedTime = null;
-            document.getElementById('time').value = null;
-            return;
-        }
-        selectedTime = timepicker.get('select');
-
-        selectedDateTime = new Date(selectedDate);
-        selectedDateTime.setHours(selectedTime['hour'] - (clientOffset/60 - serverOffset/60),selectedTime['mins']);
-
-        document.getElementById('time').value = selectedDateTime;
-
-        // Call function that updates the duration selector
-        durationSetup();
+  function dateUpdated() {
+    // Update the selected date after check
+    if (datepicker.get() === '') {
+      selectedDate = null;
+      return;
     }
+    selectedDate = datepicker.get('select')['obj'];
+    // Call function that updates the time selector
+    timeSetup();
+  }
 
-    function durationSetup() {
-        // Make durationpicker visible
-        document.getElementById('durationcontainer').style.display = "inline";
+  function timeSetup() {
+    // Make timepicker visible
+    document.getElementById('timecontainer').style.display = "inline";
+    // Declare new list of available times
+    var availableTimes = [];
+    // For every available date of the selected tutor see if that time is on the selected date and then push it to the array
+    for (var i = 0; i < availableDays.length; i++) {
+      var compareDate = new Date(availableDays[i]);
+      compareDate.setHours(0, 0, 0, 0);
+      if (compareDate.getTime() === selectedDate.getTime()) {
+        var date = new Date(availableDays[i]);
+        date.setHours((availableDays[i].getHours() + (clientOffset / 60 - serverOffset / 60)));
+        availableTimes.push(date);
+      }
+    }
+    // WORKAROUND FOR PICKADATE.JS https://github.com/amsul/pickadate.js/issues/364#issuecomment-116980300
+    // Disable all the times.
+    timepicker.set('disable', true);
+    timepicker.set('enable', false);
+    // Disable the times you want to enable.
+    timepicker.set('disable', availableTimes);
+    // Flip the times.
+    timepicker.set('disable', 'flip');
+    timepicker.set('enable', 'flip');
+  }
 
-        // Make schedule button visible
-        document.getElementById('sched').style.display = "inline";
+  function timeUpdated() {
+    // Update the selected date and dateAndTime after check
+    if (timepicker.get() === '') {
+      selectedTime = null;
+      document.getElementById('time').value = null;
+      return;
+    }
+    selectedTime = timepicker.get('select');
+    selectedDateTime = new Date(selectedDate);
+    selectedDateTime.setHours(selectedTime['hour'] - (clientOffset / 60 - serverOffset / 60), selectedTime['mins']);
+    document.getElementById('time').value = selectedDateTime;
+    // Call function that updates the duration selector
+    durationSetup();
+  }
 
-        // Declare variables required to do duration math
-        var oldTutorID;
-        var streak = [];
-        var highestStreak = [];
-        var reset = false;
-
-        // For every valid session for the selected subject
-        for ( var i = 0; i < validSessions.length; i++ ) {
-            
-            // If the tutor is set to any or the selected tutor
-            if ( selectedTutor === 'Any' || validSessions[i]['tutor_id'] === selectedTutor ) {
-                
-                // If the tutorID doesn't equal the one of the last run of the for loop or if reset isn't called
-                if ( validSessions[i]['tutor_id'] != oldTutorID || reset ) {
-                    
-                    // Check if the highest streak is smaller than the current
-                    if ( highestStreak.length < streak.length ) {
-                        // Update it if so
-                        generatedTutor = oldTutorID;
-                        highestStreak = streak;
-                    }
-                    
-                    // Reset the streak
-                    streak = [];
-
-                    // Check if the selectedTime equals the sessions time
-                    if ( selectedDateTime.getTime() === new Date(validSessions[i]['time_id']).getTime() ) {
-                        // Update the oldTutorID for next loop and push the date to the streak
-                        oldTutorID = validSessions[i]['tutor_id'];
-                        streak.push(validSessions[i]['time_id']);
-                    }
-
-                }
-
-                // If this is a tutor ID that was saw in the last for loop
-                else {
-                    //Check if the interval between now and previous time is 15m
-                    if ( ( new Date(validSessions[i]['time_id']).getTime() - new Date(validSessions[i-1]['time_id']).getTime() ) === 900000 ) {
-                        // Push the date to the streak
-                        streak.push(validSessions[i]['time_id']);
-                    }
-
-                    // Else force reset the streak
-                    else {
-                        reset = true;
-                    }
-                }
-            }
-        }
-
-        // Final check to make sure the current streak isn't larger than the highest
-        if ( highestStreak.length < streak.length ) {
+  function durationSetup() {
+    // Make durationpicker visible
+    document.getElementById('durationcontainer').style.display = "inline";
+    // Make schedule button visible
+    document.getElementById('sched').style.display = "inline";
+    // Declare variables required to do duration math
+    var oldTutorID;
+    var streak = [];
+    var highestStreak = [];
+    var reset = false;
+    // For every valid session for the selected subject
+    for (var i = 0; i < validSessions.length; i++) {
+      // If the tutor is set to any or the selected tutor
+      if (selectedTutor === 'Any' || validSessions[i]['tutor_id'] === selectedTutor) {
+        // If the tutorID doesn't equal the one of the last run of the for loop or if reset isn't called
+        if (validSessions[i]['tutor_id'] != oldTutorID || reset) {
+          // Check if the highest streak is smaller than the current
+          if (highestStreak.length < streak.length) {
             // Update it if so
             generatedTutor = oldTutorID;
             highestStreak = streak;
+          }
+          // Reset the streak
+          streak = [];
+          // Check if the selectedTime equals the sessions time
+          if (selectedDateTime.getTime() === new Date(validSessions[i]['time_id']).getTime()) {
+            // Update the oldTutorID for next loop and push the date to the streak
+            oldTutorID = validSessions[i]['tutor_id'];
+            streak.push(validSessions[i]['time_id']);
+          }
         }
-
-        // Remove all previous duration options
-        while (durationpicker.options.length > 0) {
+        // If this is a tutor ID that was saw in the last for loop
+        else {
+          //Check if the interval between now and previous time is 15m
+          if ((new Date(validSessions[i]['time_id']).getTime() - new Date(validSessions[i - 1]['time_id']).getTime()) === 900000) {
+            // Push the date to the streak
+            streak.push(validSessions[i]['time_id']);
+          }
+          // Else force reset the streak
+          else {
+            reset = true;
+          }
+        }
+      }
+    }
+    // Final check to make sure the current streak isn't larger than the highest
+    if (highestStreak.length < streak.length) {
+      // Update it if so
+      generatedTutor = oldTutorID;
+      highestStreak = streak;
+    }
+    // Remove all previous duration options
+    while (durationpicker.options.length > 0) {
+      durationpicker.remove(0);
+    }
+    // Add new duration options
+    for (i = 1; i - 1 < highestStreak.length; i++) {
+      var option = new Option(i * 15 + ' Minutes', i * 15);
+      durationpicker.add(option, undefined);
+    }
+  }
+  // Reset info after value changed
+  function remove(i) {
+    // Until reached resetting duration
+    for (i; i < 3; i++) {
+      // Check the i and perform the action
+      switch (i) {
+        // Remove old date info
+        case 0:
+          if (datepicker.get() != '') {
+            datepicker.clear();
+          }
+          document.getElementById('timecontainer').style.display = "none";
+          // Remove old time info
+        case 1:
+          if (timepicker.get() != '') {
+            timepicker.clear();
+          }
+          document.getElementById('durationcontainer').style.display = "none";
+          // Remove old duration info
+        case 2:
+          while (durationpicker.options.length > 0) {
             durationpicker.remove(0);
-        }
-
-        // Add new duration options
-        for (i = 1; i-1 < highestStreak.length; i++ ) {
-            var option = new Option(i*15 + ' Minutes', i*15);
-            durationpicker.add(option, undefined);
-        }
+          }
+      }
     }
-
-    // Reset info after value changed
-    function remove(i) {
-        // Until reached resetting duration
-        for( i; i < 3; i++ ) {
-            // Check the i and perform the action
-            switch (i) {
-                // Remove old date info
-                case 0:
-                    if ( datepicker.get() != '' ) {
-                        datepicker.clear();
-                    }
-                    document.getElementById('timecontainer').style.display = "none";
-                // Remove old time info
-                case 1:
-                    if ( timepicker.get() != '' ) {
-                        timepicker.clear();
-                    }
-                    document.getElementById('durationcontainer').style.display = "none";
-                // Remove old duration info
-                case 2:
-                    while (durationpicker.options.length > 0) {
-                        durationpicker.remove(0);
-                    }
-            }
-        }
-    }
+  }
 </script>

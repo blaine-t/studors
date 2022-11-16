@@ -6,7 +6,7 @@
   <title>Studors - Student</title>
 
   <style>
-    /* Navbar current bold */
+    /* Current page bold */
     .home-footer {
       font-weight: 900;
     }
@@ -19,8 +19,8 @@
 
 <body>
   <div id="home-top">
-      <%- include('../../components/header'); %>
-      <%- include('../../components/topbar'); %>
+    <%- include('../../components/header'); %>
+    <%- include('../../components/topbar'); %>
   </div>
   <div class="flex-box">
     <div id="home-internal">
@@ -28,15 +28,15 @@
       <div id="home-center-box">
         <%- include('../../components/profile'); %>
         <div class="home-buttons">
-            <button class="mainbutton" onclick="location.href='upcoming'" type="button">
-                Upcoming Sessions
-            </button>
-            <button class="mainbutton" onclick="location.href='find'" type="button">
-                Schedule a new session
-            </button>
-            <button class="mainbutton" onclick="location.href='history'" type="button">
-                Session History
-            </button>
+          <button class="mainbutton" onclick="location.href='upcoming'" type="button">
+            Upcoming Sessions
+          </button>
+          <button class="mainbutton" onclick="location.href='find'" type="button">
+            Schedule a new session
+          </button>
+          <button class="mainbutton" onclick="location.href='history'" type="button">
+            Session History
+          </button>
         </div>
       </div>
       <div id="right-hidden-navbar">

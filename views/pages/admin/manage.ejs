@@ -2,201 +2,200 @@
 <html lang="en">
 
 <head>
-    <%- include('../../components/head'); %>
-        <title>Studors - Admin</title>
+  <%- include('../../components/head'); %>
+  <title>Studors - Admin</title>
 </head>
 
 <style>
-    #manage-form {
-        font-size: 20pt;
-        margin-left: 1vw;
-    }
+  #manage-form {
+    font-size: 20pt;
+    margin-left: 1vw;
+  }
 
-    body {
-        height: 100%;
-    }
+  body {
+    height: 100%;
+  }
 
-    button {
+  button {
     margin-left: 0;
     margin-bottom: 55px;
-    }
-
-    
+  }
 </style>
 
 <body>
-    <%- include('../../components/header'); %>
-    <div class="admin-list">
-        <div id="manage-form">
-            <form action="" method="post">
-                <label for="allowedStudentDomain">Allow student domain(s):</label>
-                <input type="text" id="allowedStudentDomain" name="allowedStudentDomain"
-                    pattern="^(@[\w\-.]+\.[A-Za-z]{2,4}[\W]*[,\s]{1}[\W]*)*(@[\w\-.]+\.[A-Za-z]+)[\W]*$"
-                    placeholder="@example.org,@example.com"
-                    oninvalid="setCustomValidity('Please enter an email or list of emails with this format: @example.com,@example.org')"
-                    oninput="setCustomValidity('')"
-                    class="text-input">
-                <br>
-                <label for="allowedTutors">Allow tutor(s):</label>
-                <input type="text" id="allowedTutors" name="allowedTutors"
-                    pattern="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4}[\W]*[,\s]{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4})[\W]*$"
-                    placeholder="test@example.com,test2@example.com"
-                    oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')"
-                    oninput="setCustomValidity('')"
-                    class="text-input">
-                <br>
-                <label for="allowedAdmins">Allow admin(s):</label>
-                <input type="text" id="allowedAdmins" name="allowedAdmins"
-                    pattern="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4}[\W]*[,\s]{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4})[\W]*$"
-                    placeholder="test@example.com,test2@example.com"
-                    oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')"
-                    oninput="setCustomValidity('')"
-                    class="text-input">
-                <br>
-                <label for="revokedStudentDomain">Revoke student domain(s):</label>
-                <input type="text" id="revokedStudentDomain" name="revokedStudentDomain"
-                    pattern="^(@[\w\-.]+\.[A-Za-z]{2,4}[\W]*[,\s]{1}[\W]*)*(@[\w\-.]+\.[A-Za-z]+)[\W]*$"
-                    placeholder="<%=domains%>"
-                    oninvalid="setCustomValidity('Please enter an email or list of emails with this format: @example.com,@example.org')"
-                    oninput="setCustomValidity('')"
-                    class="text-input">
-                <br>
-                <label for="revokedTutors">Revoke tutor(s):</label>
-                <input type="text" id="revokedTutors" name="revokedTutors"
-                    pattern="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4}[\W]*[,\s]{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4})[\W]*$"
-                    placeholder="<%=tutors%>"
-                    oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')"
-                    oninput="setCustomValidity('')"
-                    class="text-input">
-                <br>
-                <label for="revokedAdmins">Revoke admin(s):</label>
-                <input type="text" id="revokedAdmins" name="revokedAdmins"
-                    pattern="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4}[\W]*[,\s]{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4})[\W]*$"
-                    placeholder="<%=admins%>"
-                    oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')"
-                    oninput="setCustomValidity('')"
-                    class="text-input">
-                <br>
-                <label for="addSub">Add subject(s):</label>
-                <input type="text" id="addSub" name="addSub" 
-                pattern="^[\w ,]+$"
-                placeholder="Algebra, World History"
-                oninvalid="setCustomValidity('Please enter a subject or list of subjects with this format: Geometry, Calc D')"
-                oninput="setCustomValidity('')"
-                class="text-input">
-                <br>
-                <label for="remSub">Remove subject(s):</label>
-                <input type="text" id="remSub" name="remSub" 
-                pattern="^[\w ,]+$"
-                placeholder="<%=subjects%>"
-                oninvalid="setCustomValidity('Please enter a subject or list of subjects with this format: English 9, AP Lang')"
-                oninput="setCustomValidity('')"
-                class="text-input">
-                <br><hr>
-                    <label for="add_hol">Add an off day:</label>
-                    <input type="date" id="add_hol" name="add_hol">
-                    <br><hr>
-                    <label for="rem_hol">Remove an off day:</label>
-                    <input type="date" id="rem_hol" name="rem_hol">
-                    <br><hr>
-                    <label for="add_inc_h">Add a 15 minute slot:</label>
-                    <select id="add_inc_h" name="add_inc_h">
-                        <option>-</option>
-                        <option value=1>01</option>
-                        <option value=2>02</option>
-                        <option value=3>03</option>
-                        <option value=4>04</option>
-                        <option value=5>05</option>
-                        <option value=6>06</option>
-                        <option value=7>07</option>
-                        <option value=8>08</option>
-                        <option value=9>09</option>
-                        <option value=10>10</option>
-                        <option value=11>11</option>
-                        <option value=12>12</option>
-                        <option value=13>13</option>
-                        <option value=14>14</option>
-                        <option value=15>15</option>
-                        <option value=16>16</option>
-                        <option value=17>17</option>
-                        <option value=18>18</option>
-                        <option value=19>19</option>
-                        <option value=20>20</option>
-                        <option value=21>21</option>
-                        <option value=22>22</option>
-                        <option value=23>23</option>
-                    </select>
-                    :
-                    <select id="add_inc_m" name="add_inc_m">
-                        <option value=0>00</option>
-                        <option value=15>15</option>
-                        <option value=30>30</option>
-                        <option value=45>45</option>
-                    </select>
-                    <br><hr>
-                    <label for="rem_inc_h">Remove a 15 minute slot:</label>
-                    <select id="rem_inc_h" name="rem_inc_h">
-                        <option>-</option>
-                        <option value=1>01</option>
-                        <option value=2>02</option>
-                        <option value=3>03</option>
-                        <option value=4>04</option>
-                        <option value=5>05</option>
-                        <option value=6>06</option>
-                        <option value=7>07</option>
-                        <option value=8>08</option>
-                        <option value=9>09</option>
-                        <option value=10>10</option>
-                        <option value=11>11</option>
-                        <option value=12>12</option>
-                        <option value=13>13</option>
-                        <option value=14>14</option>
-                        <option value=15>15</option>
-                        <option value=16>16</option>
-                        <option value=17>17</option>
-                        <option value=18>18</option>
-                        <option value=19>19</option>
-                        <option value=20>20</option>
-                        <option value=21>21</option>
-                        <option value=22>22</option>
-                        <option value=23>23</option>
-                    </select>
-                    :
-                    <select id="rem_inc_m" name="rem_inc_m">
-                        <option value=0>00</option>
-                        <option value=15>15</option>
-                        <option value=30>30</option>
-                        <option value=45>45</option>
-                    </select>
-                    <br><hr>
-                    <label for="adv_term">Advance the term:</label>
-                    <label class="check"><input style="display: none;" type="checkbox" id="adv_term" name="adv_term"><span></span></label>
-                    <br><hr>
-                    <label for="inc_grade">Increment Grade:</label>
-                    <label class="check"><input style="display: none;" type="checkbox" id="inc_grade" name="inc_grade"><span></span></label>
-                    <br><hr>
-                    <label for="rem_student_grade">Remove students >12:</label>
-                    <label class="check"><input style="display: none;" type="checkbox" id="rem_student_grade" name="rem_student_grade"><span></span></label>
-                    <br><hr>
-                    <label for="rem_tutor_grade">Remove tutors >12:</label>
-                    <label class="check"><input style="display: none;" type="checkbox" id="rem_tutor_grade" name="rem_tutor_grade"><span></span></label>
-                    <br><hr>
-                    <label for="rem_students">Remove all students:</label>
-                    <label class="check"><input style="display: none;" type="checkbox" id="rem_students" name="rem_students"><span></span></label>
-                    <br><hr>
-                    <label for="rem_tutors">Remove all tutors:</label>
-                    <label class="check"><input style="display: none;" type="checkbox" id="rem_tutors" name="rem_tutors"><span></span></label>
-                    <br><hr>
-                <% if (error != '') { %>
-                <p id="small-error">
-                    <%=error %>
-                </p>
-                <%} %>
-                <button class="mainbutton" type="submit">Apply</button>
-            </form>
-        </div>
+  <%- include('../../components/header'); %>
+  <div class="admin-list">
+    <div id="manage-form">
+      <form action="" method="post">
+        <label for="allowedStudentDomain">Allow student domain(s):</label>
+        <input type="text" id="allowedStudentDomain" name="allowedStudentDomain" class="text-input"
+        pattern="^(@[\w\-.]+\.[A-Za-z]{2,4}[\W]*[,\s]{1}[\W]*)*(@[\w\-.]+\.[A-Za-z]+)[\W]*$" 
+        placeholder="@example.org,@example.com" 
+        oninvalid="setCustomValidity('Please enter an email or list of emails with this format: @example.com,@example.org')" 
+        oninput="setCustomValidity('')">
+        <br>
+        <label for="allowedTutors">Allow tutor(s):</label>
+        <input type="text" id="allowedTutors" name="allowedTutors" class="text-input" 
+        pattern="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4}[\W]*[,\s]{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4})[\W]*$" 
+        placeholder="test@example.com,test2@example.com" 
+        oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')" 
+        oninput="setCustomValidity('')">
+        <br>
+        <label for="allowedAdmins">Allow admin(s):</label>
+        <input type="text" id="allowedAdmins" name="allowedAdmins" class="text-input"
+        pattern="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4}[\W]*[,\s]{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4})[\W]*$" 
+        placeholder="test@example.com,test2@example.com" 
+        oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')" 
+        oninput="setCustomValidity('')">
+        <br>
+        <label for="revokedStudentDomain">Revoke student domain(s):</label>
+        <input type="text" id="revokedStudentDomain" name="revokedStudentDomain" class="text-input"
+        pattern="^(@[\w\-.]+\.[A-Za-z]{2,4}[\W]*[,\s]{1}[\W]*)*(@[\w\-.]+\.[A-Za-z]+)[\W]*$" 
+        placeholder="<%=domains%>" 
+        oninvalid="setCustomValidity('Please enter an email or list of emails with this format: @example.com,@example.org')" 
+        oninput="setCustomValidity('')">
+        <br>
+        <label for="revokedTutors">Revoke tutor(s):</label>
+        <input type="text" id="revokedTutors" name="revokedTutors" class="text-input"
+        pattern="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4}[\W]*[,\s]{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4})[\W]*$" 
+        placeholder="<%=tutors%>" 
+        oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')" 
+        oninput="setCustomValidity('')">
+        <br>
+        <label for="revokedAdmins">Revoke admin(s):</label>
+        <input type="text" id="revokedAdmins" name="revokedAdmins" class="text-input"
+        pattern="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4}[\W]*[,\s]{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4})[\W]*$" 
+        placeholder="<%=admins%>" 
+        oninvalid="setCustomValidity('Please enter an email or list of emails with this format: test@example.com,test2@example.com')" 
+        oninput="setCustomValidity('')">
+        <br>
+        <label for="addSub">Add subject(s):</label>
+        <input type="text" id="addSub" name="addSub" class="text-input"
+        pattern="^[\w ,]+$" 
+        placeholder="Algebra, World History" 
+        oninvalid="setCustomValidity('Please enter a subject or list of subjects with this format: Geometry, Calc D')" 
+        oninput="setCustomValidity('')">
+        <br>
+        <label for="remSub">Remove subject(s):</label>
+        <input type="text" id="remSub" name="remSub" class="text-input"
+        pattern="^[\w ,]+$" 
+        placeholder="<%=subjects%>" 
+        oninvalid="setCustomValidity('Please enter a subject or list of subjects with this format: English 9, AP Lang')" 
+        oninput="setCustomValidity('')">
+        <br>
+        <hr>
+        <label for="add_hol">Add an off day:</label>
+        <input type="date" id="add_hol" name="add_hol">
+        <br>
+        <hr>
+        <label for="rem_hol">Remove an off day:</label>
+        <input type="date" id="rem_hol" name="rem_hol">
+        <br>
+        <hr>
+        <label for="add_inc_h">Add a 15 minute slot:</label>
+        <select id="add_inc_h" name="add_inc_h">
+          <option>-</option>
+          <option value=1>01</option>
+          <option value=2>02</option>
+          <option value=3>03</option>
+          <option value=4>04</option>
+          <option value=5>05</option>
+          <option value=6>06</option>
+          <option value=7>07</option>
+          <option value=8>08</option>
+          <option value=9>09</option>
+          <option value=10>10</option>
+          <option value=11>11</option>
+          <option value=12>12</option>
+          <option value=13>13</option>
+          <option value=14>14</option>
+          <option value=15>15</option>
+          <option value=16>16</option>
+          <option value=17>17</option>
+          <option value=18>18</option>
+          <option value=19>19</option>
+          <option value=20>20</option>
+          <option value=21>21</option>
+          <option value=22>22</option>
+          <option value=23>23</option>
+        </select>
+        :
+        <select id="add_inc_m" name="add_inc_m">
+          <option value=0>00</option>
+          <option value=15>15</option>
+          <option value=30>30</option>
+          <option value=45>45</option>
+        </select>
+        <br>
+        <hr>
+        <label for="rem_inc_h">Remove a 15 minute slot:</label>
+        <select id="rem_inc_h" name="rem_inc_h">
+          <option>-</option>
+          <option value=1>01</option>
+          <option value=2>02</option>
+          <option value=3>03</option>
+          <option value=4>04</option>
+          <option value=5>05</option>
+          <option value=6>06</option>
+          <option value=7>07</option>
+          <option value=8>08</option>
+          <option value=9>09</option>
+          <option value=10>10</option>
+          <option value=11>11</option>
+          <option value=12>12</option>
+          <option value=13>13</option>
+          <option value=14>14</option>
+          <option value=15>15</option>
+          <option value=16>16</option>
+          <option value=17>17</option>
+          <option value=18>18</option>
+          <option value=19>19</option>
+          <option value=20>20</option>
+          <option value=21>21</option>
+          <option value=22>22</option>
+          <option value=23>23</option>
+        </select>
+        :
+        <select id="rem_inc_m" name="rem_inc_m">
+          <option value=0>00</option>
+          <option value=15>15</option>
+          <option value=30>30</option>
+          <option value=45>45</option>
+        </select>
+        <br>
+        <hr>
+        <label for="adv_term">Advance the term:</label>
+        <label class="check"><input style="display: none;" type="checkbox" id="adv_term" name="adv_term"><span></span></label>
+        <br>
+        <hr>
+        <label for="inc_grade">Increment Grade:</label>
+        <label class="check"><input style="display: none;" type="checkbox" id="inc_grade" name="inc_grade"><span></span></label>
+        <br>
+        <hr>
+        <label for="rem_student_grade">Remove students >12:</label>
+        <label class="check"><input style="display: none;" type="checkbox" id="rem_student_grade" name="rem_student_grade"><span></span></label>
+        <br>
+        <hr>
+        <label for="rem_tutor_grade">Remove tutors >12:</label>
+        <label class="check"><input style="display: none;" type="checkbox" id="rem_tutor_grade" name="rem_tutor_grade"><span></span></label>
+        <br>
+        <hr>
+        <label for="rem_students">Remove all students:</label>
+        <label class="check"><input style="display: none;" type="checkbox" id="rem_students" name="rem_students"><span></span></label>
+        <br>
+        <hr>
+        <label for="rem_tutors">Remove all tutors:</label>
+        <label class="check"><input style="display: none;" type="checkbox" id="rem_tutors" name="rem_tutors"><span></span></label>
+        <br>
+        <hr>
+        <% if (error != '') { %>
+        <p id="small-error"><%= error %></p>
+        <% } %>
+        <button class="mainbutton" type="submit">Apply</button>
+      </form>
     </div>
-    <%- include('../../components/footer'); %>
+  </div>
+  <%- include('../../components/footer'); %>
 </body>
 
 </html>

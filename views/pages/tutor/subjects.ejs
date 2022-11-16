@@ -2,34 +2,30 @@
 <html lang="en">
 
 <head>
-    <%- include('../../components/head'); %>
-    <title>Studors - Tutor</title>
+  <%- include('../../components/head'); %>
+  <title>Studors - Tutor</title>
 </head>
 
 <body>
-    <%- include('../../components/header'); %>
-    <div class="flex-box">
-        <div id="holder">
-            <div class="settings-box">
-                <form action="" method="post">
-                    <% for ( const obj of subjects ) { %>
-                        <label for ="<%= obj['subject'] %>"><%= obj['subject'] %> </label>
-                        <label class="check"><input style="display: none;" type="checkbox" name="<%= obj['subject'] %>"
-                            <% if(checked.includes(obj['subject'])) { %>
-                                checked
-                            <% } %>/>
-                            <span></span>
-                        </label>
-                        <br>
-                    <% } %>
-                    <span class="small-error">
-                        <%=error %>
-                    </span>
-                    <button class="mainbutton" type="submit">Save</button>
-                </form>
-            </div>
-        </div>
+  <%- include('../../components/header'); %>
+  <div class="flex-box">
+    <div id="holder">
+      <div class="flex-box" style="top: 0; transform: none;">
+        <form action="" method="post">
+          <% for (const obj of subjects) { %>
+          <label for="<%= obj['subject'] %>"><%= obj['subject'] %> </label>
+          <label class="check"><input style="display: none;" type="checkbox" name="<%= obj['subject'] %>" <% if(checked.includes(obj['subject'])) { %> checked <% } %> />
+          <span></span>
+          </label>
+          <br>
+          <% } %>
+          <span class="small-error"><%= error %></span>
+          <button class="mainbutton" type="submit">Save</button>
+        </form>
+      </div>
     </div>
-    <%- include('../../components/footer'); %>
+  </div>
+  <%- include('../../components/footer'); %>
 </body>
+
 </html>
