@@ -24,19 +24,21 @@
             <%- include('../../components/topbar'); %>
         </div>
     <div class="flex-box">
-        <div id="home-internal">
+        <div id="home-internal" style="margin-bottom: 50px;">
             <%- include('../../components/navbar'); %>
-                <div id="home-center-box">
-                    <%- include('../../components/profile'); %>
-                    <div class="home-buttons">
-                        <button class="mainbutton" onclick="location.href='upcoming'" type="button">Upcoming Sessions</button>
-                        <!--button onclick="location.href='find'" type="button">Schedule a new session</button-->
-                        <button class="mainbutton" onclick="location.href='history'" type="button">Session History</button>
-                    </div>
+            <div id="home-center-box">
+                <%- include('../../components/profile'); %>
+                <div class="home-buttons">
+                    <button class="mainbutton" onclick="location.href='upcoming'" type="button">Upcoming Sessions</button>
+                    <!--button onclick="location.href='find'" type="button">Schedule a new session</button-->
+                    <button class="mainbutton" onclick="location.href='history'" type="button">Session History</button>
+                    <button class="mainbutton" onclick="location.href='availability'" type="button">Manage Availability</button>
+                    <button class="mainbutton" onclick="location.href='subjects'" type="button">Choose Subjects</button>
                 </div>
-                <div id="right-hidden-navbar">
-                    <span></span>
-                </div>
+            </div>
+            <div id="right-hidden-navbar">
+                <span></span>
+            </div>
         </div>
     </div>
     <%- include('../../components/footer'); %>
