@@ -30,6 +30,10 @@ html {
     background-color: #666;
 }
 
+.returnbutton {
+    color: #f0f0f0;
+}
+
 li a:hover {
     background-color: #666;
 }
@@ -39,7 +43,7 @@ li a:active {
 }
 
 .admin-list button {
-    color: #434343;
+    color: #f0f0f0;
 }
 
 /* Footer setup */
@@ -127,7 +131,8 @@ header hr {
 .settings-box form button,
 .maincontent form button,
 #manage-form form button,
-#apiKey p button {
+#apiKey p button,
+.returnbutton {
     color: #f0f0f0;
     background-color: #3c3c3c;
 }
@@ -135,7 +140,8 @@ header hr {
 .settings-box form button:hover,
 .maincontent form button:hover,
 #manage-form form button:hover,
-#apiKey p button:hover {
+#apiKey p button:hover,
+.returnbutton:hover {
     background-color: #666;
 }
 
