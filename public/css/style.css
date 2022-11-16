@@ -683,7 +683,7 @@ header hr {
         margin-bottom: 60px;
     }
 
-    .navbar {
+    #navbar {
         display: none;
     }
 
