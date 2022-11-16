@@ -128,7 +128,7 @@ router.post('/availability', async (req, res) => {
       db.removeTutorWeeklyAvailability(id, name)
     }
   }
-  res.redirect('settings')
+  res.redirect('home')
   return
 })
 
@@ -175,7 +175,7 @@ router.post('/subjects', async (req, res) => {
       db.removeTutorsSubject(name, id)
     }
   }
-  res.redirect('settings')
+  res.redirect('home')
   return
 })
 
