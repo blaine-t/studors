@@ -5,15 +5,11 @@
   <%- include('../../components/head'); %>
   <title>Studors - Tutor</title>
   <style>
-    #user-list {
-      white-space: pre-line;
-    }
-
     body {
       height: 100%;
     }
 
-    form hr:last-child {
+    #user-list hr:last-child {
       display: none;
     }
   </style>
@@ -26,9 +22,9 @@
   <%- include('../../components/header'); %>
   <div class="admin-list">
     <h2>Upcoming Sessions:</h2>
-    <form id="user-list" action='/tutor/cancel' method='post' style="white-space:normal;">
+    <form id="user-list" action='/tutor/cancel' method='post'>
       <span <% if(message === 'Session successfully deleted') { %> class="small-success" <%} else {%> class="small-error" <%}%>><%=message%></span>
-        <% for(const obj of upcomingSessions) { %>
+      <% for(const obj of upcomingSessions) { %>
         <div class="session">
           <p>
             <%= functions.formatDate(obj['time_id'], true, obj['duration']) %><br>
@@ -39,7 +35,7 @@
           </p>
         </div>
         <hr>
-        <% } %>
+      <% } %>
     </form>
     <button class="mainbutton returnbutton" onclick="window.location.replace('/tutor/home')">Home</button>
     <br id="upcoming-list">

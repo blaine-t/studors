@@ -5,15 +5,11 @@
   <%- include('../../components/head'); %>
   <title>Studors - Student</title>
   <style>
-    #user-list {
-      white-space: pre-line;
-    }
-
     body {
       height: 100%;
     }
 
-    form hr:last-child {
+    #user-list hr:last-child {
       display: none;
     }
   </style>
@@ -25,16 +21,16 @@
 <body>
   <%- include('../../components/header'); %>
   <div class="admin-list">
-    <h2> Past Sessions: </h2>
+    <h2>Past Sessions:</h2>
     <div id="user-list">
       <% for(const obj of pastSessions) { %>
-      <p><%= functions.formatDate(obj['time_id'], true, obj['duration']) %>
-      <p><%= obj['first_name'] %> <%= obj['last_name'] %> | <%= obj['subject_id'] %>
-      <p> <% if( obj['phone'] ) { %> <%= obj['phone'] %> | <%}%> <%= obj['email'] %>
-      </p>
-      </p>
-      </p>
-      <hr>
+        <div class="session">
+          <p><%= functions.formatDate(obj['time_id'], true, obj['duration']) %><br>
+          <%= obj['first_name'] %> <%= obj['last_name'] %> | <%= obj['subject_id'] %><br>
+          <% if(obj['phone']) { %> <%= obj['phone'] %> | <%}%> <%= obj['email'] %>
+          </p>
+        </div>
+        <hr>
       <% } %>
     </div>
     <button class="mainbutton returnbutton" onclick="window.location.replace('/student/home')">Home</button>

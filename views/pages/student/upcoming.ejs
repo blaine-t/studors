@@ -5,15 +5,11 @@
   <%- include('../../components/head'); %>
   <title>Studors - Student</title>
   <style>
-    #user-list {
-      white-space: pre-line;
-    }
-
     body {
       height: 100%;
     }
     
-    form hr:last-child {
+    #user-list hr:last-child {
       display: none;
     }
   </style>
@@ -26,22 +22,20 @@
   <%- include('../../components/header'); %>
   <div class="admin-list">
     <h2>Upcoming Sessions:</h2>
-    <form id="user-list" action='/student/cancel' method='post' style="white-space:normal;">
-      <span <%if(message === 'Session successfully deleted') { %> class="small-success" <%} else {%> class="small-error" <%}%>><%=message%></span>
-        <% for(const obj of upcomingSessions) { %>
+    <form id="user-list" action='/student/cancel' method='post'>
+      <span <% if(message === 'Session successfully deleted') { %> class="small-success" <%} else {%> class="small-error" <%}%>><%=message%></span>
+      <% for(const obj of upcomingSessions) { %>
         <div class="session">
           <p>
             <%= functions.formatDate(obj['time_id'], true, obj['duration']) %><br>
             <%= obj['first_name'] %> <%= obj['last_name'] %> | <%= obj['subject_id'] %><br>
             <% if( obj['phone'] ) { %> <%= obj['phone'] %> | <%}%> <%= obj['email'] %>
             <button name="cancel" type="submit" value="<%=obj['time_id'].getTime()%>" class="cancelbutton mainbutton" title="Cancel session" style="border: 0px"
-            onclick="if(confirm('Are you sure you want to cancel your session on <%= functions.formatDate(obj['time_id'], true, obj['duration']) %>?')){}else{return false;};">
-            ❌
-            </button>
+            onclick="if(confirm('Are you sure you want to cancel your session on <%= functions.formatDate(obj['time_id'], true, obj['duration']) %>?')){}else{return false;};">❌</button>
           </p>
         </div>
         <hr>
-        <% } %>
+      <% } %>
     </form>
     <button class="mainbutton returnbutton" onclick="window.location.replace('/student/home')">Home</button>
     <br id="upcoming-list">
