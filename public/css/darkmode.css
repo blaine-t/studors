@@ -27,7 +27,7 @@ html {
 }
 
 .mainbutton:hover {
-    background-color: #666;
+    background-color: #2b2a2a;
 }
 
 .returnbutton {
@@ -35,11 +35,11 @@ html {
 }
 
 li a:hover {
-    background-color: #666;
+    background-color: #444;
 }
 
 li a:active {
-    background-color: #666;
+    background-color: #444;
 }
 
 .admin-list button {
@@ -57,6 +57,10 @@ footer li {
 
 footer li a {
     color: #ddd;
+}
+
+footer li a:hover {
+    background-color: #444;
 }
 
 footer hr {
@@ -99,11 +103,11 @@ header hr {
 }
 
 .home-buttons button {
-    background-color: #373737;
+    background-color: #2d2c2c;
 }
 
 .home-buttons button:hover {
-    background-color: #595959;
+    background-color: #3a3a3a;
 }
 
 #topbar ul {
@@ -116,6 +120,10 @@ header hr {
 
 #topbar li a {
     color: #d9d9d9;
+}
+
+#topbar li a:hover {
+    background-color: #444;
 }
 
 /* Settings specific */
@@ -142,7 +150,7 @@ header hr {
 #manage-form form button:hover,
 #apiKey p button:hover,
 .returnbutton:hover {
-    background-color: #666;
+    background-color: #2b2a2a;
 }
 
 #manage-form input[type="text"] {
@@ -167,10 +175,26 @@ header hr {
     background-color: #444;
 }
 
+#datepicker,
+#subjectpicker,
+#tutorpicker,
+#timepicker,
+#durationpicker {
+    background-color: #3c3c3c;
+    color: #f0f0f0;
+}
+
+#datepicker:hover,
+#subjectpicker:hover,
+#tutorpicker:hover,
+#timepicker:hover,
+#durationpicker:hover {
+    background-color: #2b2a2a;
+}
+
 .small-error {
     color: #e8413c;
 }
-
 
 .small-success {
     color: #5ccc00;

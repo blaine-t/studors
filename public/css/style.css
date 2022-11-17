@@ -464,6 +464,33 @@ header hr {
     background-color: #444;
 }
 
+#datepicker,
+#subjectpicker,
+#tutorpicker,
+#timepicker,
+#durationpicker {
+    border-radius: 5px!important;
+    border: 2px solid grey!important;
+    padding: 2px;
+    background-color: white;
+    transition-duration: 0.2s;
+    float: right;
+    width: 226px;
+}
+
+#datepicker,
+#timepicker {
+    width: 218px;
+}
+
+#datepicker:hover,
+#subjectpicker:hover,
+#tutorpicker:hover,
+#timepicker:hover,
+#durationpicker:hover {
+    background-color: #dfdfdf;
+}
+
 .small-error {
     color: #e8413c;
     white-space: pre-line;
@@ -633,6 +660,14 @@ header hr {
 
     .settings-box input[type="tel"] {
         width: 200px;
+    }
+
+    #datepicker,
+    #subjectpicker,
+    #tutorpicker,
+    #timepicker,
+    #durationpicker {
+        float: none;
     }
 
     #availabilityTable {
