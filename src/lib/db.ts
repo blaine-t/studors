@@ -710,6 +710,8 @@ async function migrateWeeklyToDates(week: Date) {
   const sessions = (await migrationListSessions()) || []
   const holidays = (await listHolidays()) || []
 
+  const today = new Date()
+
   if (weeklyAvailability == undefined || weeklyAvailability.length == 0) {
     return
   }
@@ -725,13 +727,25 @@ async function migrateWeeklyToDates(week: Date) {
     time.setDate(time.getDate() + weeklyAvailability[i]['dow'])
     time.setHours(increment, (increment % 1) * 60, 0, 0)
 
+    // Check to make sure that the date isn't in the past
+    if (
+      time.getFullYear() <= today.getFullYear() &&
+      time.getMonth() <= today.getMonth() &&
+      time.getDate() <= today.getDate()
+    ) {
+      conflict = true
+    }
+
     // Check to make sure time isn't during a holiday
-    for (let k = 0; k < holidays.length; k++) {
-      // If time is in holiday then set boolean true
-      if (time.getDate() === holidays[k].holiday.getDate()) {
-        conflict = true
+    if (!conflict) {
+      for (let k = 0; k < holidays.length; k++) {
+        // If time is in holiday then set boolean true
+        if (time.getDate() === holidays[k].holiday.getDate()) {
+          conflict = true
+        }
       }
     }
+
     // Run through and make sure that a tutor isn't already busy with a session
     if (!conflict) {
       for (let j = 0; j < sessions.length; j++) {

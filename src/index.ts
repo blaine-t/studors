@@ -114,7 +114,6 @@ app.use(function (req, res) {
 // Enable automated date population through cronjobs
 import scheduler from './lib/scheduler'
 scheduler.scheduleDates()
-scheduler.purgeOldDates()
 
 // Have the server listen for incoming requests
 app.listen(port, () => {

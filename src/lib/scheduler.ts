@@ -23,16 +23,6 @@ function scheduleDates() {
   })
 }
 
-/**
- * Every 15 minutes during the weekdays purge old times
- */
-function purgeOldDates() {
-  schedule.scheduleJob('*/15 * * * 1-5', function () {
-    db.purgeOldAvailability()
-  })
-}
-
 export default {
-  scheduleDates,
-  purgeOldDates
+  scheduleDates
 }

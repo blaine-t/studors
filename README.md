@@ -59,9 +59,8 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 - [x] Fix scheduler issues with populating dates and not making sessions available in the past
 - [ ] Update Google cloud setup for their new UI
 - [x] Reformat all file types with style
-- [ ] Dark reader flag
 - [x] Style past sessions
-- [ ] Fix scheduler making dates in the past
+- [x] Fix scheduler making dates in the past
 - [ ] Fix students being able to double book
 - [ ] Lint whole project
 - [ ] Test suite from start to finish
