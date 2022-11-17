@@ -477,6 +477,7 @@ header hr {
     transition-duration: 0.2s;
     float: right;
     width: 226px;
+    transform: translatey(2px);
 }
 
 #datepicker,
@@ -669,6 +670,7 @@ header hr {
     #timepicker,
     #durationpicker {
         float: none;
+        transform: none;
     }
 
     #availabilityTable {
