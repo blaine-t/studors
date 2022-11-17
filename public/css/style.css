@@ -189,6 +189,10 @@ footer li {
     border-right: 1px solid #BBB;
 }
 
+footer li:last-child {
+    border-right: 1px solid #BBB;
+}
+
 footer li a {
     display: block;
     color: #434343;
@@ -215,6 +219,10 @@ footer hr {
 
     footer ul {
         right: 0;
+    }
+
+    footer li:last-child {
+        border-right: none;
     }
 }
 
