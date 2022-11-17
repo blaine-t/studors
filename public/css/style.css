@@ -314,6 +314,7 @@ header hr {
     height: 12vh;
     width: 12vh;
     max-height: 150px;
+    max-width: 150px;
     border: 3px solid #000;
 }
 
@@ -693,6 +694,11 @@ header hr {
     #usertype,
     #schoolname {
         display: none;
+    }
+
+    .cancelbutton {
+        float: right;
+        top: 0;
     }
 }
 
