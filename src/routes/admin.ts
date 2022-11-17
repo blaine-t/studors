@@ -127,7 +127,8 @@ router.post('/settings', (req, res) => {
   // Rerender settings page with error
   res.render('pages/admin/settings', {
     error: error,
-    darkMode: true // Check box handles
+    darkMode: true, // Check box handles
+    pos: 'Admin'
   })
 })
 

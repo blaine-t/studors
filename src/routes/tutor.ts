@@ -257,7 +257,8 @@ router.post('/settings', (req, res) => {
   // Rerender settings page with error
   res.render('pages/tutor/settings', {
     error: error,
-    darkMode: res.locals.user.dark_theme
+    darkMode: res.locals.user.dark_theme,
+    pos: 'Tutor'
   })
 })
 

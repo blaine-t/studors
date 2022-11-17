@@ -15,6 +15,9 @@ function apiKey(key: string) {
  * @returns valid returned if clean false if not
  */
 function phone(phone: string) {
+  if (phone.length === 0) {
+    return ''
+  }
   phone = phone.replace(/\D/g, '')
   if (phone.length === 10) {
     phone =
@@ -31,12 +34,8 @@ function phone(phone: string) {
     ) {
       return phone
     }
-    return false
-  } else if (phone.length === 0) {
-    return ''
-  } else {
-    return false
   }
+  return false
 }
 
 /**
