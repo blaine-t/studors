@@ -41,6 +41,10 @@
       text-align: center;
     }
 
+    #subjectpicker {
+      margin-left: 20px;
+    }
+
     @media(max-width: 600px) {
       .maincontent {
         margin-top: 10px;
@@ -49,6 +53,10 @@
       .centerselect {
         text-align: center;
         line-height: 1;
+      }
+
+      #subjectpicker {
+        margin-left: 0;
       }
     }
   </style>
@@ -60,7 +68,7 @@
     <div class="centerselect">
       <form onsubmit='return validate(this)' action='' method='post'>
         <h1 style="display: inline;">Select a subject:
-          <select id='subjectpicker' name='subjectpicker' onchange='subjectUpdated(); remove(0);' style="margin-left: 20px;">
+          <select id='subjectpicker' name='subjectpicker' onchange='subjectUpdated(); remove(0);'>
             <option></option>
             <% for (const obj of subjects) { %>
             <option value='<%= obj['subject'] %>'><%= obj['subject'] %></option>
@@ -178,6 +186,7 @@
       document.getElementById('datecontainer').style.display = "none";
       document.getElementById('timecontainer').style.display = "none";
       document.getElementById('durationcontainer').style.display = "none";
+      document.getElementById('sched').style.display = "none";
     } else {
       // Populate the drop down with tutor names
     for (i = 0; i < uniqueTutors.length; i++) {
