@@ -23,7 +23,7 @@ async function truncateTable(table: string) {
  * @param picture profile picture URL
  * @param email Will be lowercased
  */
-async function createUser(
+function createUser(
   role: string,
   id: string,
   first_name: string,

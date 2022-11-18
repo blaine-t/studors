@@ -46,7 +46,7 @@ passport.use(
           )) != undefined
         ) {
           const profilePic = profile._json.picture?.replace('=s96-c', '=s256-c')
-          await db.createUser(
+          db.createUser(
             'students',
             profile.id,
             profile._json.given_name || 'Example',
@@ -54,7 +54,12 @@ passport.use(
             profilePic || 'https://via.placeholder.com/256',
             profile._json.email || 'examplestudent@example.org'
           )
-          const studentProfile = await db.authUser('students', profile.id)
+          let studentProfile
+          let maxTries = 0
+          while (studentProfile === undefined && maxTries <= 100) {
+            studentProfile = await db.authUser('students', profile.id)
+            maxTries++
+          }
           done(null, studentProfile)
           return
         }
@@ -90,7 +95,7 @@ passport.use(
       else if (profile._json.email != undefined) {
         if ((await db.checkUser('tutors', profile._json.email)) != undefined) {
           const profilePic = profile._json.picture?.replace('=s96-c', '=s256-c')
-          await db.createUser(
+          db.createUser(
             'tutors',
             profile.id,
             profile._json.given_name || 'Example',
@@ -98,7 +103,12 @@ passport.use(
             profilePic || 'https://via.placeholder.com/256',
             profile._json.email || 'exampletutor@example.org'
           )
-          const tutorProfile = await db.authUser('tutors', profile.id)
+          let tutorProfile
+          let maxTries = 0
+          while (tutorProfile === undefined && maxTries <= 100) {
+            tutorProfile = await db.authUser('tutors', profile.id)
+            maxTries++
+          }
           done(null, tutorProfile)
           return
         }
@@ -134,7 +144,7 @@ passport.use(
       else if (profile._json.email != undefined) {
         if ((await db.checkUser('admins', profile._json.email)) != undefined) {
           const profilePic = profile._json.picture?.replace('=s96-c', '=s256-c')
-          await db.createUser(
+          db.createUser(
             'admins',
             profile.id,
             profile._json.given_name || 'Example',
@@ -142,7 +152,12 @@ passport.use(
             profilePic || 'https://via.placeholder.com/256',
             profile._json.email || 'exampleadmin@example.org'
           )
-          const adminProfile = await db.authUser('admins', profile.id)
+          let adminProfile
+          let maxTries = 0
+          while (adminProfile === undefined && maxTries <= 100) {
+            adminProfile = await db.authUser('admins', profile.id)
+            maxTries++
+          }
           done(null, adminProfile)
           return
         }

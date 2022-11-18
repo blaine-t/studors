@@ -60,7 +60,7 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 - [x] Style past sessions
 - [x] Fix scheduler making dates in the past
 - [ ] Fix ambiguous cancellation red X
-- [ ] Fix the first time sign up auth fail (Race condition?)
+- [x] Fix the first time sign up auth fail (Race condition!)
 - [ ] Fix students being able to double book
 - [ ] No tutors available notice
 - [ ] Update docs for Google cloud setup for their new UI
