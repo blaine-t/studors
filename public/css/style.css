@@ -524,6 +524,7 @@ header hr {
 }
 
 .small-info {
+    font-size: 14pt;
     color: #2b56ff;
 }
 
@@ -661,6 +662,12 @@ header hr {
         width: 170px;
     }
 
+    .small-info {
+        font-size: 13pt;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
     /*Footer things*/
     footer {
         height: 40px;
@@ -736,6 +743,10 @@ header hr {
     .cancelbutton {
         float: right;
         top: 0;
+    }
+
+    .hidemobile {
+        display: none;
     }
 }
 
