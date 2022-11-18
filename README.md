@@ -54,16 +54,19 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 - [x] Manage text boxes need tinted
 - [x] Need About, Mission, Contact text offset
 - [x] Finalize dark mode colors and contrast
-- [x] Fix the first time sign up auth fail (Race condition in strategy. Still bug?)
 - [x] Allow removing student and tutor errors when truncating through tables
 - [x] Fix scheduler issues with populating dates and not making sessions available in the past
-- [ ] Update Google cloud setup for their new UI
 - [x] Reformat all file types with style
 - [x] Style past sessions
 - [x] Fix scheduler making dates in the past
+- [ ] Fix ambiguous cancellation red X
+- [ ] Fix the first time sign up auth fail (Race condition?)
 - [ ] Fix students being able to double book
+- [ ] No tutors available notice
+- [ ] Update docs for Google cloud setup for their new UI
 - [ ] Lint whole project
-- [ ] Test suite from start to finish
+- [ ] Solo test suite from start to finish
+- [ ] Pen test and bug fix with ULPC
 
 ## 2.0 Features:
 
