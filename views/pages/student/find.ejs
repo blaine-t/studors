@@ -68,13 +68,13 @@
           </select>
         </h1>
         <br>
+        <span id="noTutorError" class="small-info" style="display:none;font-size:14pt;">Sorry, there are currently no tutors for this subject.<br>Please contact the tutoring chair for further assistance.<br></span>
         <h1 id="tutorcontainer" style='display: none;'>Select a tutor:
           <select id='tutorpicker' name='tutorpicker' onchange='tutorUpdated(); remove(0);'>
             <option>Any</option>
           </select>
           <br>
         </h1>
-        <span id="noTutorError" style="display:none">Sorry there are no tutors for this subject, please contact the tutoring chair for further assistance<br></span>
         <h1 id="datecontainer" style='display: none;'>Select a date:
           <input id='datepicker' onchange='dateUpdated(); remove(1);'></input>
           <br>
@@ -174,6 +174,10 @@
     // Make sure that there is a tutor that can teach the selected subject
     if (uniqueTutors.length === 0) {
       document.getElementById('noTutorError').style.display = "inline";
+      document.getElementById('tutorcontainer').style.display = "none";
+      document.getElementById('datecontainer').style.display = "none";
+      document.getElementById('timecontainer').style.display = "none";
+      document.getElementById('durationcontainer').style.display = "none";
     } else {
       // Populate the drop down with tutor names
     for (i = 0; i < uniqueTutors.length; i++) {

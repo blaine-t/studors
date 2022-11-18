@@ -212,6 +212,10 @@ footer hr {
     z-index: 50;
 }
 
+#schoolname {
+    left: calc((100vw - 2560px)/2);
+}
+
 @media (max-width: 2560px) {
     footer {
         right: 0;
@@ -223,6 +227,10 @@ footer hr {
 
     footer li:last-child {
         border-right: none;
+    }
+
+    #schoolname {
+        left: 0;
     }
 }
 
@@ -513,6 +521,10 @@ header hr {
     white-space: pre-line;
     height: 20px;
     font-size: 15pt;
+}
+
+.small-info {
+    color: #2b56ff;
 }
 
 .cancelbutton {

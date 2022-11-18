@@ -200,6 +200,10 @@ header hr {
     color: #5ccc00;
 }
 
+.small-info {
+    color: #17bcef;
+}
+
 @media (max-width: 600px) {
     .profileimg {
         border: none;
