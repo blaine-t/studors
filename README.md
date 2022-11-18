@@ -62,7 +62,7 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 - [ ] Fix ambiguous cancellation red X
 - [x] Fix the first time sign up auth fail (Race condition!)
 - [x] Fix students being able to double book
-- [ ] No tutors available notice
+- [x] No tutors available notice
 - [ ] Occasional hang on availability tutor button after changing times on new db instance?
 - [ ] Update docs for Google cloud setup for their new UI
 - [ ] Lint whole project

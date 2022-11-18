@@ -145,13 +145,22 @@ router.get('/subjects', async (req, res) => {
       checked.push(tutorsSubjects[i]['subject_id'])
     }
   }
-  res.render('pages/tutor/subjects', {
-    subjects: subjects,
-    checked: checked,
-    error: req.query.error,
-    darkMode: res.locals.user.dark_theme,
-    pos: 'Tutor'
-  })
+  if (subjects != undefined && subjects.length > 0) {
+    res.render('pages/tutor/subjects', {
+      subjects: subjects,
+      checked: checked,
+      error: req.query.error,
+      darkMode: res.locals.user.dark_theme,
+      pos: 'Tutor'
+    })
+  } else {
+    res.render('pages/tutor/settings', {
+      error: 'No subjects have been set by your admin',
+      darkMode: res.locals.user.dark_theme,
+      pos: 'Tutor'
+    })
+    return
+  }
 })
 
 // Take in data given from user for selecting subjects

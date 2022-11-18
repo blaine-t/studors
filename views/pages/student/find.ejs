@@ -60,7 +60,7 @@
     <div class="centerselect">
       <form onsubmit='return validate(this)' action='' method='post'>
         <h1 style="display: inline;">Select a subject:
-          <select id='subjectpicker' name='subjectpicker' onchange='subjectUpdated(); dateSetup(); remove(0);' style="margin-left: 20px;">
+          <select id='subjectpicker' name='subjectpicker' onchange='subjectUpdated(); remove(0);' style="margin-left: 20px;">
             <option></option>
             <% for (const obj of subjects) { %>
             <option value='<%= obj['subject'] %>'><%= obj['subject'] %></option>
@@ -74,6 +74,7 @@
           </select>
           <br>
         </h1>
+        <span id="noTutorError" style="display:none">Sorry there are no tutors for this subject, please contact the tutoring chair for further assistance<br></span>
         <h1 id="datecontainer" style='display: none;'>Select a date:
           <input id='datepicker' onchange='dateUpdated(); remove(1);'></input>
           <br>
@@ -157,8 +158,6 @@
   }
 
   function tutorSetup() {
-    // Make tutorpicker visible
-    document.getElementById('tutorcontainer').style.display = "inline";
     // Reset previous list of unique tutors
     uniqueTutors = [];
     // Run through all valid sessions and if a tutorID is not already in the list add it
@@ -171,10 +170,22 @@
     while (tutorpicker.options.length > 1) {
       tutorpicker.remove(1);
     }
-    // Populate the drop down with tutor names
+    console.log(uniqueTutors)
+    // Make sure that there is a tutor that can teach the selected subject
+    if (uniqueTutors.length === 0) {
+      document.getElementById('noTutorError').style.display = "inline";
+    } else {
+      // Populate the drop down with tutor names
     for (i = 0; i < uniqueTutors.length; i++) {
       var option = new Option(uniqueTutors[i]['first_name'] + ' ' + uniqueTutors[i]['last_name'], uniqueTutors[i]['tutor_id']);
       tutorpicker.add(option, undefined);
+    }
+    // Make tutorpicker visible and hide error
+    document.getElementById('tutorcontainer').style.display = "inline";
+    document.getElementById('noTutorError').style.display = "none";
+
+    // Setup date if there are tutors
+    dateSetup();
     }
   }
 
