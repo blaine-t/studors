@@ -116,11 +116,9 @@
 <script>
   var serverOffset = <%- new Date(Date.now()).getTimezoneOffset() %>;
   var clientOffset = new Date(Date.now()).getTimezoneOffset();
-  var $time = $('#timepicker').pickatime({
-    interval: 15
-  });
+  var $time = $('#timepicker').pickatime({ interval: 15 });
   var timepicker = $time.pickatime('picker');
-  var $date = $('#datepicker').pickadate();
+  var $date = $('#datepicker').pickadate({ today: '' });
   var datepicker = $date.pickadate('picker');
   var duration = document.querySelector('#duration');
   var sessions = <%- JSON.stringify(availability) %>;
