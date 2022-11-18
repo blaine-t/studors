@@ -71,6 +71,7 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 
 ## 2.0 Features:
 
+- [ ] Add fading between pages
 - [ ] Rework scheduler and population of dates for less disk IO and CPU (also authentication if possible)
 - [ ] Allow tutors to blacklist problematic students (/tutor/blacklist?)
 - [ ] Make removal of certain things easier for admin (/admin/manage)
