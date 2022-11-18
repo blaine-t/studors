@@ -61,8 +61,9 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 - [x] Fix scheduler making dates in the past
 - [ ] Fix ambiguous cancellation red X
 - [x] Fix the first time sign up auth fail (Race condition!)
-- [ ] Fix students being able to double book
+- [x] Fix students being able to double book
 - [ ] No tutors available notice
+- [ ] Occasional hang on availability tutor button after changing times on new db instance?
 - [ ] Update docs for Google cloud setup for their new UI
 - [ ] Lint whole project
 - [ ] Solo test suite from start to finish
@@ -70,7 +71,7 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 
 ## 2.0 Features:
 
-- [ ] Rework scheduler and population of dates for less disk IO and CPU
+- [ ] Rework scheduler and population of dates for less disk IO and CPU (also authentication if possible)
 - [ ] Allow tutors to blacklist problematic students (/tutor/blacklist?)
 - [ ] Make removal of certain things easier for admin (/admin/manage)
 - [ ] Student request for tutoring at a set time slot (/student/request)

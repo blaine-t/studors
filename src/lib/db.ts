@@ -773,12 +773,13 @@ async function migrateWeeklyToDates(week: Date) {
     }
   }
   // Remove trailing comma
-  string = string.replace(/,$/, '')
-  pool
-    .query(
-      `INSERT INTO availabilitymap (time_id, tutor_id) VALUES ${string} ON CONFLICT DO NOTHING`
-    )
-    .catch((e) => console.error(e))
+  string = string.replace(/,$/, ' ')
+
+  if (string) {
+    pool
+      .query(`INSERT INTO availabilitymap(time_id,tutor_id) VALUES ${string}`)
+      .catch((e) => console.error(e))
+  }
 }
 
 /**
@@ -894,7 +895,7 @@ function removeTutorsSubject(sid: string, tid: string) {
  */
 async function listAvailability(id: string) {
   try {
-    const res = await pool.query(
+    const availabilities = await pool.query(
       `SELECT availabilitymap.time_id, availabilitymap.tutor_id, tutors.first_name, tutors.last_name, subjectmap.subject_id
       FROM availabilitymap
       INNER JOIN subjectmap on availabilitymap.tutor_id = subjectmap.tutor_id
@@ -903,7 +904,38 @@ async function listAvailability(id: string) {
       ORDER BY availabilitymap.tutor_id, availabilitymap.time_id`,
       [id]
     )
-    return res.rows
+
+    // Make sure that a student doesn't double book a session
+
+    // Pull their sessions
+    const studentSessions = await listSessions(true, 'students', id, false)
+    const res = []
+    if (studentSessions != undefined && studentSessions.length > 0) {
+      // For every availability retrieved from the database
+      for (let i = 0; i < availabilities.rowCount; i++) {
+        let conflict = false
+        // Go through every student session
+        for (let j = 0; j < studentSessions.length; j++) {
+          const time = studentSessions[j].time_id
+          // And check all parts of the time slot
+          for (let k = 0; k < studentSessions[j].duration * 4; k++) {
+            if (
+              availabilities.rows[i].time_id.getTime() ===
+              new Date(time.getTime() + k * 15 * 60 * 1000).getTime()
+            ) {
+              // if there was a conflict then change boolean so it isn't sent to client
+              conflict = true
+            }
+          }
+        }
+        if (!conflict) {
+          res.push(availabilities.rows[i])
+        }
+      }
+    } else {
+      return availabilities.rows
+    }
+    return res
   } catch (err) {
     console.error(err)
   }
