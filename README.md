@@ -8,7 +8,7 @@ Leader and sole developer, [Blaine Traudt](https://github.com/blaine-t)
 
 Web Design courtesy of [Grant Gardner](https://github.com/G2-Games)
 
-Logo licensed from Louis Quattrocchi under the CC BY-NC 3.0 License
+Logo used by permission from Louis Quattrocchi under the CC BY-NC 3.0 License
 
 ## Features
 
