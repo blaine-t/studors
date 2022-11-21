@@ -10,16 +10,17 @@
     "clean": "npx rimraf dist/*",
     "lint-and-fix": "eslint . --ext .ts --fix",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
-    "prebuild": "npm-run-all clean lint-and-fix",
+    "minify": "npx ts-node ./dev/scripts/minify",
+    "prebuild": "npm-run-all clean lint-and-fix minify",
     "build": "npx tsc",
-    "postbuild": "npx ts-node build",
+    "postbuild": "npx ts-node ./dev/scripts/build",
     "build-image": "docker build --tag studors-node:latest -f Node-Dockerfile .",
     "docker-build": "npm-run-all build build-image",
+    "docker-build-all": "npm-run-all build build-image build-database",
     "build-database": "docker build --tag studors-postgres:latest -f PG-Dockerfile .",
     "lint": "eslint . --ext .ts",
     "prod": "node .",
-    "dev": "npx nodemon",
-    "test": "npx jest --findRelatedTests"
+    "dev": "npx nodemon"
   },
   "dependencies": {
     "body-parser": "^1.20.1",
@@ -45,6 +46,7 @@
     "@types/passport-google-oauth20": "^2.0.11",
     "@types/pg": "^8.6.5",
     "@types/shelljs": "^0.8.11",
+    "@types/uglifycss": "^0.0.7",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
@@ -57,6 +59,8 @@
     "prettier": "^2.7.1",
     "shelljs": "^0.8.5",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.3"
+    "typescript": "^4.9.3",
+    "uglify-js": "^3.17.4",
+    "uglifycss": "^0.0.29"
   }
 }
