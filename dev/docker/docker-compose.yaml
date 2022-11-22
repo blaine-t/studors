@@ -7,7 +7,6 @@ services:
       - '19090:19090/tcp'
     depends_on:
       - db
-    user: '1000:1000'
     restart: 'unless-stopped'
 
   db:
@@ -20,5 +19,4 @@ services:
     # Make sure to create the db folder as user before docker does otherwise permission issues will happen
     volumes:
       - ./db:/var/lib/postgresql/data
-    user: '1000:1000'
     restart: 'unless-stopped'
