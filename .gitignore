@@ -108,4 +108,4 @@ db/
 
 # Auto generated minified stuff
 public/css/
-views/
+/views/
