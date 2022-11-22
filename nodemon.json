@@ -1,6 +1,6 @@
 {
-  "watch": ["src", "public/css","views"],
+  "watch": ["src", "dev/css","dev/views"],
   "ext": ".ts,.js,.css,.ejs",
   "ignore": [],
-  "exec": "ts-node --files ./src/index.ts"
+  "exec": "npm run minify && ts-node --files ./src/index.ts"
 }
