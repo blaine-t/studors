@@ -1,6 +1,7 @@
 import uglifycss from 'uglifycss'
 import shell from 'shelljs'
 
+// Minify CSS
 const styleCSS = uglifycss.processFiles(['./dev/css/style.css'])
 shell.ShellString(styleCSS).to('./public/css/style.min.css')
 
@@ -13,3 +14,13 @@ const pickadateCSS = uglifycss.processFiles([
   './dev/css/pickadate/default.time.css'
 ])
 shell.ShellString(pickadateCSS).to('./public/css/pickadate.min.css')
+
+// Minify EJS
+shell.exec(
+  'npx html-minifier --input-dir ./dev/views --output-dir ./views --collapse-boolean-attributes --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace  --minify-css --minify-js --remove-empty-attributes'
+)
+// Fix minification of the TS file
+shell.cp(
+  './dev/views/components/functions.ts',
+  './views/components/functions.ts'
+)

@@ -64,17 +64,20 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 - [x] Fix students being able to double book
 - [x] No tutors available notice
 - [x] Occasional hang on availability tutor button after changing times on new db instance?
+- [ ] Fix retaining boxes in /student/find
+- [ ] No sessions message upcoming and past sessions
 - [ ] Update docs for Google cloud setup for their new UI
-- [ ] Lint whole project
-- [ ] Solo test suite from start to finish
-- [ ] Pen test and bug fix with ULPC
+- [x] Minify all the things
+- [x] Lint whole project
+- [x] Solo test suite from start to finish
+- [x] Pen test and bug fix with ULPC
 
 ## 2.0 Features:
 
 - [ ] Add fading between pages
 - [ ] Rework scheduler and population of dates for less disk IO and CPU (also authentication if possible)
 - [ ] Allow tutors to blacklist problematic students (/tutor/blacklist?)
-- [ ] Make removal of certain things easier for admin (/admin/manage)
+- [ ] Make admin panel easier to use (/admin/manage)
 - [ ] Student request for tutoring at a set time slot (/student/request)
 - [ ] Tutor page to fulfill student requests (/tutor/request)
 
