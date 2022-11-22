@@ -228,6 +228,7 @@
   function dateUpdated() {
     // Update the selected date after check
     if (datepicker.get() === '') {
+      document.getElementById('timecontainer').style.display = "none";
       selectedDate = null;
       return;
     }
@@ -267,6 +268,7 @@
     if (timepicker.get() === '') {
       selectedTime = null;
       document.getElementById('time').value = null;
+      document.getElementById('durationcontainer').style.display = "none";
       return;
     }
     selectedTime = timepicker.get('select');
