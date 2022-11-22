@@ -66,7 +66,6 @@ Installation of Studors is easy with Docker! (Blaine don't forget to put instruc
 - [x] Occasional hang on availability tutor button after changing times on new db instance?
 - [x] Fix retaining boxes in /student/find
 - [x] No sessions message upcoming and past sessions
-- [ ] Update docs for Google cloud setup for their new UI
 - [x] Minify all the things
 - [x] Lint whole project
 - [x] Solo test suite from start to finish
