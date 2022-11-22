@@ -20,6 +20,9 @@
   <div class="admin-list">
     <h2>Past Sessions:</h2>
     <div id="user-list">
+      <% if (pastSessions.length === 0) { %>
+        <p class="small-info" style="text-align: center;">You currently have no past sessions</p>
+      <% } %>
       <% for(const obj of pastSessions) { %>
         <div class="session">
           <p><%= functions.formatDate(obj['time_id'], true, obj['duration']) %><br>

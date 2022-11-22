@@ -21,6 +21,9 @@
     <h2>Upcoming Sessions:</h2>
     <form id="user-list" action='/tutor/cancel' method='post'>
       <span <% if(message === 'Session successfully deleted') { %> class="small-success" <%} else {%> class="small-error" <%}%>><%=message%></span>
+      <% if (upcomingSessions.length === 0) { %>
+        <p class="small-info" style="text-align: center;">You currently have no upcoming sessions</p>
+      <% } %>
       <% for(const obj of upcomingSessions) { %>
         <div class="session">
           <p>
