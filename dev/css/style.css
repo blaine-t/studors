@@ -486,8 +486,8 @@ header hr {
 #tutorpicker,
 #timepicker,
 #durationpicker {
-    border-radius: 5px!important;
-    border: 2px solid grey!important;
+    border-radius: 5px !important;
+    border: 2px solid grey !important;
     padding: 2px;
     background-color: white;
     transition-duration: 0.2s;
