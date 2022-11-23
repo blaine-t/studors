@@ -6,7 +6,6 @@ create table
         picture text default 'https://studors.example.org/img/defaultStudent.jpg',
         email text not null unique,
         grade int default -1,
-        school text default 'SCHOOL',
         dark_theme bool default false,
         phone text,
         pos text default 'student'
@@ -20,7 +19,6 @@ create table
         picture text default 'https://studors.example.org/img/defaultTutor.jpg',
         email text not null unique,
         grade int default -1,
-        school text default 'SCHOOL',
         hours_term decimal default 0,
         hours_total decimal default 0,
         dark_theme bool default false,
@@ -37,7 +35,6 @@ create table
         picture text default 'https://studors.example.org/img/defaultAdmin.jpg',
         email text not null unique,
         grade int default -1,
-        school text default 'SCHOOL',
         dark_theme bool default false,
         phone text,
         pos text default 'admin'
@@ -105,3 +102,5 @@ create table allowedadmins(email text primary key);
 create table allowedtutors( email text primary key );
 
 create table allowedstudents( email text primary key );
+
+insert into allowedadmins(email) VALUES ('studors@example.com');

@@ -1,8 +1,0 @@
-# syntax=docker/dockerfile:1
-FROM postgres:latest
-
-ENV POSTGRES_USER studorsadmin
-ENV POSTGRES_PASSWORD password
-ENV POSTGRES_DB studors
-
-ADD /dev/sql/init.sql /docker-entrypoint-initdb.d/

@@ -15,7 +15,7 @@
 <body>
   <%- include('../../components/header'); %>
   <div class="about-info">
-    <p> Email: contact@example.com</p>
+    <%-process.env.CONTACT%>
   </div>
   <%- include('../../components/footer'); %>
 </body>

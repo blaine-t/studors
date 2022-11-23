@@ -2,6 +2,7 @@ import uglifycss from 'uglifycss'
 import shell from 'shelljs'
 
 // Minify CSS
+shell.rm('-R', './public/css')
 shell.mkdir('./public/css')
 const styleCSS = uglifycss.processFiles(['./dev/css/style.css'])
 shell.ShellString(styleCSS).to('./public/css/style.min.css')
@@ -17,6 +18,7 @@ const pickadateCSS = uglifycss.processFiles([
 shell.ShellString(pickadateCSS).to('./public/css/pickadate.min.css')
 
 // Minify EJS
+shell.rm('./views')
 shell.mkdir('./views')
 shell.exec(
   'npx html-minifier --input-dir ./dev/views --output-dir ./views --collapse-boolean-attributes --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace  --minify-css --minify-js --remove-empty-attributes'

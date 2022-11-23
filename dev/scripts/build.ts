@@ -3,7 +3,6 @@ import shell from 'shelljs'
 const buildFolder = './dist/'
 
 const files = new Set([
-  '.env',
   'LICENSE',
   'README.md',
   'package.json',

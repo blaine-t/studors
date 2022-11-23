@@ -1,22 +1,35 @@
 version: '3'
 services:
   app:
-    image: 'studors-node:latest'
+    image: 'node:19-slim'
     container_name: 'studors-node'
+    env_file: 'studors-node.env'
     ports:
       - '19090:19090/tcp'
     depends_on:
-      - db
+      - 'db'
+    # Keep consistent with if user is commented or not on db.
+    #user: '1000:1000'
+    working_dir: '/app'
+    volumes:
+      - './app:/app'
+    command: 'node .'
     restart: 'unless-stopped'
 
   db:
     image: 'studors-postgres:latest'
     container_name: 'studors-postgres'
+    env_file: 'studors-postgres.env'
     # Enable ports for dev work. Leave off for prod because it's an attack vector
-    #ports:
-    #  - '5432:5432/tcp'
+    ports:
+      - '37073:37073/tcp'
 
-    # Make sure to create the db folder as user before docker does otherwise permission issues will happen
+    # If you want to run as a non root user you have to pass through the user arg and /etc/passwd as read-only
+    #user: '1000:1000'
     volumes:
-      - ./db:/var/lib/postgresql/data
+      #- '/etc/passwd:/etc/passwd:ro'
+      - './db:/var/lib/postgresql/data'
+      - './init.sql:/docker-entrypoint-initdb.d/init.sql'
+    # Puts postgres on a non standard port to obscure it.
+    command: '-p 37073'
     restart: 'unless-stopped'

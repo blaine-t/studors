@@ -14,11 +14,8 @@
     "prebuild": "npm-run-all clean lint-and-fix minify",
     "build": "npx tsc",
     "postbuild": "npx ts-node ./dev/scripts/build",
-    "build-image": "docker build --tag studors-node:latest -f ./dev/docker/Node-Dockerfile .",
-    "docker-build": "npm-run-all build build-image",
-    "docker-build-all": "npm-run-all build build-image build-database",
-    "build-database": "docker build --tag studors-postgres:latest -f ./dev/docker/PG-Dockerfile .",
-    "lint": "eslint . --ext .ts",
+    "docker-setup": "npx ts-node ./dev/scripts/docker",
+    "docker-build": "npm-run-all build docker-setup",
     "prod": "node .",
     "dev": "npx nodemon"
   },
