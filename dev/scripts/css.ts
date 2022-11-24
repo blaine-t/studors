@@ -30,6 +30,7 @@ folders.forEach((folder) => {
 
 shell.mkdir(styleFolder + '/public/css')
 
+// Minifies all the pickadate CSS together
 const pickadateCSS = uglifycss.processFiles([
   './dev/css/pickadate/default.css',
   './dev/css/pickadate/default.date.css',
