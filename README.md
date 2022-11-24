@@ -37,7 +37,8 @@ Logo used by permission from Louis Quattrocchi under the CC BY-NC 3.0 License
 - <img src="dev/img/passport.png" width="20" height="20"> [**Passport.js**](https://github.com/jaredhanson/passport) allowed for quick and easy OAuth with Google. While it was a bit confusing to use at first and led to some _less than ideal_ code in the end it made it so Studors could be zero-knowledge when it came to user credentials.
 - <img src="dev/img/jQuery.png" width="20" height="20"> [**JQuery**](https://github.com/jquery/jquery) while underutilized in Studors because it came in to the stack late still made using other js libraries miles easier.
 - <img src="dev/img/dataTables.png" width="20" height="20"> [**DataTables**](https://github.com/DataTables/DataTables) made making sortable and tabulated tables _way_ easier than native HTML I was trying to wrangle before I brought it in to the stack
-- <img src="dev/img/pickADate.png" height="20"> [**Pickadate.js**](https://github.com/amsul/pickadate.js) made intuitive calendars easier to create and more user friendly.
+- <img src="dev/img/pickADate.png" height="20"> [**pickadate.js**](https://github.com/amsul/pickadate.js) made intuitive calendars easier to create and more user friendly.
+- <img src="dev/img/date-fns.png" width="20" height="20"> [**date-fns**](https://github.com/date-fns/date-fns) was the last module to be added but allowed me to clean up code and make date manipulation easier to read and safer.
 
 ## Installation
 

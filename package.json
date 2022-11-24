@@ -9,7 +9,6 @@
   "scripts": {
     "clean": "npx rimraf dist/*",
     "lint-and-fix": "eslint . --ext .ts --fix",
-    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "minify": "npx ts-node ./dev/scripts/minify",
     "prebuild": "npm-run-all clean lint-and-fix minify",
     "build": "npx tsc",
@@ -22,6 +21,8 @@
   },
   "dependencies": {
     "body-parser": "^1.20.1",
+    "date-fns": "^2.29.3",
+    "date-fns-tz": "^1.3.7",
     "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
