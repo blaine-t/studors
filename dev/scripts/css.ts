@@ -10,16 +10,9 @@ const folders = new Set(['./public/', './dev/views/'])
 
 // Backup in case unsaved changes
 shell.rm('-R', backupFolder)
+shell.mkdir('./backup')
 shell.mv(styleFolder, backupFolder)
 shell.mkdir(styleFolder)
-
-// Move over TS file so it gets compiled properly
-shell.mkdir('./views')
-shell.mkdir('./views/components')
-shell.cp(
-  './dev/views/components/functions.ts',
-  './views/components/functions.ts'
-)
 
 // Build the typescript and populate dependencies
 shell.exec('npx tsc --outDir ' + styleFolder)

@@ -172,7 +172,6 @@
     while (tutorpicker.options.length > 1) {
       tutorpicker.remove(1);
     }
-    console.log(uniqueTutors)
     // Make sure that there is a tutor that can teach the selected subject
     if (uniqueTutors.length === 0) {
       document.getElementById('noTutorError').style.display = "inline";
@@ -248,7 +247,7 @@
       compareDate.setHours(0, 0, 0, 0);
       if (compareDate.getTime() === selectedDate.getTime()) {
         var date = new Date(availableDays[i]);
-        date.setHours((availableDays[i].getHours() + (clientOffset / 60 - serverOffset / 60)));
+        date.setHours((date.getHours() + (clientOffset / 60 - serverOffset / 60)));
         availableTimes.push(date);
       }
     }

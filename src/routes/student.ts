@@ -3,8 +3,7 @@ const router = express.Router()
 
 import db from '../lib/db'
 import sanitize from '../lib/sanitize'
-
-import functions from '../../views/components/functions'
+import time from '../lib/time'
 
 /**
  * Ensures that the user is authenticated and signed up, if not signed up redirect to settings and if not authed then redirect to auth page
@@ -144,7 +143,7 @@ router.get('/upcoming', async (req, res) => {
   )
   res.render('pages/student/upcoming', {
     upcomingSessions: upcomingSessions,
-    functions: functions,
+    time: time,
     darkMode: res.locals.user.dark_theme,
     pos: 'Student',
     message: req.query.message
@@ -167,7 +166,7 @@ router.get('/history', async (req, res) => {
   )
   res.render('pages/student/history', {
     pastSessions: pastSessions,
-    functions: functions,
+    time: time,
     darkMode: res.locals.user.dark_theme,
     pos: 'Student'
   })

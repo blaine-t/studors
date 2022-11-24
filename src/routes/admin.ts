@@ -6,7 +6,9 @@ import { v4 as uuidv4 } from 'uuid'
 import db from '../lib/db'
 import sanitize from '../lib/sanitize'
 
-import functions from '../../views/components/functions'
+import functions from '../lib/functions'
+
+import * as datef from 'date-fns'
 
 /**
  * Ensures that the user is authenticated and signed up, if not signed up redirect to settings and if not authed then redirect to auth page
@@ -65,7 +67,7 @@ router.get('/list', async (req, res) => {
     holidays: holidays,
     pastSessions: pastSessions,
     upcomingSessions: upcomingSessions,
-    functions: functions,
+    datef: datef,
     darkMode: res.locals.user.dark_theme,
     pos: 'Admin'
   })

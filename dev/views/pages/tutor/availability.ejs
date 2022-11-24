@@ -29,7 +29,7 @@
               <tr>
                 <% for(const key in obj) { %>
                 <% if (key == 0) { %>
-                <td style="width:150px; border-right: 1px solid #e1e1e1;"><%= functions.formatTime(obj[key]) %></td>
+                <td style="width:150px; border-right: 1px solid #e1e1e1;"><%= format(new Date(1970,0,1,obj[key],(obj[key]%1 * 60)), 'h:mm aa') %></td>
                 <% } else { %>
                 <td style="width: 100px;text-align: center;"><label class="check"><input style="display: none;" type="checkbox" name="<%= (obj[key]) %>" <% if(checked.includes(obj[key])) { %> checked <%}%>/>
                   <span style="display: inline-block; float: none;"></span>

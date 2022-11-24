@@ -23,8 +23,3 @@ shell.mkdir('./views')
 shell.exec(
   'npx html-minifier --input-dir ./dev/views --output-dir ./views --collapse-boolean-attributes --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace  --minify-css --minify-js --remove-empty-attributes'
 )
-// Fix minification of the TS file
-shell.cp(
-  './dev/views/components/functions.ts',
-  './views/components/functions.ts'
-)

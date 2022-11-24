@@ -164,7 +164,7 @@
         <tbody>
           <% for(const obj of increments) { %>
           <tr>
-            <td><%= functions.formatTime(obj['hour']) %></td>
+            <td><%= datef.format(new Date(1970,0,1,obj['hour'],(obj['hour']%1 * 60)), 'HH:mm') %></td>
           </tr>
           <% } %>
         </tbody>
@@ -180,7 +180,7 @@
         <tbody>
           <% for(const obj of holidays) { %>
           <tr>
-            <td><%= functions.formatDate(obj['holiday'], false, 0).replace('00:00','') %></td>
+            <td><%= datef.formatISO9075(obj['holiday'], { representation: 'date' }) %></td>
           </tr>
           <% } %>
         </tbody>
@@ -204,7 +204,7 @@
           <tr>
             <% for(const key in obj) { %>
             <% if(key == "time_id") { %>
-            <td><%= functions.formatDate(obj[key], false, 0) %></td>
+            <td><%= datef.formatISO9075(obj[key]) %></td>
             <% } else { %>
             <td><%= obj[key] %></td>
             <% } %>
@@ -232,7 +232,7 @@
           <tr>
             <% for(const key in obj) { %>
             <% if(key == "time_id") { %>
-            <td><%= functions.formatDate(obj[key], false, 0) %></td>
+            <td><%= datef.formatISO9075(obj[key]) %></td>
             <% } else { %>
             <td><%= obj[key] %></td>
             <% } %>

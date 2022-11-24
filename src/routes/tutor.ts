@@ -3,8 +3,8 @@ const router = express.Router()
 
 import db from '../lib/db'
 import sanitize from '../lib/sanitize'
-
-import functions from '../../views/components/functions'
+import time from '../lib/time'
+import { format } from 'date-fns'
 
 /**
  * Ensures that the user is authenticated and signed up, if not signed up redirect to settings and if not authed then redirect to auth page
@@ -100,7 +100,7 @@ router.get('/availability', async (req, res) => {
   res.render('pages/tutor/availability', {
     times: times,
     checked: checked,
-    functions: functions,
+    format: format,
     error: req.query.error,
     darkMode: res.locals.user.dark_theme,
     pos: 'Tutor'
@@ -197,7 +197,7 @@ router.get('/upcoming', async (req, res) => {
   )
   res.render('pages/tutor/upcoming', {
     upcomingSessions: upcomingSessions,
-    functions: functions,
+    time: time,
     darkMode: res.locals.user.dark_theme,
     pos: 'Tutor',
     message: req.query.message
@@ -220,7 +220,7 @@ router.get('/history', async (req, res) => {
   )
   res.render('pages/tutor/history', {
     pastSessions: pastSessions,
-    functions: functions,
+    time: time,
     darkMode: res.locals.user.dark_theme,
     pos: 'Tutor'
   })
