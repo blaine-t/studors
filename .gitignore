@@ -112,5 +112,5 @@ public/css/
 /views/
 
 # CSS Dev stuff
-/test/
-/testBackup/
+/style/
+/backup/

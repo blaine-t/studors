@@ -1,7 +1,8 @@
+import uglifycss from 'uglifycss'
 import shell from 'shelljs'
 
 const styleFolder = './style'
-const backupFolder = './styleBackup'
+const backupFolder = './backup/style'
 
 const files = new Set(['.env', 'package.json', 'package-lock.json'])
 
@@ -33,6 +34,17 @@ files.forEach((file) => {
 folders.forEach((folder) => {
   shell.cp('-R', folder, styleFolder)
 })
+
+shell.mkdir(styleFolder + '/public/css')
+
+const pickadateCSS = uglifycss.processFiles([
+  './dev/css/pickadate/default.css',
+  './dev/css/pickadate/default.date.css',
+  './dev/css/pickadate/default.time.css'
+])
+shell
+  .ShellString(pickadateCSS)
+  .to(styleFolder + '/public/css/pickadate.min.css')
 
 // Copies CSS over and renames to ensure that the HTML served corresponds to the right name
 shell.cp('./dev/css/darkmode.css', styleFolder + '/public/css/darkmode.min.css')
