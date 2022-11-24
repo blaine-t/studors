@@ -1,7 +1,7 @@
 import shell from 'shelljs'
 
-const testFolder = './test'
-const backupFolder = './testBackup'
+const styleFolder = './style'
+const backupFolder = './styleBackup'
 
 const files = new Set(['.env', 'package.json', 'package-lock.json'])
 
@@ -9,8 +9,8 @@ const folders = new Set(['./public/', './dev/views/'])
 
 // Backup in case unsaved changes
 shell.rm('-R', backupFolder)
-shell.mv(testFolder, backupFolder)
-shell.mkdir(testFolder)
+shell.mv(styleFolder, backupFolder)
+shell.mkdir(styleFolder)
 
 // Move over TS file so it gets compiled properly
 shell.mkdir('./views')
@@ -21,19 +21,19 @@ shell.cp(
 )
 
 // Build the typescript and populate dependencies
-shell.exec('npx tsc --outDir ./test')
-shell.exec('npm --prefix ./test i --omit=dev')
+shell.exec('npx tsc --outDir ' + styleFolder)
+shell.exec('npm --prefix ' + styleFolder + ' i --omit=dev')
 
 // Copy Files
 files.forEach((file) => {
-  shell.cp('-R', file, testFolder)
+  shell.cp('-R', file, styleFolder)
 })
 
 // Copy Folders
 folders.forEach((folder) => {
-  shell.cp('-R', folder, testFolder)
+  shell.cp('-R', folder, styleFolder)
 })
 
 // Copies CSS over and renames to ensure that the HTML served corresponds to the right name
-shell.cp('./dev/css/darkmode.css', testFolder + '/public/css/darkmode.min.css')
-shell.cp('./dev/css/style.css', testFolder + '/public/css/style.min.css')
+shell.cp('./dev/css/darkmode.css', styleFolder + '/public/css/darkmode.min.css')
+shell.cp('./dev/css/style.css', styleFolder + '/public/css/style.min.css')
