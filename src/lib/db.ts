@@ -377,7 +377,7 @@ async function listSessions(
  * Get a list of hours for tutors
  * @returns Array of tutors hours
  */
-async function getHours() {
+async function getTutorHours() {
   try {
     const res = await pool.query(
       `SELECT last_name, first_name, hours_term, hours_total FROM tutors ORDER BY last_name`
@@ -538,6 +538,7 @@ function createHoliday(date: Date) {
   if (isNaN(Date.parse(String(date)))) {
     return
   }
+  date = new Date(date)
   date.setHours(date.getHours() + date.getTimezoneOffset() / 60) // Hack; fix later
   pool
     .query(
@@ -570,6 +571,7 @@ function deleteHoliday(date: Date) {
   if (isNaN(Date.parse(String(date)))) {
     return
   }
+  date = new Date(date)
   date.setHours(date.getHours() + date.getTimezoneOffset() / 60) // Hack; fix later
   pool
     .query('DELETE FROM holidays WHERE holiday = $1', [date])
@@ -690,7 +692,7 @@ async function listWeeklyAvailabilityMap() {
 async function migrationListSessions() {
   try {
     const res = await pool.query(
-      'SELECT sessions.time_id, sessions.tutor_id, sessions.duration FROM sessions'
+      'SELECT sessions.time_id, sessions.tutor_id, sessions.duration FROM sessions WHERE time_id > now()'
     )
     return res.rows
   } catch (err) {
@@ -728,11 +730,7 @@ async function migrateWeeklyToDates(week: Date) {
     time.setHours(increment, (increment % 1) * 60, 0, 0)
 
     // Check to make sure that the date isn't in the past
-    if (
-      time.getFullYear() <= today.getFullYear() &&
-      time.getMonth() <= today.getMonth() &&
-      time.getDate() <= today.getDate()
-    ) {
+    if (time.getTime() <= today.getTime()) {
       conflict = true
     }
 
@@ -983,7 +981,7 @@ export default {
   createSession,
   removeSession,
   listSessions,
-  getHours,
+  getTutorHours,
   confirmApiKey,
   updateApiKey,
   advanceTerm,

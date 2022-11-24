@@ -20,7 +20,7 @@ async function acceptHoursRequest(apiKey: string) {
   }
   // Return the hours of tutors if valid key
   if ((await db.confirmApiKey(apiKey)) != null) {
-    return await db.getHours()
+    return await db.getTutorHours()
   }
   // If API key is supplied but isn't valid report unauthorized
   return { user: 'UNAUTHORIZED' }
