@@ -916,7 +916,6 @@ async function listAvailability(id: string) {
         let conflict = false
         // Go through every student session
         for (let j = 0; j < studentSessions.length; j++) {
-          const time = studentSessions[j].time_id
           // And check all parts of the time slot
           for (let k = 0; k < studentSessions[j].duration * 4; k++) {
             if (
@@ -936,35 +935,6 @@ async function listAvailability(id: string) {
       return availabilities.rows
     }
     return res
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-/**
- * Remove old availability past current time
- */
-async function purgeOldAvailability() {
-  try {
-    pool.query('DELETE FROM availabilitymap WHERE time_id < now()')
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-/**
- * List times available in between two dates
- * @param afterTime Later date
- * @param beforeTime Earlier date
- * @returns Array of times in between two dates
- */
-async function listTimesBetweenDates(afterTime: Date, beforeTime: Date) {
-  try {
-    const res = await pool.query(
-      'SELECT time FROM times WHERE time > $1 AND time < $2',
-      [afterTime, beforeTime]
-    )
-    return res.rows
   } catch (err) {
     console.error(err)
   }
@@ -1009,7 +979,5 @@ export default {
   addTutorsSubject,
   listTutorsSubjects,
   removeTutorsSubject,
-  listAvailability,
-  purgeOldAvailability, // Not currently in use
-  listTimesBetweenDates // Not currently in use
+  listAvailability
 }

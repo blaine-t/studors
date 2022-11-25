@@ -206,7 +206,24 @@ router.get('/upcoming', async (req, res) => {
 
 router.post('/cancel', async (req, res) => {
   const date = new Date(Number(req.body.cancel))
+  const upcomingSessions = await db.listSessions(
+    true,
+    'tutors',
+    res.locals.user.id,
+    true
+  )
+  let newSessions = upcomingSessions
   const message = await db.removeSession(res.locals.user.id, 'tutor', date)
+  let maxTries = 20
+  while (upcomingSessions === newSessions && maxTries > 0) {
+    newSessions = await db.listSessions(
+      true,
+      'tutors',
+      res.locals.user.id,
+      true
+    )
+    maxTries--
+  }
   res.redirect('/tutor/upcoming?message=' + message)
   return
 })
