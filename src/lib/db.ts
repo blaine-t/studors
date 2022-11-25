@@ -1,5 +1,6 @@
 import { Pool } from 'pg'
 import sanitize from './sanitize'
+import { add, formatISO, isSameDay, set } from 'date-fns'
 // Pulls connection info from .env variables. See: https://node-postgres.com/features/connecting
 const pool = new Pool()
 
@@ -195,7 +196,7 @@ async function createSession(
     try {
       // If the session is longer than 15 minutes delete those values as well
       for (let i = 0; i < duration * 4; i++) {
-        const durationTime = new Date(time.getTime() + i * 15 * 60 * 1000)
+        const durationTime = add(time, { minutes: i * 15 })
         pool.query(
           'DELETE FROM availabilitymap WHERE time_id = $1 AND tutor_id = $2',
           [durationTime, tid]
@@ -287,7 +288,7 @@ async function removeSession(id: string, role: string, time: Date) {
       return 'Error saving hours'
     })
   for (let i = 0; i < session.duration * 4; i++) {
-    const durationTime = new Date(time.getTime() + i * 15 * 60 * 1000)
+    const durationTime = add(time, { minutes: i * 15 })
     pool
       .query('INSERT INTO availabilitymap (time_id, tutor_id) VALUES ($1,$2)', [
         durationTime,
@@ -306,7 +307,7 @@ async function removeSession(id: string, role: string, time: Date) {
  * @param upcoming True is upcoming. False is past
  * @param pos students, tutors, or admins
  * @param id OAuth ID (string)
- * @param userFriendly Returns a user friendly array of strings instead of rows
+ * @param userFriendly Returns based on if it is for student/tutor (true) or admin (false)
  * @returns Array of sessions
  */
 async function listSessions(
@@ -459,26 +460,33 @@ function removeOldUsers(role: string) {
 async function createDates(week: Date) {
   try {
     let times = ''
-    const inc = await listIncrements()
+    const increments = await listIncrements()
     // If undefined do empty list to not check holidays
     const holidays = (await listHolidays()) || []
     // If there are increments loop through the days of the week and add the increments every day
-    if (inc != undefined && inc.length != 0) {
+    if (increments != undefined && increments.length != 0) {
       for (let i = 1; i < 6; i++) {
-        for (let j = 0; j < inc.length; j++) {
-          const time = new Date(week)
+        for (let j = 0; j < increments.length; j++) {
+          const time = add(week, { days: i })
           let holiday = false
-          time.setDate(time.getDate() + i)
           for (let k = 0; k < holidays.length; k++) {
             // If time is in holiday then set boolean true
-            if (time.getDate() === holidays[k].holiday.getDate()) {
+            if (isSameDay(time, holidays[k].holiday)) {
               holiday = true
             }
           }
           // If not holiday add the time slot to the query
           if (!holiday) {
-            time.setHours(inc[j].hour, (inc[j].hour % 1) * 60, 0, 0)
-            times += "('" + new Date(time).toISOString() + "'),"
+            times +=
+              "('" +
+              formatISO(
+                set(time, {
+                  hours: increments[j].hour,
+                  minutes: (increments[j].hour % 1) * 60,
+                  seconds: 0
+                })
+              ) +
+              "'),"
           }
         }
       }
@@ -535,11 +543,10 @@ function removeIncrement(hour: number) {
  * @param date Date (time doesn't matter) of off day
  */
 function createHoliday(date: Date) {
+  // Check to make sure it is date
   if (isNaN(Date.parse(String(date)))) {
     return
   }
-  date = new Date(date)
-  date.setHours(date.getHours() + date.getTimezoneOffset() / 60) // Hack; fix later
   pool
     .query(
       'INSERT INTO holidays (holiday) VALUES ($1) ON CONFLICT DO NOTHING',
@@ -571,8 +578,6 @@ function deleteHoliday(date: Date) {
   if (isNaN(Date.parse(String(date)))) {
     return
   }
-  date = new Date(date)
-  date.setHours(date.getHours() + date.getTimezoneOffset() / 60) // Hack; fix later
   pool
     .query('DELETE FROM holidays WHERE holiday = $1', [date])
     .catch((e) => console.error(e))
@@ -721,12 +726,11 @@ async function migrateWeeklyToDates(week: Date) {
   let string = ''
 
   for (let i = 0; i < weeklyAvailability.length; i++) {
-    const time = new Date(week)
+    const time = add(week, { days: weeklyAvailability[i]['dow'] })
     let conflict = false
     const increment = weeklyAvailability[i]['increment_id']
 
     // Some fun translation stuff
-    time.setDate(time.getDate() + weeklyAvailability[i]['dow'])
     time.setHours(increment, (increment % 1) * 60, 0, 0)
 
     // Check to make sure that the date isn't in the past
@@ -736,9 +740,9 @@ async function migrateWeeklyToDates(week: Date) {
 
     // Check to make sure time isn't during a holiday
     if (!conflict) {
-      for (let k = 0; k < holidays.length; k++) {
+      for (let j = 0; j < holidays.length; j++) {
         // If time is in holiday then set boolean true
-        if (time.getDate() === holidays[k].holiday.getDate()) {
+        if (isSameDay(time, holidays[j].holiday)) {
           conflict = true
         }
       }
@@ -748,9 +752,7 @@ async function migrateWeeklyToDates(week: Date) {
     if (!conflict) {
       for (let j = 0; j < sessions.length; j++) {
         for (let h = 0; h < sessions[j]['duration'] * 4; h++) {
-          const durationTime = new Date(
-            sessions[j].time_id.getTime() + h * 15 * 60 * 1000
-          )
+          const durationTime = add(sessions[j].time_id, { minutes: h * 15 })
           if (
             time.getTime() === durationTime.getTime() &&
             weeklyAvailability[i]['tutor_id'] === sessions[j]['tutor_id']
@@ -764,7 +766,7 @@ async function migrateWeeklyToDates(week: Date) {
     if (!conflict) {
       string +=
         "('" +
-        new Date(time).toISOString() +
+        formatISO(time) +
         "','" +
         weeklyAvailability[i]['tutor_id'] +
         "'),"
@@ -888,7 +890,7 @@ function removeTutorsSubject(sid: string, tid: string) {
 
 /**
  * List all available time slots in db
- * @param student's OAuth ID so that they don't get their own time slots
+ * @param id student's OAuth ID so that they don't get their own time slots
  * @returns Array of time slots with extra data
  */
 async function listAvailability(id: string) {
@@ -919,7 +921,7 @@ async function listAvailability(id: string) {
           for (let k = 0; k < studentSessions[j].duration * 4; k++) {
             if (
               availabilities.rows[i].time_id.getTime() ===
-              new Date(time.getTime() + k * 15 * 60 * 1000).getTime()
+              add(studentSessions[j].time_id, { minutes: k * 15 })
             ) {
               // if there was a conflict then change boolean so it isn't sent to client
               conflict = true
@@ -999,7 +1001,6 @@ export default {
   addTutorWeeklyAvailability,
   listTutorWeeklyAvailability,
   listWeeklyAvailabilityAtIncrement,
-  listWeeklyAvailabilityMap,
   migrateWeeklyToDates,
   removeTutorWeeklyAvailability,
   createSubject,
@@ -1009,6 +1010,6 @@ export default {
   listTutorsSubjects,
   removeTutorsSubject,
   listAvailability,
-  purgeOldAvailability,
-  listTimesBetweenDates
+  purgeOldAvailability, // Not currently in use
+  listTimesBetweenDates // Not currently in use
 }
