@@ -17,12 +17,12 @@ services:
     restart: 'unless-stopped'
 
   db:
-    image: 'studors-postgres:latest'
+    image: 'postgres:15'
     container_name: 'studors-postgres'
     env_file: 'studors-postgres.env'
     # Enable ports for dev work. Leave off for prod because it's an attack vector
-    ports:
-      - '37073:37073/tcp'
+    #ports:
+    #  - '37073:37073/tcp'
 
     # If you want to run as a non root user you have to pass through the user arg and /etc/passwd as read-only
     #user: '1000:1000'
