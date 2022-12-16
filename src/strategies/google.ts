@@ -22,7 +22,8 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID || 'clientIDNotFound',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'clientSecretNotFound',
       callbackURL:
-        process.env.GOOGLE_STUDENT_REDIRECT_URL || 'studentRedirectNotFound',
+        process.env.SERVER_URL + '/auth/student/google' ||
+        'studentRedirectNotFound',
       scope: ['email', 'profile']
     },
     async (
@@ -76,7 +77,8 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID || 'clientIDNotFound',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'clientSecretNotFound',
       callbackURL:
-        process.env.GOOGLE_TUTOR_REDIRECT_URL || 'tutorRedirectNotFound',
+        process.env.SERVER_URL + '/auth/tutor/google' ||
+        'tutorRedirectNotFound',
       scope: ['email', 'profile']
     },
     async (
@@ -125,7 +127,8 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID || 'clientIDNotFound',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'clientSecretNotFound',
       callbackURL:
-        process.env.GOOGLE_ADMIN_REDIRECT_URL || 'adminRedirectNotFound',
+        process.env.SERVER_URL + '/auth/admin/google' ||
+        'adminRedirectNotFound',
       scope: ['email', 'profile']
     },
     async (

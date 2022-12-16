@@ -42,7 +42,9 @@ Logo used by permission from Louis Quattrocchi under the CC BY-NC 3.0 License
 
 ## Installation
 
-Installation of Studors is easy with Docker! (Blaine don't forget to put instructions here laters)
+Installation of Studors is easy with Docker!
+
+Instructions [here](/dev/docs/docker_setup.md)
 
 ## TODO:
 
