@@ -16,7 +16,7 @@
     "docker-setup": "npx ts-node ./dev/scripts/docker",
     "docker-build": "npm-run-all build docker-setup",
     "prod": "node .",
-    "dev": "npx nodemon",
+    "dev": "npx nodemon src/index.ts",
     "dev:debug": "nodemon --inspect src/index.ts",
     "css-dev": "npx ts-node ./dev/scripts/css"
   },
