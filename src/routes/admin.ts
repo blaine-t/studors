@@ -35,6 +35,11 @@ function checkAuthentication(req: Request, res: Response, next: NextFunction) {
 // Use above function in routing
 router.use(checkAuthentication)
 
+router.get('/', (req, res) => {
+  res.redirect('/admin/panel')
+  return
+})
+
 router.get('/panel', (req, res) => {
   res.render('pages/admin/panel', {
     darkMode: res.locals.user.dark_theme,
