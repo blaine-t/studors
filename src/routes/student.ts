@@ -40,10 +40,14 @@ router.get('/home', (req, res) => {
 router.get('/find', async (req, res) => {
   const subjects = await db.listSubjects()
   const availability = await db.listAvailability(res.locals.user.id)
+  let error = ''
+  if (availability && availability.length < 1) {
+    error = 'Sorry, but there are no available times at the moment'
+  }
   res.render('pages/student/find', {
     subjects: subjects,
     availability: availability,
-    error: '',
+    error: error,
     darkMode: res.locals.user.dark_theme,
     pos: 'Student'
   })
