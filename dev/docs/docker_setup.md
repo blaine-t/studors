@@ -30,11 +30,11 @@ Using your text editor of choice edit studors-node.env and edit the following va
 | Variable               | Description                                                                                | Default                                  | Options                    |
 | ---------------------- | ------------------------------------------------------------------------------------------ | ---------------------------------------- | -------------------------- |
 | `NODE_ENV`             | Changes how the security and proxy works on the app. If using in deployment use production | `production`                             | `production` `development` |
-| `SCHOOL`               | The string that will be displayed in the bottom left of the footer.                        | `Example High`                           | Any String                 |
-| `CONTACT`              | What shows up on the contact page when a user visits it.                                   | See example.env                          | Any HTML Code              |
+| `SCHOOL`               | The string that will be displayed in the bottom left of the footer                         | `Example High`                           | Any String                 |
+| `CONTACT`              | What shows up on the contact page when a user visits it                                    | See example.env                          | Any HTML Code              |
 | `GOOGLE_CLIENT_ID`     | The ID you get from Google oauth when you set it up                                        | ...X.apps.googleusercontent.com          | Valid client ID            |
 | `GOOGLE_CLIENT_SECRET` | The secret you get from Google oauth when you set it up                                    | XXXXXX...                                | Valid client secret        |
-| `SERVER_URL`  | Callback URL for Google oauth. Replace with your domain                                    | `http://127.0.0.1:19090`                 | Valid URL                  |
+| `SERVER_URL`           | Callback URL for Google oauth. Replace with your domain                                    | `http://127.0.0.1:19090`                 | Valid URL                  |
 | `PGUSER`               | Name of the postgres user                                                                  | `studorsadmin`                           | Any username               |
 | `PGHOST`               | Hostname of the database                                                                   | `db` for docker `localhost` for native   | Any hostname               |
 | `PGDATABASE`           | The database name                                                                          | `studors`                                | Any string                 |

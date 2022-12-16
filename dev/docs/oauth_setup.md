@@ -28,7 +28,7 @@ Oauth Client ID
 
 Application Type - Web Application
 
-Add these authorized redirect URIs:
+Add these authorized redirect URIs (Replace http://127.0.0.1:19090 with your public URL if deploying to production):
 
 http://127.0.0.1:19090/auth/student/google
 

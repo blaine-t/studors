@@ -46,42 +46,14 @@ Installation of Studors is easy with Docker!
 
 Instructions [here](/dev/docs/docker_setup.md)
 
-## TODO:
+## 2.0 TODO
 
-- [x] Add back buttons where required
-- [x] Add confirmation to cancel sessions
-- [x] Style error and success messages on sessions
-- [x] DataTables styling for dark mode
-- [x] Calendar buttons are not centered and dark styled
-- [x] Make scheduling tint standard
-- [x] Manage text boxes need tinted
-- [x] Need About, Mission, Contact text offset
-- [x] Finalize dark mode colors and contrast
-- [x] Allow removing student and tutor errors when truncating through tables
-- [x] Fix scheduler issues with populating dates and not making sessions available in the past
-- [x] Reformat all file types with style
-- [x] Style past sessions
-- [x] Fix scheduler making dates in the past
-- [x] Fix ambiguous cancellation red X
-- [x] Fix the first time sign up auth fail (Race condition!)
-- [x] Fix students being able to double book
-- [x] No tutors available notice
-- [x] Occasional hang on availability tutor button after changing times on new db instance?
-- [x] Fix retaining boxes in /student/find
-- [x] No sessions message upcoming and past sessions
-- [x] Minify all the things
-- [x] Lint whole project
-- [x] Solo test suite from start to finish
-- [x] Pen test and bug fix with ULPC
-
-## 2.0 Features:
-
-- [ ] Add fading between pages
+- [ ] Add fading between pages (or some transition)
 - [ ] Rework scheduler and population of dates for less disk IO and CPU (also authentication if possible)
 - [ ] Allow tutors to blacklist problematic students (/tutor/blacklist?)
-- [ ] Make admin panel easier to use (/admin/manage)
+- [ ] Make admin panel easier to use / more informational on what it does (/admin/manage)
 - [ ] Student request for tutoring at a set time slot (/student/request)
-- [ ] Tutor page to fulfill student requests (/tutor/request)
+- [ ] Tutor page to fulfill student requests (to go along side student requests) (/tutor/request)
 
 ## License
 
