@@ -47,7 +47,7 @@ router.get('/find', (req, res) => {
 
 router.get('/settings', (req, res) => {
   res.render('pages/tutor/settings', {
-    error: '',
+    error: req.query.error,
     darkMode: true, // Check box handles
     pos: 'Tutor'
   })
@@ -59,11 +59,9 @@ router.get('/availability', async (req, res) => {
   if (increments != undefined && increments.length != 0) {
     await db.createWeeklyAvailability()
   } else {
-    res.render('pages/tutor/settings', {
-      error: 'No time slots have been set by your admin',
-      darkMode: res.locals.user.dark_theme,
-      pos: 'Tutor'
-    })
+    res.redirect(
+      '/tutor/settings?error=No time slots have been set by your admin'
+    )
     return
   }
 
@@ -154,11 +152,9 @@ router.get('/subjects', async (req, res) => {
       pos: 'Tutor'
     })
   } else {
-    res.render('pages/tutor/settings', {
-      error: 'No subjects have been set by your admin',
-      darkMode: res.locals.user.dark_theme,
-      pos: 'Tutor'
-    })
+    res.redirect(
+      '/tutor/settings?error=No subjects have been set by your admin'
+    )
     return
   }
 })
@@ -214,7 +210,7 @@ router.post('/cancel', async (req, res) => {
   )
   let newSessions = upcomingSessions
   const message = await db.removeSession(res.locals.user.id, 'tutor', date)
-  let maxTries = 20
+  let maxTries = 100
   while (upcomingSessions === newSessions && maxTries > 0) {
     newSessions = await db.listSessions(
       true,

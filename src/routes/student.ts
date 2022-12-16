@@ -160,7 +160,7 @@ router.post('/cancel', async (req, res) => {
   )
   let newSessions = upcomingSessions
   const message = await db.removeSession(res.locals.user.id, 'student', date)
-  let maxTries = 20
+  let maxTries = 100
   while (upcomingSessions === newSessions && maxTries > 0) {
     newSessions = await db.listSessions(
       true,
