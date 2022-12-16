@@ -16,7 +16,7 @@ To build the files needed for docker employment these are the steps.
 
 1. Clone the repo
 2. Install required node modules using npm i
-3. Run npm docker-build
+3. Run `npm run docker-build`
 4. Move the files from /dev/docker to the directory you want to run the docker compose from.
 
 ## Configuring

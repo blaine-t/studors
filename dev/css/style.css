@@ -33,6 +33,12 @@
   position: absolute;
   width: 100%;
   text-align: center;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .login-buttons button {
@@ -112,6 +118,12 @@ button {
   margin: 20px;
   font-weight: normal;
   transition-duration: 0.3s;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .mainbutton:hover {
@@ -183,6 +195,12 @@ footer ul {
   white-space: nowrap;
   position: fixed;
   right: calc((100vw - 2560px)/2);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 footer li {
@@ -405,6 +423,12 @@ header hr {
   position: relative;
   margin-bottom: 55px;
   margin-top: 10px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .settings-box form {
@@ -445,6 +469,15 @@ header hr {
   left: 50%;
   transform: translatex(-50%);
   transition-duration: 0.2s;
+}
+
+#key {
+  -webkit-touch-callout: all;
+  -webkit-user-select: all;
+  -khtml-user-select: all;
+  -moz-user-select: all;
+  -ms-user-select: all;
+  user-select: all;
 }
 
 .settings-box .check span {
