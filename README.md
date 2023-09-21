@@ -46,15 +46,6 @@ Installation of Studors is easy with Docker!
 
 Instructions [here](/dev/docs/docker_setup.md)
 
-## 2.0 TODO
-
-- [ ] Add fading between pages (or some transition)
-- [ ] Rework scheduler and population of dates for less disk IO and CPU (also authentication if possible)
-- [ ] Allow tutors to blacklist problematic students (/tutor/blacklist?)
-- [ ] Make admin panel easier to use / more informational on what it does (/admin/manage)
-- [ ] Student request for tutoring at a set time slot (/student/request)
-- [ ] Tutor page to fulfill student requests (to go along side student requests) (/tutor/request)
-
 ## License
 
 Studors is licensed under the GNU General Public License V3
