@@ -910,7 +910,11 @@ async function listAvailability(id: string) {
     // Pull their sessions
     const studentSessions = await listSessions(true, 'students', id, false)
     const res = []
-    if (studentSessions != undefined && studentSessions.length > 0) {
+    if (
+      studentSessions != undefined &&
+      studentSessions.length > 0 &&
+      availabilities.rowCount != null
+    ) {
       // For every availability retrieved from the database
       for (let i = 0; i < availabilities.rowCount; i++) {
         let conflict = false

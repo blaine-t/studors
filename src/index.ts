@@ -1,4 +1,5 @@
 /* eslint-disable no-empty */
+import { join } from 'path'
 
 // Web Server Setup
 import express from 'express'
@@ -20,6 +21,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 // Allows server side rendering
+app.set('views', join(__dirname, '../views'))
 app.set('view engine', 'ejs')
 
 // Environment variable support for the project
@@ -54,7 +56,7 @@ app.use(
 )
 
 // Initialize passport authentication
-require('./strategies/google')
+import './strategies/google'
 app.use(passport.initialize())
 app.use(passport.session())
 

@@ -280,7 +280,7 @@ router.post('/manage', async (req, res) => {
     res.render('pages/admin/manage', {
       error: error,
       darkMode: res.locals.user.dark_theme,
-      pos: 'Admin' || false
+      pos: 'Admin'
     })
     return
   }
