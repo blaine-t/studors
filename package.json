@@ -66,5 +66,10 @@
     "uglify-js": "^3.19.3",
     "uglifycss": "^0.0.29"
   },
+  "overrides": {
+    "js-yaml": "^4.1.1",
+    "validator": "^13.15.20",
+    "glob": "^11.1.0"
+  },
   "packageManager": "pnpm@10.24.0"
 }
