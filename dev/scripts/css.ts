@@ -14,14 +14,16 @@ shell.mkdir('./backup')
 shell.mv(styleFolder, backupFolder)
 shell.mkdir(styleFolder)
 
+// Copy Files
+files.forEach((file) => {
+  if (shell.test('-e', file)) {
+    shell.cp('-R', file, styleFolder)
+  }
+})
+
 // Build the typescript and populate dependencies
 shell.exec('npx tsc --outDir ' + styleFolder)
 shell.exec('npm --prefix ' + styleFolder + ' i --omit=dev')
-
-// Copy Files
-files.forEach((file) => {
-  shell.cp('-R', file, styleFolder)
-})
 
 // Copy Folders
 folders.forEach((folder) => {
