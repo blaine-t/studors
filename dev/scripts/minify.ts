@@ -21,5 +21,5 @@ shell.ShellString(pickadateCSS).to('./public/css/pickadate.min.css')
 shell.rm('-R', './views')
 shell.mkdir('./views')
 shell.exec(
-  'npx html-minifier --input-dir ./dev/views --output-dir ./views --collapse-boolean-attributes --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace  --minify-css --minify-js --remove-empty-attributes'
+  'npx html-minifier-next --input-dir ./dev/views --output-dir ./views --collapse-boolean-attributes --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace  --minify-css --minify-js --remove-empty-attributes'
 )
