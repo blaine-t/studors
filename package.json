@@ -21,12 +21,12 @@
     "css-dev": "npx ts-node ./dev/scripts/css"
   },
   "dependencies": {
-    "body-parser": "^2.2.1",
+    "body-parser": "^2.2.2",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
-    "express": "^5.2.0",
+    "express": "^5.2.1",
     "express-session": "^1.18.2",
     "express-validator": "^7.3.1",
     "helmet": "^8.1.0",
